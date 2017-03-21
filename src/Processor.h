@@ -5,7 +5,7 @@
 #include <vector>
 #include "ProcessorDefines.h"
 #include <map>
-#include "CommandBase.h"
+#include "Commands/CommandBase.h"
 
 #include "Commands/MoveCommand.h"
 class Processor
