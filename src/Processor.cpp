@@ -27,9 +27,21 @@ bool Processor::ExecuteStep()
         uint16_t instruction = program_memory->Get(program_counter);
         for(auto & it: commands)
         {
-            if((instruction & it.first) == instruction)
+            if((instruction & it.first) == it.first)
             {
-                program_counter = it.second->Execute(instruction,{}, this->registers, this->special_registers,this->program_counter,this->stack_pointer);
+                uint8_t instruction_size = (it.second->CommandSize() -2)/2;
+                if(instruction_size>0)
+                {
+                    std::vector<uint8_t> additionalWords;
+                    for(int i = 0; i < instruction_size;i++)
+                    {
+                        additionalWords.push_back(program_memory->Get(program_counter+i));
+                    }
+                    program_counter = it.second->Execute(instruction,additionalWords, this->registers, this->special_registers,this->program_counter,this->stack_pointer);
+                }
+                else
+                    program_counter = it.second->Execute(instruction,{}, this->registers, this->special_registers,this->program_counter,this->stack_pointer);
+
                 return true;
             }
         }
