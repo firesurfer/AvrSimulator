@@ -20,7 +20,7 @@ uint16_t ADC::CommandSize()
     return 2;
 }
 
-uint64_t ADC::Execute(uint16_t instruction, std::vector<uint8_t> &Registers, std::vector<uint8_t> &SpecialRegisters, uint16_t ProgramCounter, uint16_t &StackPointer)
+uint64_t ADC::Execute(uint16_t instruction, std::vector<uint8_t> additionalWords, std::vector<uint8_t> &Registers, std::vector<uint8_t> &SpecialRegisters, uint16_t ProgramCounter, uint16_t &StackPointer)
 {
     uint8_t & sreg = SpecialRegisters[SREG];
     uint8_t registers = (uint8_t)(instruction >> 8);

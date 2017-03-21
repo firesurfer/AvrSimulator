@@ -29,7 +29,7 @@ bool Processor::ExecuteStep()
         {
             if((instruction & it.first) == instruction)
             {
-                program_counter = it.second->Execute(instruction, this->registers, this->special_registers,this->program_counter,this->stack_pointer);
+                program_counter = it.second->Execute(instruction,{}, this->registers, this->special_registers,this->program_counter,this->stack_pointer);
                 return true;
             }
         }

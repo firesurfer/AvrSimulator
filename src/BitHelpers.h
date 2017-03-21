@@ -1,6 +1,6 @@
 #ifndef BITHELPERS_H
 #define BITHELPERS_H
-
+#include <cinttypes>
 
 class BitHelpers
 {

@@ -9,15 +9,15 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
 
-find_package(Qt5Core REQUIRED)
+#find_package(Qt5Core REQUIRED)
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+#set(CMAKE_AUTOMOC ON)
+#set(CMAKE_AUTOUIC ON)
+#set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${Qt5Core_INCLUDE_DIRS}
+ #   ${Qt5Core_INCLUDE_DIRS}
 )
 
 file(GLOB SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c*
@@ -31,5 +31,5 @@ add_executable(register_machine_exec ${SRC_FILES})
 target_link_libraries(register_machine_exec
     Threads::Threads
 #qt core and network libs
-        Qt5::Core
+  #      Qt5::Core
 )
