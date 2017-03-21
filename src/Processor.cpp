@@ -27,12 +27,12 @@ bool Processor::ExecuteStep()
         uint16_t instruction = program_memory->Get(program_counter);
         for(auto & it: commands)
         {
-            if((instruction & it.first) == it.first)
+            if((instruction & it.second->CommandMask()) == it.first)
             {
                 uint8_t instruction_size = (it.second->CommandSize() -2)/2;
                 if(instruction_size>0)
                 {
-                    std::vector<uint8_t> additionalWords;
+                    std::vector<uint16_t> additionalWords;
                     for(int i = 0; i < instruction_size;i++)
                     {
                         additionalWords.push_back(program_memory->Get(program_counter+i));
