@@ -1,13 +1,14 @@
 #pragma once
+
 #include "CommandBase.h"
-class SBI:public CommandBase
+class RJMP:public CommandBase
 {
 public:
-    SBI(DataMemory* _dataMemory);
+    RJMP(DataMemory* _dataMemory);
     virtual uint16_t GetCommand();
     virtual uint16_t NumberOfArguments();
     virtual uint16_t CommandSize();
-    virtual uint16_t CommandMask();
+     virtual uint16_t CommandMask();
     virtual uint64_t Execute(uint16_t instruction,std::vector<uint16_t> additionalWords, std::vector<uint8_t> &Registers, std::vector<uint8_t>& SpecialRegisters,uint16_t ProgramCounter, uint16_t& StackPointer);
 };
 
