@@ -5,7 +5,7 @@ ProgramMemory::ProgramMemory(uint64_t _size, uint64_t _offset)
     this->size = _size;
     this->offset = _offset;
     this->data = new uint16_t[_size];
-    for(uint64_t i; i < size;i++ )
+    for(uint64_t i=0; i < size;i++ )
     {
         Set(i,0xFFFF);
     }
