@@ -25,7 +25,7 @@ uint16_t LD_X_PreDecr::CommandMask()
     return 0b1111111000001111;
 }
 
-uint64_t LD_X_PreDecr::Execute(uint16_t instruction, uint16_t ProgramCounter)
+uint64_t LD_X_PreDecr::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
     return ProgramCounter+1;
 }

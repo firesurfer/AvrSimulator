@@ -25,7 +25,7 @@ uint16_t ADC::CommandMask()
     return 0b1111110000000000;
 }
 
-uint64_t ADC::Execute(uint16_t instruction, uint16_t ProgramCounter)
+uint64_t ADC::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
   /*  uint8_t & sreg = SpecialRegisters[SREG];
     uint8_t registers = (uint8_t)(instruction >> 8);

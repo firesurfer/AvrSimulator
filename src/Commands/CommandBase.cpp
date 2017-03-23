@@ -25,7 +25,7 @@ uint16_t CommandBase::CommandMask()
 
 }
 
-uint64_t CommandBase::Execute(uint16_t instruction, uint16_t ProgramCounter)
+uint64_t CommandBase::Execute(uint16_t &instruction, uint16_t ProgramCounter)
 {
     return 0;
 }

@@ -25,7 +25,7 @@ uint16_t RJMP::CommandMask()
     return 0b1111000000000000;
 }
 
-uint64_t RJMP::Execute(uint16_t instruction, uint16_t ProgramCounter)
+uint64_t RJMP::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
     int16_t offset = ((instruction & ~CommandMask()) << 4)  ;
     offset /= 16;
