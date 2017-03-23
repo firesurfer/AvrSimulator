@@ -31,5 +31,6 @@ uint64_t RJMP::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     offset /= 16;
 
 
-    return ProgramCounter + offset +1 ;
+    ProgramCounter = ProgramCounter + offset +1 ;
+    return 1;
 }

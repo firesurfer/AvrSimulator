@@ -5,7 +5,7 @@ rjmp main;
 
 
 defaultInt:
-reti;
+rjmp main;
 
 main:
 rjmp main;

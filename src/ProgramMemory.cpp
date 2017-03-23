@@ -56,6 +56,8 @@ ProgramMemory *ProgramMemory::FromFile(std::string path)
         std::string line;
         while ( getline (file,line) )
         {
+            if(line.at(0) != ':')
+                throw std::runtime_error("This might not be an intel hexfile!");
             hex_file.push_back(line);
         }
         file.close();
@@ -75,22 +77,15 @@ ProgramMemory *ProgramMemory::FromFile(std::string path)
                 std::string str_address = hex_line.substr(3,4);
 
                 uint16_t address =  std::stoul("0x"+str_address, nullptr, 16);
-
-
                 for(int i = 0; i < size/4;i++)
                 {
                     uint16_t data  = std::stoul(hex_line.substr(9+i*4,4), nullptr, 16);
-
-
+                    //Swap high and lowbyte - Endianess
                     uint8_t hibyte = (data & 0xff00) >> 8;
                     uint8_t lobyte = (data & 0xff);
                     data = lobyte << 8 | hibyte;
                     mem->Set(address+i,data);
-
-
                 }
-
-
                 std::cout << "  Line:         " << line_count << std::endl;
                 std::cout << "  Size:         " << size <<std::endl;
                 std::cout << "  Startaddress: " << address << std::endl;

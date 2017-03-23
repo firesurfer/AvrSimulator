@@ -23,12 +23,17 @@ int main(int argc, char* argv[])
     Processor * processor = new Processor( dataMapper);
     CommandRegister* cmd_register = new CommandRegister(processor,dataMapper);
 
-
+    std::cout << "Starting execution" << std::endl;
+    int count_steps=0;
     while(processor->ExecuteStep())
     {
-
+        count_steps++;
     }
+
     std::cout << "Finished execution" << std::endl;
+    std::cout << "  Execution steps:   " << count_steps << std::endl;
+    std::cout << std::endl;
+    std::cout << "Exit!" << std::endl;
     delete cmd_register;
     delete processor;
     delete dataMemory;

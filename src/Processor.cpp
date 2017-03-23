@@ -18,13 +18,15 @@ bool Processor::ExecuteStep()
     else
     {
         uint16_t instruction = program_memory->Get(program_counter);
+        std::cout << "Instruction: 0x" << std::hex <<instruction << std::dec << std::endl;
         bool found = false;
         for(auto & it: commands)
         {
             if((instruction & it.second->CommandMask()) == it.first)
             {
-                program_counter = it.second->Execute(instruction,this->program_counter);
+                it.second->Execute(instruction,this->program_counter);
                 found = true;
+                return true;
             }
         }
         if(!found)

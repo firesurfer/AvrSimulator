@@ -3,7 +3,7 @@
 
 #include "Processor.h"
 #include "Commands/RJMP.h"
-
+#include "Commands/NOP.h"
 class CommandRegister
 {
 public:
