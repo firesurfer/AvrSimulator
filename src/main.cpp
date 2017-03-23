@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 
     std::cout << "Starting execution" << std::endl;
     int count_steps=0;
-    while(processor->ExecuteStep())
+    while(processor->ExecuteStep()&&count_steps<64)
     {
         count_steps++;
     }

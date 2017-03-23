@@ -18,7 +18,7 @@ bool Processor::ExecuteStep()
     else
     {
         uint16_t instruction = program_memory->Get(program_counter);
-        std::cout << "Instruction: 0x" << std::hex <<instruction << std::dec << std::endl;
+        std::cout << "Instruction 0x" << std::hex << program_counter << ": 0x" << instruction << std::dec << std::endl;
         bool found = false;
         for(auto & it: commands)
         {
