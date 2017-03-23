@@ -1,6 +1,6 @@
 #include "JMP.h"
 
-JMP::JMP(DataMemory *_dataMemory):CommandBase(_dataMemory)
+JMP::JMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
 
 }
@@ -25,9 +25,9 @@ uint16_t JMP::CommandMask()
     return 0b1111111000001110;
 }
 
-uint64_t JMP::Execute(uint16_t instruction, std::vector<uint16_t> additionalWords, std::vector<uint8_t> &Registers, std::vector<uint8_t> &SpecialRegisters, uint16_t ProgramCounter, uint16_t &StackPointer)
+uint64_t JMP::Execute(uint16_t instruction, uint16_t ProgramCounter)
 {
-    uint16_t address = additionalWords[0];
+    //uint16_t address = additionalWords[0];
 
-    return address;
+   // return address;
 }

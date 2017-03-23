@@ -1,6 +1,6 @@
 #include "Processor.h"
 
-Processor::Processor(uint8_t multipurposeRegisters, ProgramMemory *_program_memory, DataMemory *_data_memory)
+Processor::Processor(uint8_t multipurposeRegisters, ProgramMemory *_program_memory, MemoryMapper *_data_memory)
 {
     for(int i = 0; i <multipurposeRegisters; i++)
         this->registers.push_back(0);
@@ -13,8 +13,7 @@ Processor::Processor(uint8_t multipurposeRegisters, ProgramMemory *_program_memo
     this->program_memory = _program_memory;
     this->data_memory = _data_memory;
 
-    MoveCommand* mv_cmd = new MoveCommand(data_memory);
-    commands[mv_cmd->GetCommand()] = mv_cmd;
+
 }
 
 bool Processor::ExecuteStep()
@@ -29,20 +28,8 @@ bool Processor::ExecuteStep()
         {
             if((instruction & it.second->CommandMask()) == it.first)
             {
-                uint8_t instruction_size = (it.second->CommandSize() -2)/2;
-                if(instruction_size>0)
-                {
-                    std::vector<uint16_t> additionalWords;
-                    for(int i = 0; i < instruction_size;i++)
-                    {
-                        additionalWords.push_back(program_memory->Get(program_counter+i));
-                    }
-                    program_counter = it.second->Execute(instruction,additionalWords, this->registers, this->special_registers,this->program_counter,this->stack_pointer);
-                }
-                else
-                    program_counter = it.second->Execute(instruction,{}, this->registers, this->special_registers,this->program_counter,this->stack_pointer);
+                program_counter = it.second->Execute(instruction,this->program_counter);
 
-                return true;
             }
         }
 

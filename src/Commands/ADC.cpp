@@ -1,6 +1,6 @@
 #include "ADC.h"
 
-ADC::ADC(DataMemory *_dataMemory):CommandBase(_dataMemory)
+ADC::ADC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
 
 }
@@ -25,9 +25,9 @@ uint16_t ADC::CommandMask()
     return 0b1111110000000000;
 }
 
-uint64_t ADC::Execute(uint16_t instruction, std::vector<uint16_t> additionalWords, std::vector<uint8_t> &Registers, std::vector<uint8_t> &SpecialRegisters, uint16_t ProgramCounter, uint16_t &StackPointer)
+uint64_t ADC::Execute(uint16_t instruction, uint16_t ProgramCounter)
 {
-    uint8_t & sreg = SpecialRegisters[SREG];
+  /*  uint8_t & sreg = SpecialRegisters[SREG];
     uint8_t registers = (uint8_t)(instruction >> 8);
     uint8_t regd = registers & 0xF0;
     uint8_t regr = registers >> 4;
@@ -56,6 +56,6 @@ uint64_t ADC::Execute(uint16_t instruction, std::vector<uint16_t> additionalWord
         BitHelpers::set_bit(sreg,SREG_V);
 
 
-    Registers[regd] = temp;
+    Registers[regd] = temp;*/
     return ProgramCounter+1;
 }

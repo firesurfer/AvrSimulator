@@ -1,17 +1,17 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
-#include "DataMemory.h"
+#include "MemoryMapper.h"
 #include "ProgramMemory.h"
 #include <vector>
 #include "ProcessorDefines.h"
 #include <map>
 #include "Commands/CommandBase.h"
 
-#include "Commands/MoveCommand.h"
+
 class Processor
 {
 public:
-    Processor(uint8_t multipurposeRegisters, ProgramMemory* _program_memory, DataMemory* _data_memory);
+    Processor(uint8_t multipurposeRegisters, ProgramMemory* _program_memory, MemoryMapper* _data_memory);
     bool ExecuteStep();
 
 private:
@@ -25,7 +25,7 @@ private:
 
 
     ProgramMemory * program_memory;
-    DataMemory * data_memory;
+    MemoryMapper * data_memory;
     std::map<uint32_t, CommandBase*> commands;
 
 

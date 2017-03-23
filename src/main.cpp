@@ -1,9 +1,11 @@
 #include "DataMemory.h"
+#include "MemoryMapper.h"
 #include "ProgramMemory.h"
 #include "Processor.h"
 int main(int argc, char* argv[])
 {
-    DataMemory * dataMemory = new DataMemory(2048,0x0060);
+    DataMemory * dataMemory = new DataMemory(2048,0);
+
     ProgramMemory * programMemory;
 
     if(argc > 1)
@@ -16,8 +18,8 @@ int main(int argc, char* argv[])
     {
         throw std::runtime_error("Please pass program memory path as first argument!");
     }
-
-    Processor * processor = new Processor(32, programMemory, dataMemory);
+    MemoryMapper *dataMapper = new MemoryMapper(dataMemory, programMemory);
+    Processor * processor = new Processor(32, programMemory, dataMapper);
     while(processor->ExecuteStep())
     {
 
