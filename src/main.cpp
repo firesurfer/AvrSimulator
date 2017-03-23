@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
         throw std::runtime_error("Please pass program memory path as first argument!");
     }
     MemoryMapper *dataMapper = new MemoryMapper(dataMemory, programMemory);
-    Processor * processor = new Processor(32, programMemory, dataMapper);
+    Processor * processor = new Processor( dataMapper);
     while(processor->ExecuteStep())
     {
 

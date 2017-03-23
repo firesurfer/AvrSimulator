@@ -1,17 +1,11 @@
 #include "Processor.h"
 
-Processor::Processor(uint8_t multipurposeRegisters, ProgramMemory *_program_memory, MemoryMapper *_data_memory)
+Processor::Processor(MemoryMapper *_memory_mapper)
 {
-    for(int i = 0; i <multipurposeRegisters; i++)
-        this->registers.push_back(0);
 
-    for(int i = 0; i < 64; i++)
-        this->hardware_registers.push_back(0);
-    for(int i= 0; i < SPECIAL_REGISTERS_SIZE; i++)
-        this->special_registers.push_back(0);
+    this->memory_mapper = _memory_mapper;
+    this->program_memory = memory_mapper->getProgramMemory();
 
-    this->program_memory = _program_memory;
-    this->data_memory = _data_memory;
 
 
 }

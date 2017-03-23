@@ -11,21 +11,16 @@
 class Processor
 {
 public:
-    Processor(uint8_t multipurposeRegisters, ProgramMemory* _program_memory, MemoryMapper* _data_memory);
+    Processor( MemoryMapper* _memory_mapper);
     bool ExecuteStep();
 
 private:
-    /*Registers*/
-    std::vector<uint8_t> registers;
-    std::vector<uint8_t> hardware_registers;
-    std::vector<uint8_t> special_registers;
 
-    uint16_t stack_pointer;
     uint16_t program_counter;
 
 
     ProgramMemory * program_memory;
-    MemoryMapper * data_memory;
+    MemoryMapper * memory_mapper;
     std::map<uint32_t, CommandBase*> commands;
 
 
