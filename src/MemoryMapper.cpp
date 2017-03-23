@@ -30,3 +30,18 @@ void MemoryMapper::getSRAM(uint8_t val, uint16_t pos)
 {
     val = data_memory->Get(pos);
 }
+
+void MemoryMapper::setRegister(uint8_t val, uint16_t reg)
+{
+
+}
+
+void MemoryMapper::setIORegister(uint8_t val, uint16_t reg)
+{
+
+}
+
+void MemoryMapper::setSRAM(uint8_t val, uint16_t pos)
+{
+
+}

@@ -13,6 +13,10 @@ public:
     void getRegister(uint8_t &val, uint16_t reg);
     void getIORegister(uint8_t& val, uint16_t reg);
     void getSRAM(uint8_t val, uint16_t pos);
+
+    void setRegister(uint8_t val, uint16_t reg);
+    void setIORegister(uint8_t val,uint16_t reg);
+    void setSRAM(uint8_t val, uint16_t pos);
 private:
     DataMemory* data_memory;
     ProgramMemory* program_memory;

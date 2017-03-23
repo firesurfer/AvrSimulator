@@ -62,6 +62,7 @@ ProgramMemory *ProgramMemory::FromFile(std::string path)
         std::cout << "Programmemory file: " << std::endl;
         int line_count = 0;
         ProgramMemory * mem = new ProgramMemory(32*1024,0);
+        int size_total = 0;
         for(std::string & hex_line: hex_file)
         {
             if(hex_line.find(":00000001FF") == std::string::npos )
@@ -91,13 +92,17 @@ ProgramMemory *ProgramMemory::FromFile(std::string path)
 
 
                 std::cout << "  Line:         " << line_count << std::endl;
-                std::cout << "  Size:         " << size << " " << str_size<<std::endl;
-                std::cout << "  Startaddress: " << address << " " << str_address<< std::endl;
+                std::cout << "  Size:         " << size <<std::endl;
+                std::cout << "  Startaddress: " << address << std::endl;
                 line_count ++;
+                size_total += size;
             }
             else
                 break;
         }
+        std::cout << std::endl;
+        std::cout << "  Lines read:   " << line_count << std::endl;
+        std::cout << "  Total size:   " << size_total << std::endl;
 
 
 
