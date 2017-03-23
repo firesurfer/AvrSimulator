@@ -13,7 +13,7 @@ class Processor
 public:
     Processor( MemoryMapper* _memory_mapper);
     bool ExecuteStep();
-
+    void RegisterCommand(CommandBase* cmd);
 private:
 
     uint16_t program_counter;
@@ -21,7 +21,7 @@ private:
 
     ProgramMemory * program_memory;
     MemoryMapper * memory_mapper;
-    std::map<uint32_t, CommandBase*> commands;
+    std::map<uint16_t, CommandBase*> commands;
 
 
 

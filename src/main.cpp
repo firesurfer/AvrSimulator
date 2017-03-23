@@ -2,6 +2,7 @@
 #include "MemoryMapper.h"
 #include "ProgramMemory.h"
 #include "Processor.h"
+#include "CommandRegister.h"
 int main(int argc, char* argv[])
 {
     DataMemory * dataMemory = new DataMemory(2048,0);
@@ -20,11 +21,15 @@ int main(int argc, char* argv[])
     }
     MemoryMapper *dataMapper = new MemoryMapper(dataMemory, programMemory);
     Processor * processor = new Processor( dataMapper);
+    CommandRegister* cmd_register = new CommandRegister(processor,dataMapper);
+
+
     while(processor->ExecuteStep())
     {
 
     }
     std::cout << "Finished execution" << std::endl;
+    delete cmd_register;
     delete processor;
     delete dataMemory;
     delete programMemory;

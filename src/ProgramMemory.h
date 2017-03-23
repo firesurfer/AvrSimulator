@@ -5,7 +5,9 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <cstring>
+#include <sstream>
 class ProgramMemory
 {
 public:
