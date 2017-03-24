@@ -16,32 +16,44 @@ ProgramMemory *MemoryMapper::getProgramMemory()
     return this->program_memory;
 }
 
-void MemoryMapper::getRegister(uint8_t &val, uint16_t reg)
+uint8_t MemoryMapper::getRegister(uint32_t reg)
 {
-    val = data_memory->Get(reg);
+    if(reg>=0x20){
+        throw std::out_of_range("Only 32 Processorregisters available");
+    }
+    return data_memory->Get(reg);
 }
 
-void MemoryMapper::getIORegister(uint8_t &val, uint16_t reg)
+uint8_t MemoryMapper::getIORegister(uint32_t reg)
 {
-    val = data_memory->Get(reg);
+    if(reg>=0x40){
+        throw std::out_of_range("Only 64 IO-Registers available");
+    }
+    return data_memory->Get(reg+0x20);
 }
 
-void MemoryMapper::getSRAM(uint8_t val, uint16_t pos)
+uint8_t MemoryMapper::getSRAM(uint32_t pos)
 {
-    val = data_memory->Get(pos);
+    return data_memory->Get(pos);
 }
 
-void MemoryMapper::setRegister(uint8_t val, uint16_t reg)
+void MemoryMapper::setRegister(uint32_t reg, uint8_t val)
 {
-
+    if(reg>=0x20){
+        throw std::out_of_range("Only 32 Processorregisters available");
+    }
+    data_memory->Set(reg,val);
 }
 
-void MemoryMapper::setIORegister(uint8_t val, uint16_t reg)
+void MemoryMapper::setIORegister(uint32_t reg, uint8_t val)
 {
-
+    if(reg>=0x40){
+        throw std::out_of_range("Only 64 IO-Registers available");
+    }
+    data_memory->Set(reg+0x20,val);
 }
 
-void MemoryMapper::setSRAM(uint8_t val, uint16_t pos)
+void MemoryMapper::setSRAM(uint32_t reg, uint8_t val)
 {
-
+    data_memory->Set(reg,val);
 }
