@@ -10,14 +10,18 @@ class CommandBase
 {
 public:
     CommandBase(MemoryMapper* _dataMemory);
-    virtual uint16_t GetCommand();
-    virtual uint16_t NumberOfArguments();
-    virtual uint16_t CommandSize();
-    virtual uint16_t CommandMask();
+    virtual uint16_t GetCommand() const;
+    virtual uint16_t NumberOfArguments() const;
+    virtual uint16_t CommandSize() const;
+    virtual uint16_t CommandMask() const;
     virtual uint64_t Execute(uint16_t instruction,uint16_t &ProgramCounter);
 
 protected :
     MemoryMapper* data_memory;
+    uint16_t command;
+    uint16_t numArgs;
+    uint16_t commandSize;
+    uint16_t commandMask;
 };
 
 #endif // COMMANDBASE_H

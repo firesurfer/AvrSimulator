@@ -2,27 +2,10 @@
 
 ADC::ADC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-
-}
-
-uint16_t ADC::GetCommand()
-{
-    return 0b0001110000000000;
-}
-
-uint16_t ADC::NumberOfArguments()
-{
-    return 2;
-}
-
-uint16_t ADC::CommandSize()
-{
-    return 2;
-}
-
-uint16_t ADC::CommandMask()
-{
-    return 0b1111110000000000;
+    command = 0b0001110000000000;
+    commandMask = 0b1111110000000000;
+    numArgs = 2;
+    commandSize = 1;
 }
 
 uint64_t ADC::Execute(uint16_t instruction, uint16_t &ProgramCounter)

@@ -2,27 +2,10 @@
 
 EOR::EOR(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-
-}
-
-uint16_t EOR::GetCommand()
-{
-    return 0b0010010000000000;
-}
-
-uint16_t EOR::NumberOfArguments()
-{
-    return 2;
-}
-
-uint16_t EOR::CommandSize()
-{
-    return 4;
-}
-
-uint16_t EOR::CommandMask()
-{
-    return 0b1111110000000000;
+    command = 0b0010010000000000;
+    numArgs = 2;
+    commandSize = 1;
+    commandMask = 0b1111110000000000;
 }
 
 uint64_t EOR::Execute(uint16_t instruction, uint16_t &ProgramCounter)

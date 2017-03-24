@@ -2,27 +2,12 @@
 
 LDS_SRAM::LDS_SRAM(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-
-}
-
-uint16_t LDS_SRAM::GetCommand()
-{
-    return 0b1010000000000000;
-}
-
-uint16_t LDS_SRAM::NumberOfArguments()
-{
-    return 2;
-}
-
-uint16_t LDS_SRAM::CommandSize()
-{
-    return 2;
-}
-
-uint16_t LDS_SRAM::CommandMask()
-{
-    return 0b1111100000000000;
+    command = 0b1010000000000000;
+    commandMask = 0b1111100000000000;
+    numArgs = 2;
+    commandSize = 1;
+    ///only relevant for attiny10 based devices, can adress 128bytes SRAM from offset 0x40,
+    /// may interfere with the LDD instruction
 }
 
 uint64_t LDS_SRAM::Execute(uint16_t instruction, uint16_t &ProgramCounter)

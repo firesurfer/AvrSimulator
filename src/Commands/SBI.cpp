@@ -2,27 +2,10 @@
 
 SBI::SBI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-
-}
-
-uint16_t SBI::GetCommand()
-{
-    return 0b1001101000000000;
-}
-
-uint16_t SBI::NumberOfArguments()
-{
-    return 2;
-}
-
-uint16_t SBI::CommandSize()
-{
-    return 2;
-}
-
-uint16_t SBI::CommandMask()
-{
-    return 0b1111111100000000;
+    command = 0b1001101000000000;
+    numArgs = 2;
+    commandSize = 1;
+    commandMask = 0b1111111100000000;
 }
 
 uint64_t SBI::Execute(uint16_t instruction, uint16_t &ProgramCounter)

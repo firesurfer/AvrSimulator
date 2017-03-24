@@ -2,27 +2,10 @@
 
 JMP::JMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-
-}
-
-uint16_t JMP::GetCommand()
-{
-    return 0b0001110000000000;
-}
-
-uint16_t JMP::NumberOfArguments()
-{
-    return 2;
-}
-
-uint16_t JMP::CommandSize()
-{
-    return 4;
-}
-
-uint16_t JMP::CommandMask()
-{
-    return 0b1111111000001110;
+    command = 0b0001110000000000;
+    commandMask = 0b1111111000001110;
+    numArgs = 1;
+    commandSize = 2;
 }
 
 uint64_t JMP::Execute(uint16_t instruction, uint16_t &ProgramCounter)
