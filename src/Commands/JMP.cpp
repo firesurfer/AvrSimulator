@@ -10,7 +10,9 @@ JMP::JMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint64_t JMP::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
-    //uint16_t address = additionalWords[0];
-
-   // return address;
+    uint16_t address = this->data_memory->getProgramMemory()->Get(ProgramCounter+1);
+    //TODO implement checks?
+    ProgramCounter =address;
+    //TODO amount of cycles?
+    return 1;
 }

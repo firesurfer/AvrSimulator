@@ -10,5 +10,9 @@ LDS_MEM::LDS_MEM(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint64_t LDS_MEM::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
-    return ProgramCounter+1;
+    uint8_t reg = (uint8_t)((instruction & !commandMask) >> 4);
+    uint16_t address = data_memory->getProgramMemory()->Get(ProgramCounter+1);
+    data_memory->setRegister(reg,data_memory->getSRAM(address));
+    ProgramCounter = ProgramCounter+2;
+    return 2;
 }
