@@ -91,6 +91,16 @@ void MemoryMapper::pushStack(uint8_t data)
     data_memory->Set(0x5D,SP);
 }
 
+uint16_t MemoryMapper::getXReg()
+{
+    return get16bitRegister(X_L);
+}
+
+uint16_t MemoryMapper::getYReg()
+{
+    return get16bitRegister(Y_L);
+}
+
 uint16_t MemoryMapper::getZReg()
 {
     return get16bitRegister(Z_L);
