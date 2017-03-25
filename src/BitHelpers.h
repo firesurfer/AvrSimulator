@@ -26,6 +26,12 @@ public:
     {
         byte |= (1<<pos);
     }
+    static void swap_bytes(uint16_t & integer)
+    {
+        uint8_t hibyte = (integer & 0xff00) >> 8;
+        uint8_t lobyte = (integer & 0xff);
+        integer = lobyte << 8 | hibyte;
+    }
 
 };
 
