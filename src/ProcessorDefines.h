@@ -27,5 +27,7 @@
 #define SREG_Z 1
 #define SREG_C 0
 
+#define OCDR 0x51
+
 
 #endif // PROCESSORDEFINES_H

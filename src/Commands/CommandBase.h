@@ -2,8 +2,9 @@
 #define COMMANDBASE_H
 
 #include <cstdint>
-#include "MemoryMapper.h"
 #include <vector>
+#include "MemoryMapper.h"
+
 #include "ProcessorDefines.h"
 #include "BitHelpers.h"
 class CommandBase
