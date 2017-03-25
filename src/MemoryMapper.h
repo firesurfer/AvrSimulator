@@ -4,7 +4,8 @@
 #include "DataMemory.h"
 #include "ProgramMemory.h"
 #include <stdexcept>
-
+#include "BitHelpers.h"
+#include "ProcessorDefines.h"
 class MemoryMapper
 {
 public:
@@ -18,9 +19,23 @@ public:
     void setRegister(uint32_t reg, uint8_t val);
     void setIORegister(uint32_t reg, uint8_t val);
     void setSRAM(uint32_t reg, uint8_t val);
+
+    uint16_t getXReg();
+    uint16_t getYReg();
+    uint16_t getZReg();
+    uint16_t getStackPtr();
+    void setXReg(uint16_t data);
+    void setYReg(uint16_t data);
+    void setZReg(uint16_t data);
+    void setStackPtr(uint16_t data);
+
+
+
 private:
     DataMemory* data_memory;
     ProgramMemory* program_memory;
+    uint16_t get16bitRegister(uint8_t l_reg);
+    void set16bitRegister(uint8_t l_reg,uint16_t val);
 };
 
 #endif // MEMORYMAPPER_H
