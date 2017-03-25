@@ -12,11 +12,12 @@ public:
     BitHelpers();
     static uint8_t bit_set(uint8_t byte, uint8_t pos)
     {
-        return byte & (1 <<pos);
+
+        return (byte>>pos) & 1;
     }
     static uint8_t bit_set(uint16_t word, uint8_t pos)
     {
-        return word & (1<<pos);
+        return (word >>pos)& 1;
     }
     static void clear_bit(uint8_t &byte, uint8_t pos)
     {
