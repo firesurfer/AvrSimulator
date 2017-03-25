@@ -16,5 +16,6 @@ uint64_t CALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     rest_bits = (rest_bits & 0b0000000111110000) >> 3;
     rest_bits |= (temp & 0b0000000000000001);
     address |= (rest_bits << 16);
+    //TODO write on stack
     ProgramCounter = ProgramCounter+2;
 }

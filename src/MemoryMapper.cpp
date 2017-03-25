@@ -91,3 +91,47 @@ void MemoryMapper::pushStack(uint8_t data)
     data_memory->Set(0x5D,SP);
 }
 
+uint16_t MemoryMapper::getZReg()
+{
+    return get16bitRegister(Z_L);
+}
+
+uint16_t MemoryMapper::getStackPtr()
+{
+    return get16bitRegister(SPL);
+}
+
+void MemoryMapper::setXReg(uint16_t data)
+{
+    set16bitRegister(X_L,data);
+}
+
+void MemoryMapper::setYReg(uint16_t data)
+{
+    set16bitRegister(Y_L,data);
+}
+
+void MemoryMapper::setZReg(uint16_t data)
+{
+    set16bitRegister(Z_L,data);
+}
+
+void MemoryMapper::setStackPtr(uint16_t data)
+{
+    set16bitRegister(SPL,data);
+}
+
+uint16_t MemoryMapper::get16bitRegister(uint8_t l_reg)
+{
+     uint16_t* reg_ptr = (uint16_t*)&data_memory->GetDataPtr()[l_reg];
+     uint16_t reg = *reg_ptr;
+     BitHelpers::swap_bytes(reg);
+     return reg;
+}
+
+void MemoryMapper::set16bitRegister(uint8_t l_reg,uint16_t val)
+{
+     uint16_t* reg_ptr = (uint16_t*)&data_memory->GetDataPtr()[l_reg];
+     BitHelpers::swap_bytes(val);
+     *reg_ptr = val;
+}
