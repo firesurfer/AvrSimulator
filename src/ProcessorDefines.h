@@ -27,6 +27,15 @@
 #define SREG_Z 1
 #define SREG_C 0
 
+#define MASK_I (1<<SREG_I)
+#define MASK_T (1<<SREG_T)
+#define MASK_H (1<<SREG_H)
+#define MASK_S (1<<SREG_S)
+#define MASK_V (1<<SREG_V)
+#define MASK_N (1<<SREG_N)
+#define MASK_Z (1<<SREG_Z)
+#define MASK_C (1<<SREG_C)
+
 #define OCDR 0x51
 
 
