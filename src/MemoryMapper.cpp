@@ -37,6 +37,21 @@ uint8_t MemoryMapper::getSRAM(uint32_t pos)
     return data_memory->Get(pos);
 }
 
+uint8_t MemoryMapper::getSREG(uint8_t mask)
+{
+    return data_memory->Get(0x5F)&mask;
+}
+
+uint8_t MemoryMapper::popStack()
+{
+    uint16_t SP=(uint16_t)data_memory->Get(0x5E)<<8;
+    SP|=data_memory->Get(0x5D);
+    SP++;
+    data_memory->Set(0x5E,SP>>8);
+    data_memory->Set(0x5D,SP);
+    return data_memory->Get(SP);
+}
+
 void MemoryMapper::setRegister(uint32_t reg, uint8_t val)
 {
     if(reg>=0x20){
@@ -57,3 +72,22 @@ void MemoryMapper::setSRAM(uint32_t reg, uint8_t val)
 {
     data_memory->Set(reg,val);
 }
+
+void MemoryMapper::setSREG(uint8_t sreg, uint8_t mask)
+{
+    data_memory->Set(getSREG(~mask)|(mask&sreg),0x5F);
+}
+
+void MemoryMapper::pushStack(uint8_t data)
+{
+    uint16_t SP=(uint16_t)data_memory->Get(0x5E)<<8;
+    SP|=data_memory->Get(0x5D);
+    if(SP<=0x60){
+        throw std::overflow_error("Stackoverflow, did you initialize the stackpointer?");
+    }
+    data_memory->Set(SP,data);
+    SP--;
+    data_memory->Set(0x5E,SP>>8);
+    data_memory->Set(0x5D,SP);
+}
+
