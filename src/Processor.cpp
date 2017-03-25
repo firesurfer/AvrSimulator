@@ -5,7 +5,7 @@ Processor::Processor(MemoryMapper *_memory_mapper)
     this->program_counter = 0;
     this->memory_mapper = _memory_mapper;
     this->program_memory = memory_mapper->getProgramMemory();
-
+    this->periph_handler = new PeripheryHandler(this->memory_mapper);
 
 
 }
@@ -24,7 +24,8 @@ bool Processor::ExecuteStep()
         {
             if((instruction & it.second->CommandMask()) == it.first)
             {
-                it.second->Execute(instruction,this->program_counter);
+                uint16_t cycles = it.second->Execute(instruction,this->program_counter);
+                this->periph_handler->handlePeriphery(cycles);
                 found = true;
                 return true;
             }

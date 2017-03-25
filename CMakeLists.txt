@@ -23,7 +23,10 @@ include_directories(
 file(GLOB SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c*
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h*
      ${CMAKE_CURRENT_SOURCE_DIR}/src/Commands/*.h*
-      ${CMAKE_CURRENT_SOURCE_DIR}/src/Commands/*.c*)
+      ${CMAKE_CURRENT_SOURCE_DIR}/src/Commands/*.c*
+       ${CMAKE_CURRENT_SOURCE_DIR}/src/Periphery/*.h*
+       ${CMAKE_CURRENT_SOURCE_DIR}/src/Periphery/*.c*
+      )
 
 
 add_executable(register_machine_exec ${SRC_FILES})

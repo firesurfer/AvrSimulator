@@ -1,11 +1,13 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
+#include <vector>
+#include <map>
+
 #include "MemoryMapper.h"
 #include "ProgramMemory.h"
-#include <vector>
 #include "ProcessorDefines.h"
-#include <map>
 #include "Commands/CommandBase.h"
+#include "PeripheryHandler.h"
 
 
 class Processor
@@ -21,6 +23,7 @@ private:
 
     ProgramMemory * program_memory;
     MemoryMapper * memory_mapper;
+    PeripheryHandler* periph_handler;
     std::map<uint16_t, CommandBase*> commands;
 
 
