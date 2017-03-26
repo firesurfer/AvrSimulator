@@ -3,7 +3,7 @@
 RET::RET(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
     command = 0b1001010100001000;
-    commandMask = 0xFF;
+    commandMask = 0xFFFF;
     numArgs = 0;
     commandSize = 1;
 }
