@@ -15,7 +15,10 @@ uint64_t LPM_R0::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
     UNUSED(instruction);
     uint16_t address = data_memory->getZReg();
-    data_memory->setRegister(R0, data_memory->getProgramMemory()->Get(address));
+    if(address&0x01)
+        data_memory->setRegister(R0, data_memory->getProgramMemory()->Get(address>>1)>>8);
+    else
+        data_memory->setRegister(R0, data_memory->getProgramMemory()->Get(address>>1));
     ProgramCounter += 1;
     return 3;
 }

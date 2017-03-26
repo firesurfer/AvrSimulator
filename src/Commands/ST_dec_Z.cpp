@@ -1,0 +1,22 @@
+#include "ST_dec_Z.h"
+
+ST_dec_Z::ST_dec_Z(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
+{
+    command = 0b1001001000000010;
+    commandMask = 0b1111111000001111;
+    numArgs = 1;
+    commandSize = 1;
+}
+
+uint64_t ST_dec_Z::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+{
+    uint8_t reg = (instruction>>4) & 0x1F;
+
+    uint16_t z_reg = data_memory->getZReg();
+    z_reg--;
+    data_memory->setSRAM(z_reg,data_memory->getRegister(reg));
+    data_memory->setZReg(z_reg);
+
+    ProgramCounter += 1;
+    return 2;
+}
