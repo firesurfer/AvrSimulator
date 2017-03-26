@@ -1,6 +1,8 @@
 #ifndef PROCESSORDEFINES_H
 #define PROCESSORDEFINES_H
 
+#define DEBUG
+
 #define X_H 27
 #define X_L 26
 #define Y_H 29
