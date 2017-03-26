@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     PeripheryRegister * periphRegister = new PeripheryRegister(periphHandler,dataMapper);
     Processor * processor = new Processor( dataMapper,periphHandler);
     CommandRegister* cmd_register = new CommandRegister(processor,dataMapper);
-
+    processor->PrintRegisteredCommands();
     std::cout << "Starting execution" << std::endl;
     int count_steps=0;
     while(processor->ExecuteStep()&&count_steps<64)

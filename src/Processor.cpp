@@ -48,3 +48,13 @@ void Processor::RegisterCommand(CommandBase *cmd)
 {
     this->commands.insert(std::pair<uint16_t,CommandBase*>(cmd->GetCommand(),cmd));
 }
+
+void Processor::PrintRegisteredCommands()
+{
+    std::cout << "List of all known instructions: " << std::endl;
+    for(auto & it: commands)
+    {
+        std::cout << "    0x" << std::hex << it.second->GetCommand() << std::dec << std::endl;
+    }
+    std::cout << "#######################################" <<std::endl;
+}

@@ -16,6 +16,7 @@ public:
     Processor(MemoryMapper* _memory_mapper, PeripheryHandler *_periph_handler);
     bool ExecuteStep();
     void RegisterCommand(CommandBase* cmd);
+    void PrintRegisteredCommands();
 private:
 
     uint16_t program_counter;

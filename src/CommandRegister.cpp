@@ -51,6 +51,9 @@
 #include "Commands/ST_Y_inc.h"
 #include "Commands/ST_Z_inc.h"
 #include "Commands/ST_Z.h"
+#include "Commands/STD_Y.h"
+#include "Commands/STD_Z.h"
+#include "Commands/STS.h"
 
 CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
 {
@@ -107,5 +110,8 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new ST_Z(mapper));
     processor->RegisterCommand(new ST_Y_inc(mapper));
     processor->RegisterCommand(new ST_Z_inc(mapper));
+    processor->RegisterCommand(new STD_Y(mapper));
+    processor->RegisterCommand(new STD_Z(mapper));
+    processor->RegisterCommand(new STS(mapper));
 
 }
