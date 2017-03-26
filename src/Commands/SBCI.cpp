@@ -18,7 +18,7 @@ uint64_t SBCI::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     uint8_t Rd = data_memory->getRegister(addrRd);
     uint8_t sreg = data_memory->getSREG(MASK_C|MASK_Z);
 
-    Rd = additionFlags(Rd,-operand,sreg);
+    Rd = subtractionFlags(Rd,operand,sreg);
     data_memory->setRegister(addrRd,Rd);
     data_memory->setSREG(sreg,MASK_H|MASK_S|MASK_V|MASK_N|MASK_Z|MASK_C);
 

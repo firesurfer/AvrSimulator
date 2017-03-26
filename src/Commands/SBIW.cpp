@@ -19,8 +19,8 @@ uint64_t SBIW::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     uint8_t Rdh = data_memory->getRegister(addrRd+1);
     uint8_t sreg = 0;
 
-    Rdl = additionFlags(Rdl,-summand,sreg);
-    Rdh = additionFlags(Rdh,0,sreg);
+    Rdl = subtractionFlags(Rdl,summand,sreg);
+    Rdh = subtractionFlags(Rdh,0,sreg);
     data_memory->setRegister(addrRd,Rdl);
     data_memory->setRegister(addrRd+1,Rdh);
     data_memory->setSREG(sreg,MASK_S|MASK_V|MASK_N|MASK_Z|MASK_C);
