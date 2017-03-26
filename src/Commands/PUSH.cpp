@@ -11,7 +11,7 @@ PUSH::PUSH(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 uint64_t PUSH::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
 
-    uint8_t reg = (instruction & !commandMask) >> 4;
+    uint8_t reg = (instruction>>4) & 0x1F;
     data_memory->pushStack(data_memory->getRegister(reg));
     ProgramCounter= ProgramCounter+1;
     return 2;

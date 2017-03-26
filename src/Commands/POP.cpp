@@ -10,7 +10,7 @@ POP::POP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint64_t POP::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
-    uint8_t reg = (instruction&!commandMask)>>4;
+    uint8_t reg = (instruction>>4) & 0x1F;
     data_memory->setRegister(reg,data_memory->popStack());
     ProgramCounter = ProgramCounter+1;
     return 1;
