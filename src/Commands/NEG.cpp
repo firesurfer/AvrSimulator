@@ -17,7 +17,7 @@ uint64_t NEG::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     uint8_t Rd = data_memory->getRegister(addrRd);
     uint8_t sreg = 0;
 
-    Rd = additionFlags(0,-Rd,sreg);
+    Rd = subtractionFlags(0,Rd,sreg);
     data_memory->setRegister(addrRd,Rd);
     data_memory->setSREG(sreg,MASK_H|MASK_S|MASK_V|MASK_N|MASK_Z|SREG_C);
 

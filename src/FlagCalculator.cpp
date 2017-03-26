@@ -59,6 +59,27 @@ uint8_t additionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg){
     return res;
 }
 
+uint8_t subtractionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg){
+    if((r1&0xF)<((r2&0xF)+bit_set(sreg,SREG_C)))
+        set_bit(sreg,SREG_H);
+    else
+        clear_bit(sreg,SREG_H);
+
+    int16_t res = (uint16_t)r1-r2-bit_set(sreg,SREG_C);
+    if(res<0)
+        set_bit(sreg,SREG_C);
+    else
+        clear_bit(sreg,SREG_C);
+
+    if(0x80&((res&~r1&r2)|(~res&r1&~r2)))//alternativ:(0x80&((r1^r2)&(r1^res)))
+        set_bit(sreg,SREG_V);
+    else
+        clear_bit(sreg,SREG_V);
+
+    sreg = simpleFlags(res, sreg);
+    return res;
+}
+
 uint8_t shiftFlags(uint8_t value, uint8_t sreg)
 {
     sreg = simpleFlags(value,sreg);

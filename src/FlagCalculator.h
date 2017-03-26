@@ -25,6 +25,16 @@ uint8_t simpleFlags(uint8_t value,uint8_t sreg=0);
 uint8_t additionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg);
 
 ///
+/// \brief subtractionFlags SREG Flag calculation for a typical subtraction for S,N,V,Z,H,C flags
+/// \param r1 first value for addition
+/// \param r2 second value
+/// \param sreg previous SREG value for carryadd/16bit operations,
+///     will be overwritten with new flags, I and T flags are unchanged
+/// \return result of subtraction
+///
+uint8_t subtractionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg);
+
+///
 /// \brief shiftFlags calculates Flags after shift/rol
 /// \param value after shift
 /// \param sreg with Carry set manually
