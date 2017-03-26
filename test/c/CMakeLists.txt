@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 2.6)
+
+set(RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+if(BUILD_TESTS)
+    add_avr_test(empty_main empty_main/empty_main.c)
+    add_avr_test(while_loop while_loop/while_loop.c)
+    #add_subdirectory(empty_main)
+    #add_subdirectory(while_loop)
+   # add_subdirectory(addition)
+   # add_subdirectory(addition_loop)
+endif()
