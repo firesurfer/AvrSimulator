@@ -1,6 +1,11 @@
 #include "IOPort.h"
 
-IOPort::IOPort(MemoryMapper *mapper):PeripheryElement(mapper)
+IOPort::IOPort(MemoryMapper *mapper,Port _port):PeripheryElement(mapper)
+{
+    this->port = _port;
+}
+
+void IOPort::handle()
 {
 
 }
