@@ -19,8 +19,8 @@ uint64_t AND::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     uint8_t Rd = data_memory->getRegister(addrRd);
     uint8_t sreg = 0;
 
-    Rd&=Rr;
-    sreg=simpleFlags(Rd);
+    Rd &= Rr;
+    sreg = simpleFlags(Rd);
     data_memory->setRegister(addrRd,Rd);
     data_memory->setSREG(sreg,MASK_S|MASK_V|MASK_N|MASK_Z);
 

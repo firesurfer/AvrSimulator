@@ -23,8 +23,8 @@ uint64_t ASR::Execute(uint16_t instruction, uint16_t &ProgramCounter)
         set_bit(sreg,SREG_C);
     else
         clear_bit(sreg,SREG_C);
-    Rd=(int8_t)Rd/2;
-    sreg=shiftFlags(Rd,sreg);
+    Rd = (int8_t)Rd/2;
+    sreg = shiftFlags(Rd,sreg);
     data_memory->setRegister(addrRd,Rd);
     data_memory->setSREG(sreg,MASK_S|MASK_V|MASK_N|MASK_Z|SREG_C);
 
