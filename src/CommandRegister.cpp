@@ -55,6 +55,11 @@
 #include "Commands/STD_Z.h"
 #include "Commands/STS.h"
 
+#include "Commands/LDD_Y.h"
+#include "Commands/LDD_Z.h"
+#include "Commands/LD_dec_Y.h"
+#include "Commands/LD_dec_Z.h"
+
 CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
 {
     processor->RegisterCommand(new RJMP(mapper));
@@ -113,5 +118,12 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new STD_Y(mapper));
     processor->RegisterCommand(new STD_Z(mapper));
     processor->RegisterCommand(new STS(mapper));
+
+    processor->RegisterCommand(new LDD_Y(mapper));
+    processor->RegisterCommand(new LDD_Z(mapper));
+    processor->RegisterCommand(new LD_dec_Y(mapper));
+    processor->RegisterCommand(new LD_dec_Z(mapper));
+
+
 
 }

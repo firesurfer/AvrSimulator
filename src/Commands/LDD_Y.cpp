@@ -2,7 +2,7 @@
 
 LDD_Y::LDD_Y(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-    command = 0b1000001000001000;
+    command = 0b1000000000001000;
     commandMask = 0b1101001000001000;
     numArgs = 2;
     commandSize = 1;

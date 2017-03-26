@@ -2,7 +2,7 @@
 
 LDD_Z::LDD_Z(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-    command = 0b1000001000000000;
+    command = 0b1000000000000000;
     commandMask = 0b1101001000001000;
     numArgs = 2;
     commandSize = 1;
