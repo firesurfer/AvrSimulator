@@ -30,7 +30,9 @@ bool Processor::ExecuteStep()
         {
             if((instruction & it->CommandMask()) == (it->GetCommand() & it->CommandMask()))
             {
+#ifdef DEBUG
                 std::cout << "Stackptr: 0x" << std::hex << this->memory_mapper->getStackPtr() << std::dec << std::endl;
+#endif
                 uint16_t cycles = it->Execute(instruction,this->program_counter);
                 this->periph_handler->handlePeriphery(cycles);
                 found = true;
