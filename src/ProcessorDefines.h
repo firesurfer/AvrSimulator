@@ -12,11 +12,11 @@
 #define R31 0x1F
 
 #define SPECIAL_REGISTERS_SIZE 5
-#define MCUCR 0
-#define MCUCSR 1
-#define SREG 2
-#define SPH 3
-#define SPL 4
+#define MCUCR 0x55
+#define MCUCSR 0x54
+#define SREG 0x5F
+#define SPH 0x5E
+#define SPL 0x5D
 
 #define SREG_I 7
 #define SREG_T 6

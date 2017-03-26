@@ -38,7 +38,7 @@ uint8_t simpleFlags(uint8_t value,uint8_t sreg){
 /// \param sreg optional previos SREG value for carryadd/16bit operations
 /// \return SREG with calculated flags, other Flags are 0
 ///
-uint8_t additionFlags(uint8_t r1, uint8_t r2, uint8_t sreg){
+uint8_t additionFlags(uint8_t &r1, uint8_t r2, uint8_t sreg){
     if(((r1&0xF)+(r2&0xF)+bit_set(sreg,SREG_C))&0x10)
         set_bit(sreg,SREG_H);
     else
@@ -55,6 +55,7 @@ uint8_t additionFlags(uint8_t r1, uint8_t r2, uint8_t sreg){
     else
         clear_bit(sreg,SREG_V);
 
+    r1=res;
     return simpleFlags(res, sreg);
 }
 
