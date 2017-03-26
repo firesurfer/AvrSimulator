@@ -14,7 +14,7 @@ SUBI::SUBI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 uint64_t SUBI::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
     uint8_t operand = (instruction&0x0F)|((instruction>>4)&0xF0);
-    uint32_t addrRd = 16 + (instruction>>4)&0xF;
+    uint32_t addrRd = 16 + ((instruction>>4)&0xF);
     uint8_t Rd = data_memory->getRegister(addrRd);
     uint8_t sreg = 0;
 
