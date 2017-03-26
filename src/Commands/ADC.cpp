@@ -19,7 +19,7 @@ uint64_t ADC::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     uint8_t Rd = data_memory->getRegister(addrRd);
     uint8_t sreg = data_memory->getSREG(MASK_C);
 
-    sreg = additionFlags(Rd,Rr,sreg);
+    Rd = additionFlags(Rd,Rr,sreg);
     data_memory->setRegister(addrRd,Rd);
     data_memory->setSREG(sreg,MASK_H|MASK_S|MASK_V|MASK_N|MASK_Z|MASK_C);
 
