@@ -2,7 +2,7 @@
 
 JMP::JMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-    command = 0b0001110000000000;
+    command = 0b1001010000001100;
     commandMask = 0b1111111000001110;
     numArgs = 1;
     commandSize = 2;
