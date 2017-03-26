@@ -15,7 +15,7 @@ uint64_t CALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     address |= uint32_t(instruction&0x0001)<<16 | uint32_t(instruction&0x01F0)<<13;
 
     uint8_t low_byte = (uint8_t)ProgramCounter+2;
-    uint8_t high_byte = (uint8_t)(ProgramCounter+2 >> 8);
+    uint8_t high_byte = (uint8_t)((ProgramCounter+2) >> 8);
 
     data_memory->pushStack(low_byte);
     data_memory->pushStack(high_byte);

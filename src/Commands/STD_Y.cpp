@@ -10,11 +10,12 @@ STD_Y::STD_Y(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint64_t STD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
-    UNUSED(instruction);
+
     uint16_t offset = (instruction&0x07)|((instruction&0x0C00)>>7)|((instruction&0x2000)>>8);
     uint8_t reg = (instruction>>4) & 0x1F;
 
     uint16_t y_reg = data_memory->getYReg();
+    std::cout << "y reg: " << y_reg << " " << "offset: " << offset << std::endl;
     data_memory->setSRAM(y_reg+offset,data_memory->getRegister(reg));
 
     ProgramCounter += 1;

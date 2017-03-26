@@ -25,7 +25,7 @@ uint8_t DataMemory::Get(uint32_t address)
         return data[address];
     }
     else
-        throw std::out_of_range("Argument out of range!");
+        throw std::out_of_range("SRAM: Argument out of range!");
 }
 
 void DataMemory::Set(uint32_t address, uint8_t value)
@@ -35,7 +35,7 @@ void DataMemory::Set(uint32_t address, uint8_t value)
         data[address] = value;
     }
     else
-        throw std::out_of_range("Argument out of range!");
+        throw std::out_of_range("SRAM: Argument out of range!");
 }
 
 uint8_t *DataMemory::GetDataPtr()
