@@ -18,7 +18,7 @@ bool Processor::ExecuteStep()
     else
     {
         uint16_t instruction = program_memory->Get(program_counter);
-        std::cout << "Instruction 0x" << std::hex << program_counter << ": 0x" << instruction << std::dec << std::endl;
+        std::cout << "Instruction 0x" << std::hex << program_counter*2 << ": 0x" << instruction << std::dec << std::endl;
         bool found = false;
 
         if(instruction == 0xCFFF)
@@ -30,6 +30,7 @@ bool Processor::ExecuteStep()
         {
             if((instruction & it->CommandMask()) == (it->GetCommand() & it->CommandMask()))
             {
+                std::cout << "Stackptr: 0x" << std::hex << this->memory_mapper->getStackPtr() << std::dec << std::endl;
                 uint16_t cycles = it->Execute(instruction,this->program_counter);
                 this->periph_handler->handlePeriphery(cycles);
                 found = true;

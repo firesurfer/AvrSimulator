@@ -15,7 +15,7 @@ uint64_t STD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     uint8_t reg = (instruction>>4) & 0x1F;
 
     uint16_t y_reg = data_memory->getYReg();
-    std::cout << "y reg: " << y_reg << " " << "offset: " << offset << std::endl;
+
     data_memory->setSRAM(y_reg+offset,data_memory->getRegister(reg));
 
     ProgramCounter += 1;
