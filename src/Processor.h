@@ -25,7 +25,7 @@ private:
     ProgramMemory * program_memory;
     MemoryMapper * memory_mapper;
     PeripheryHandler* periph_handler;
-    std::map<uint16_t, CommandBase*> commands;
+    std::vector<CommandBase*> commands;
 
 
 

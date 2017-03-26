@@ -28,9 +28,9 @@ bool Processor::ExecuteStep()
         }
         for(auto & it: commands)
         {
-            if((instruction & it.second->CommandMask()) == it.first)
+            if((instruction & it->CommandMask()) == (it->GetCommand() & it->CommandMask()))
             {
-                uint16_t cycles = it.second->Execute(instruction,this->program_counter);
+                uint16_t cycles = it->Execute(instruction,this->program_counter);
                 this->periph_handler->handlePeriphery(cycles);
                 found = true;
                 return true;
@@ -46,7 +46,7 @@ bool Processor::ExecuteStep()
 
 void Processor::RegisterCommand(CommandBase *cmd)
 {
-    this->commands.insert(std::pair<uint16_t,CommandBase*>(cmd->GetCommand(),cmd));
+    this->commands.push_back(cmd);
 }
 
 void Processor::PrintRegisteredCommands()
@@ -54,7 +54,7 @@ void Processor::PrintRegisteredCommands()
     std::cout << "List of all known instructions: " << std::endl;
     for(auto & it: commands)
     {
-        std::cout << "    0x" << std::hex << it.second->GetCommand() << std::dec << std::endl;
+        std::cout << "    0x" << std::hex << it->GetCommand() << std::dec << std::endl;
     }
     std::cout << "#######################################" <<std::endl;
 }
