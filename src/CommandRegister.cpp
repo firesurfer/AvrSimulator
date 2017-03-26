@@ -38,6 +38,9 @@
 #include "Commands/LDI.h"
 #include "Commands/CALL.h"
 #include "Commands/RET.h"
+#include "Commands/POP.h"
+#include "Commands/PUSH.h"
+#include "Commands/RCALL.h"
 CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
 {
     processor->RegisterCommand(new RJMP(mapper));
@@ -79,5 +82,8 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new LDI(mapper));
     processor->RegisterCommand(new CALL(mapper));
     processor->RegisterCommand(new RET(mapper));
+    processor->RegisterCommand(new POP(mapper));
+    processor->RegisterCommand(new PUSH(mapper));
+    processor->RegisterCommand(new RCALL(mapper));
 
 }
