@@ -7,7 +7,10 @@ PeripheryHandler::PeripheryHandler(MemoryMapper *_mem_mapper)
 
 void PeripheryHandler::handlePeriphery(uint16_t cycles)
 {
-
+    for(PeripheryElement* & element: this->periphery_elements)
+    {
+        element->handle();
+    }
 }
 
 void PeripheryHandler::addPeripheryElement(PeripheryElement *element)

@@ -43,6 +43,15 @@
 #include "Commands/RCALL.h"
 #include "Commands/SPM.h"
 #include "Commands/BREAK.h"
+
+#include "Commands/ST_dec_Y.h"
+#include "Commands/ST_dec_Z.h"
+#include "Commands/ST_X.h"
+#include "Commands/ST_Y.h"
+#include "Commands/ST_Y_inc.h"
+#include "Commands/ST_Z_inc.h"
+#include "Commands/ST_Z.h"
+
 CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
 {
     processor->RegisterCommand(new RJMP(mapper));
@@ -90,5 +99,13 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new SPM(mapper));
     processor->RegisterCommand(new BREAK(mapper));
 
+
+    processor->RegisterCommand(new ST_dec_Y(mapper));
+    processor->RegisterCommand(new ST_dec_Z(mapper));
+    processor->RegisterCommand(new ST_X(mapper));
+    processor->RegisterCommand(new ST_Y(mapper));
+    processor->RegisterCommand(new ST_Z(mapper));
+    processor->RegisterCommand(new ST_Y_inc(mapper));
+    processor->RegisterCommand(new ST_Z_inc(mapper));
 
 }

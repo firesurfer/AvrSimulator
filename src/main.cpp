@@ -4,6 +4,7 @@
 #include "Processor.h"
 #include "CommandRegister.h"
 #include "PeripheryHandler.h"
+#include "PeripheryRegister.h"
 int main(int argc, char* argv[])
 {
     DataMemory * dataMemory = new DataMemory(2048+0x60,0);
@@ -22,6 +23,7 @@ int main(int argc, char* argv[])
     }
     MemoryMapper *dataMapper = new MemoryMapper(dataMemory, programMemory);
     PeripheryHandler* periphHandler = new PeripheryHandler(dataMapper);
+    PeripheryRegister * periphRegister = new PeripheryRegister(periphHandler,dataMapper);
     Processor * processor = new Processor( dataMapper,periphHandler);
     CommandRegister* cmd_register = new CommandRegister(processor,dataMapper);
 
