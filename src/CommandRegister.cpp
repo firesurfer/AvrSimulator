@@ -35,6 +35,9 @@
 #include "Commands/SUBI.h"
 #include "Commands/IN.h"
 #include "Commands/OUT.h"
+#include "Commands/LDI.h"
+#include "Commands/CALL.h"
+#include "Commands/RET.h"
 CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
 {
     processor->RegisterCommand(new RJMP(mapper));
@@ -73,5 +76,8 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new SUBI(mapper));
     processor->RegisterCommand(new OUT(mapper));
     processor->RegisterCommand(new IN(mapper));
+    processor->RegisterCommand(new LDI(mapper));
+    processor->RegisterCommand(new CALL(mapper));
+    processor->RegisterCommand(new RET(mapper));
 
 }

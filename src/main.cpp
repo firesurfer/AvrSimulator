@@ -5,7 +5,7 @@
 #include "CommandRegister.h"
 int main(int argc, char* argv[])
 {
-    DataMemory * dataMemory = new DataMemory(2048,0);
+    DataMemory * dataMemory = new DataMemory(2048+0x60,0);
 
     ProgramMemory * programMemory;
 
