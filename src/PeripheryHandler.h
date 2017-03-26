@@ -2,14 +2,17 @@
 #define PERIPHERYHANDLER_H
 
 #include "MemoryMapper.h"
-
+#include <vector>
+#include <Periphery/PeripheryElement.h>
 class PeripheryHandler
 {
 public:
     PeripheryHandler(MemoryMapper* _mem_mapper);
     void handlePeriphery(uint16_t cycles);
+    void addPeripheryElement(PeripheryElement* element);
 private:
     MemoryMapper* memory_mapper;
+    std::vector<PeripheryElement*> periphery_elements;
 };
 
 #endif // PERIPHERYHANDLER_H

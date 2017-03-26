@@ -3,6 +3,7 @@
 #include "ProgramMemory.h"
 #include "Processor.h"
 #include "CommandRegister.h"
+#include "PeripheryHandler.h"
 int main(int argc, char* argv[])
 {
     DataMemory * dataMemory = new DataMemory(2048+0x60,0);
@@ -20,7 +21,8 @@ int main(int argc, char* argv[])
         throw std::runtime_error("Please pass program memory path as first argument!");
     }
     MemoryMapper *dataMapper = new MemoryMapper(dataMemory, programMemory);
-    Processor * processor = new Processor( dataMapper);
+    PeripheryHandler* periphHandler = new PeripheryHandler(dataMapper);
+    Processor * processor = new Processor( dataMapper,periphHandler);
     CommandRegister* cmd_register = new CommandRegister(processor,dataMapper);
 
     std::cout << "Starting execution" << std::endl;

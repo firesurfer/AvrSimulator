@@ -13,7 +13,7 @@
 class Processor
 {
 public:
-    Processor( MemoryMapper* _memory_mapper);
+    Processor(MemoryMapper* _memory_mapper, PeripheryHandler *_periph_handler);
     bool ExecuteStep();
     void RegisterCommand(CommandBase* cmd);
 private:

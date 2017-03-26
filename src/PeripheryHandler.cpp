@@ -9,3 +9,8 @@ void PeripheryHandler::handlePeriphery(uint16_t cycles)
 {
 
 }
+
+void PeripheryHandler::addPeripheryElement(PeripheryElement *element)
+{
+    this->periphery_elements.push_back(element);
+}

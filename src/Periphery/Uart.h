@@ -6,7 +6,7 @@
 class Uart:public PeripheryElement
 {
 public:
-    Uart();
+    Uart(MemoryMapper* mapper);
 };
 
 #endif // UART_H

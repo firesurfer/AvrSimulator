@@ -1,11 +1,11 @@
 #include "Processor.h"
 
-Processor::Processor(MemoryMapper *_memory_mapper)
+Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_handler)
 {
     this->program_counter = 0;
     this->memory_mapper = _memory_mapper;
     this->program_memory = memory_mapper->getProgramMemory();
-    this->periph_handler = new PeripheryHandler(this->memory_mapper);
+    this->periph_handler =_periph_handler;
 
 
 }

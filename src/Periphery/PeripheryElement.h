@@ -2,10 +2,14 @@
 #define PERIPHERYELEMENT_H
 
 
+#include "MemoryMapper.h"
 class PeripheryElement
 {
 public:
-    PeripheryElement();
+    PeripheryElement(MemoryMapper* mapper);
+    void handle();
+private:
+    MemoryMapper* mem_mapper;
 };
 
 #endif // PERIPHERYELEMENT_H
