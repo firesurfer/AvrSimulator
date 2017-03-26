@@ -1,6 +1,6 @@
 #include "PeripheryElement.h"
 
-PeripheryElement::PeripheryElement()
+PeripheryElement::PeripheryElement(MemoryMapper *mapper)
 {
-
+    this->mem_mapper = mapper;
 }

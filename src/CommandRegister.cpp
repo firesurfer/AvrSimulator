@@ -42,6 +42,7 @@
 #include "Commands/PUSH.h"
 #include "Commands/RCALL.h"
 #include "Commands/SPM.h"
+#include "Commands/BREAK.h"
 CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
 {
     processor->RegisterCommand(new RJMP(mapper));
@@ -87,5 +88,7 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new PUSH(mapper));
     processor->RegisterCommand(new RCALL(mapper));
     processor->RegisterCommand(new SPM(mapper));
+    processor->RegisterCommand(new BREAK(mapper));
+
 
 }

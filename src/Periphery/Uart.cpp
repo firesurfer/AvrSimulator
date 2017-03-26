@@ -1,6 +1,6 @@
 #include "Uart.h"
 
-Uart::Uart()
+Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
 {
 
 }
