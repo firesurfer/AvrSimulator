@@ -11,7 +11,7 @@
 #define R0 0x00
 #define R31 0x1F
 
-#define SPECIAL_REGISTERS_SIZE 5
+
 #define MCUCR 0x55
 #define MCUCSR 0x54
 #define SREG 0x5F
@@ -38,5 +38,6 @@
 
 #define OCDR 0x51
 
+#define UNUSED(x) (void)(x)
 
 #endif // PROCESSORDEFINES_H
