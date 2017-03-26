@@ -20,6 +20,12 @@ bool Processor::ExecuteStep()
         uint16_t instruction = program_memory->Get(program_counter);
         std::cout << "Instruction 0x" << std::hex << program_counter << ": 0x" << instruction << std::dec << std::endl;
         bool found = false;
+
+        if(instruction == 0xCFFF)
+        {
+            std::cout << "Found endless loop (without content)- Aborting programm" << std::endl;
+            return false;
+        }
         for(auto & it: commands)
         {
             if((instruction & it.second->CommandMask()) == it.first)
