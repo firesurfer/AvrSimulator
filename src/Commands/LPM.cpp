@@ -12,7 +12,14 @@ uint64_t LPM::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
     uint16_t address = data_memory->getZReg();
     uint8_t reg = (instruction & (0b0000000111110000))>>4;
-    data_memory->setRegister(reg, data_memory->getProgramMemory()->Get(address));
-    ProgramCounter = ProgramCounter +1;
+    if(address&0x01)
+        data_memory->setRegister(reg, data_memory->getProgramMemory()->Get(address>>1)>>8);
+    else
+        data_memory->setRegister(reg, data_memory->getProgramMemory()->Get(address>>1));
+
+    if(instruction&0x01)
+        data_memory->setZReg(address+1);
+
+    ProgramCounter += 1;
     return 3;
 }
