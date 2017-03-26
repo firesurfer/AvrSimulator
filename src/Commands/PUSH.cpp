@@ -10,11 +10,9 @@ PUSH::PUSH(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint64_t PUSH::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
-    uint16_t stack_ptr = data_memory->getStackPtr();
-    uint8_t reg = (instruction & !commandMask) >> 4;
-    data_memory->setSRAM(stack_ptr,data_memory->getSRAM(reg));
-    stack_ptr++;
-    data_memory->setStackPtr(stack_ptr);
 
+    uint8_t reg = (instruction & !commandMask) >> 4;
+    data_memory->pushStack(data_memory->getRegister(reg));
     ProgramCounter= ProgramCounter+1;
+    return 2;
 }
