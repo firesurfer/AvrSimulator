@@ -33,7 +33,8 @@
 #include "Commands/SBIW.h"
 #include "Commands/SUB.h"
 #include "Commands/SUBI.h"
-
+#include "Commands/IN.h"
+#include "Commands/OUT.h"
 CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
 {
     processor->RegisterCommand(new RJMP(mapper));
@@ -70,6 +71,7 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new SBIW(mapper));
     processor->RegisterCommand(new SUB(mapper));
     processor->RegisterCommand(new SUBI(mapper));
-
+    processor->RegisterCommand(new OUT(mapper));
+    processor->RegisterCommand(new IN(mapper));
 
 }
