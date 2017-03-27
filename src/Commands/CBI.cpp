@@ -13,7 +13,11 @@ CBI::CBI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint64_t CBI::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
-
-    ProgramCounter += 1;
+    uint16_t addresses = instruction & ~CommandMask();
+    uint8_t ioregister = (addresses & 0b0000000011111000)>>3;
+    uint8_t bit = (uint8_t)(addresses & 0b0000000000000111);
+    data_memory->setIORegister(ioregister,data_memory->getIORegister(ioregister)&~(1<<bit));
+    ProgramCounter = ProgramCounter+1;
     return 2;
 }
+
