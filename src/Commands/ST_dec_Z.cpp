@@ -6,6 +6,7 @@ ST_dec_Z::ST_dec_Z(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001111;
     numArgs = 1;
     commandSize = 1;
+    name = "ST_dec_Z";
 }
 
 uint64_t ST_dec_Z::Execute(uint16_t instruction, uint16_t &ProgramCounter)

@@ -11,6 +11,7 @@ ASR::ASR(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001111;
     numArgs = 1;
     commandSize = 1;
+    name = "ASR";
 }
 
 uint64_t ASR::Execute(uint16_t instruction, uint16_t &ProgramCounter)

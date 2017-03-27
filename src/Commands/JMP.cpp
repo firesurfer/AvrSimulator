@@ -6,6 +6,7 @@ JMP::JMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001110;
     numArgs = 1;
     commandSize = 2;
+    name = "JMP";
 }
 
 uint64_t JMP::Execute(uint16_t instruction, uint16_t &ProgramCounter)

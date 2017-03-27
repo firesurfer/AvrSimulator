@@ -18,7 +18,7 @@ bool Processor::ExecuteStep()
     else
     {
         uint16_t instruction = program_memory->Get(program_counter);
-        std::cout << "Instruction 0x" << std::hex << program_counter*2 << ": 0x" << instruction << std::dec << std::endl;
+        std::cout << "Instruction 0x" << std::hex << program_counter*2 << ": 0x" << instruction << std::dec;
         bool found = false;
 
         if(instruction == 0xCFFF)
@@ -30,6 +30,7 @@ bool Processor::ExecuteStep()
         {
             if((instruction & it->CommandMask()) == (it->GetCommand() & it->CommandMask()))
             {
+                std::cout << " " << it->Name() << std::endl;
 #ifdef DEBUG
                 std::cout << "Stackptr: 0x" << std::hex << this->memory_mapper->getStackPtr() << std::dec << std::endl;
 #endif
@@ -57,7 +58,7 @@ void Processor::PrintRegisteredCommands()
     std::cout << "List of all known instructions: " << std::endl;
     for(auto & it: commands)
     {
-        std::cout << "    0x" << std::hex << it->GetCommand() << std::dec << std::endl;
+        std::cout << "    0x" << std::hex << it->GetCommand() << std::dec  << " " << it->Name()<< std::endl;
     }
     std::cout << "#######################################" <<std::endl;
 }

@@ -9,6 +9,7 @@ NEG::NEG(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001111;
     numArgs = 1;
     commandSize = 1;
+    name = "NEG";
 }
 
 uint64_t NEG::Execute(uint16_t instruction, uint16_t &ProgramCounter)

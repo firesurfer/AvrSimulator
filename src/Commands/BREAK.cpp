@@ -6,6 +6,7 @@ BREAK::BREAK(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0xFFFF;
     numArgs = 0;
     commandSize = 1;
+    name = "BREAK";
 }
 
 uint64_t BREAK::Execute(uint16_t instruction, uint16_t &ProgramCounter)

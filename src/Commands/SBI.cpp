@@ -6,6 +6,7 @@ SBI::SBI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     numArgs = 2;
     commandSize = 1;
     commandMask = 0b1111111100000000;
+    name = "SBI";
 }
 
 uint64_t SBI::Execute(uint16_t instruction, uint16_t &ProgramCounter)

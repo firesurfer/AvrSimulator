@@ -6,6 +6,7 @@ IJMP::IJMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0xFFFF;
     numArgs = 2;
     commandSize = 1;
+    name = "IJMP";
 }
 
 uint64_t IJMP::Execute(uint16_t instruction, uint16_t &ProgramCounter)

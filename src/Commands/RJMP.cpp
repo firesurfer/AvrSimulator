@@ -6,6 +6,7 @@ RJMP::RJMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     numArgs = 1;
     commandSize = 1;
     commandMask = 0b1111000000000000;
+    name = "RJMP";
 }
 
 uint64_t RJMP::Execute(uint16_t instruction, uint16_t &ProgramCounter)

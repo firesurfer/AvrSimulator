@@ -6,6 +6,7 @@ STD_Z::STD_Z(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1101001000001000;
     numArgs = 2;
     commandSize = 1;
+    name = "STD_Z";
 }
 
 uint64_t STD_Z::Execute(uint16_t instruction, uint16_t &ProgramCounter)

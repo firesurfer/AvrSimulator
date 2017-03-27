@@ -6,6 +6,7 @@ LD_X::LD_X(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001100;
     numArgs = 1;
     commandSize = 1;
+    name = "LD_X";
 }
 
 uint64_t LD_X::Execute(uint16_t instruction, uint16_t &ProgramCounter)

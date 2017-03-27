@@ -11,6 +11,7 @@ BLD::BLD(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001000;
     numArgs = 2;
     commandSize = 1;
+    name = "BLD";
 }
 
 uint64_t BLD::Execute(uint16_t instruction, uint16_t &ProgramCounter)

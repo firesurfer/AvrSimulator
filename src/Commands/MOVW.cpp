@@ -2,43 +2,19 @@
 
 MOVW::MOVW(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-    command = 0b0001110000000000;
-    commandMask = 0b1111110000000000;
+    command = 0b0000000100000000;
+    commandMask = 0xFF00;
     numArgs = 2;
     commandSize = 1;
+    name = "MOVW";
 }
 
 uint64_t MOVW::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
-  /*  uint8_t & sreg = SpecialRegisters[SREG];
-    uint8_t registers = (uint8_t)(instruction >> 8);
-    uint8_t regd = registers & 0xF0;
-    uint8_t regr = registers >> 4;
-    if(BitHelpers::bit_set(registers, 7))
-    {
-        regd+=16;
-    }
-    if(BitHelpers::bit_set(registers,8))
-    {
-        regr+=16;
-    }
-    uint8_t temp = Registers[regd] + Registers[regr];
-    if(BitHelpers::bit_set(Registers[regd],3)&& BitHelpers::bit_set(Registers[regr],3)|| BitHelpers::bit_set(Registers[regr],3) && !BitHelpers::bit_set(temp,3) || !BitHelpers::bit_set(temp,3) && BitHelpers::bit_set(Registers[regd],3))
-        BitHelpers::set_bit(sreg,SREG_H);
-    if(BitHelpers::bit_set(temp,7))
-        BitHelpers::set_bit(sreg,SREG_N);
-    if(BitHelpers::bit_set(sreg, SREG_N) != BitHelpers::bit_set(sreg,SREG_V))
-        BitHelpers::set_bit(sreg,SREG_S);
-    if(temp = 0)
-        BitHelpers::set_bit(sreg,SREG_Z);
-    else
-        BitHelpers::clear_bit(sreg,SREG_Z);
-    if(BitHelpers::bit_set(Registers[regd],7) && BitHelpers::bit_set(Registers[regr],7) || BitHelpers::bit_set(Registers[regr],7)  && !BitHelpers::bit_set(temp,7) || !BitHelpers::bit_set(temp,7), BitHelpers::bit_set(Registers[regd],7))
-        BitHelpers::set_bit(sreg,SREG_C);
-    if(BitHelpers::bit_set(Registers[regd],7)&& BitHelpers::bit_set(Registers[regr],7) && !BitHelpers::bit_set(temp,7) || !BitHelpers::bit_set(Registers[regd],7) || !BitHelpers::bit_set(Registers[regr],7) || BitHelpers::bit_set(temp,7))
-        BitHelpers::set_bit(sreg,SREG_V);
-
-
-    Registers[regd] = temp;*/
-    return ProgramCounter+1;
+    uint8_t src = (instruction & 0xF) | ((instruction & 0x0200) >> 5);
+    uint8_t dest = (instruction & 0x1F0) >> 4;
+    data_memory->setRegister(dest,data_memory->getRegister(src));
+    data_memory->setRegister(dest+1,data_memory->getRegister(src+1));
+    ProgramCounter+=1;
+    return 1;
 }

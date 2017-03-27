@@ -6,6 +6,7 @@ LD_dec_Y::LD_dec_Y(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001111;
     numArgs = 1;
     commandSize = 1;
+    name = "LD_dec_Y";
 }
 
 uint64_t LD_dec_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter)

@@ -9,6 +9,7 @@ CBI::CBI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0xFF00;
     numArgs = 2;
     commandSize = 1;
+    name = "CBI";
 }
 
 uint64_t CBI::Execute(uint16_t instruction, uint16_t &ProgramCounter)

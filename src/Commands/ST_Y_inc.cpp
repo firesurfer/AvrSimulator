@@ -6,6 +6,7 @@ ST_Y_inc::ST_Y_inc(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001111;
     numArgs = 1;
     commandSize = 1;
+    name = "ST_Y_inc";
 }
 
 uint64_t ST_Y_inc::Execute(uint16_t instruction, uint16_t &ProgramCounter)

@@ -11,6 +11,7 @@ BCLR::BCLR(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111110001111;
     numArgs = 1;
     commandSize = 1;
+    name = "BCLR";
 }
 
 uint64_t BCLR::Execute(uint16_t instruction, uint16_t &ProgramCounter)

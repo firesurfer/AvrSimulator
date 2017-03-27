@@ -6,6 +6,7 @@ LDD_Y::LDD_Y(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1101001000001000;
     numArgs = 2;
     commandSize = 1;
+    name = "LDD_Y";
 }
 
 uint64_t LDD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter)

@@ -6,6 +6,7 @@ SPM::SPM(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0xFFFF;
     numArgs = 2;
     commandSize = 1;
+    name = "SPM";
 }
 
 uint64_t SPM::Execute(uint16_t instruction, uint16_t &ProgramCounter)

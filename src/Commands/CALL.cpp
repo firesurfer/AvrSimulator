@@ -6,6 +6,7 @@ CALL::CALL(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001110;
     numArgs = 1;
     commandSize = 2;
+    name = "CALL";
 }
 
 uint64_t CALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)

@@ -9,6 +9,7 @@ ADIW::ADIW(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111100000000;
     numArgs = 2;
     commandSize = 1;
+    name = "ADIW";
 }
 
 uint64_t ADIW::Execute(uint16_t instruction, uint16_t &ProgramCounter)

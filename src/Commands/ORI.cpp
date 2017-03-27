@@ -9,6 +9,7 @@ ORI::ORI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111000000000000;
     numArgs = 2;
     commandSize = 1;
+    name = "ORI";
 }
 
 uint64_t ORI::Execute(uint16_t instruction, uint16_t &ProgramCounter)

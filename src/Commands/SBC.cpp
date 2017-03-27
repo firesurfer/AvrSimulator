@@ -9,6 +9,7 @@ SBC::SBC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111110000000000;
     numArgs = 2;
     commandSize = 1;
+    name = "SBC";
 }
 
 uint64_t SBC::Execute(uint16_t instruction, uint16_t &ProgramCounter)

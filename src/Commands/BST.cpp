@@ -11,6 +11,7 @@ BST::BST(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001000;
     numArgs = 2;
     commandSize = 1;
+    name = "BST";
 }
 
 uint64_t BST::Execute(uint16_t instruction, uint16_t &ProgramCounter)

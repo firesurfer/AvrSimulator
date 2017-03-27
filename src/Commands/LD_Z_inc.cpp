@@ -6,6 +6,7 @@ LD_Z_inc::LD_Z_inc(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001111;
     numArgs = 1;
     commandSize = 1;
+    name = "LD_Z_inc";
 }
 
 uint64_t LD_Z_inc::Execute(uint16_t instruction, uint16_t &ProgramCounter)

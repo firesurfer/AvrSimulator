@@ -9,6 +9,7 @@ ANDI::ANDI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111000000000000;
     numArgs = 2;
     commandSize = 1;
+    name = "ANDI";
 }
 
 uint64_t ANDI::Execute(uint16_t instruction, uint16_t &ProgramCounter)

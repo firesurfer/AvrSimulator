@@ -17,13 +17,14 @@ public:
     virtual uint16_t CommandSize() const;
     virtual uint16_t CommandMask() const;
     virtual uint64_t Execute(uint16_t instruction,uint16_t &ProgramCounter);
-
+    virtual std::string Name();
 protected :
     MemoryMapper* data_memory;
     uint16_t command;
     uint16_t numArgs;
     uint16_t commandSize;
     uint16_t commandMask;
+    std::string name;
 };
 
 #endif // COMMANDBASE_H

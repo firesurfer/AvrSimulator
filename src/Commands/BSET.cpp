@@ -11,6 +11,7 @@ BSET::BSET(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111110001111;
     numArgs = 1;
     commandSize = 1;
+    name = "BSET";
 }
 
 uint64_t BSET::Execute(uint16_t instruction, uint16_t &ProgramCounter)

@@ -6,6 +6,7 @@ LDI::LDI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111000000000000;
     numArgs = 2;
     commandSize = 1;
+    name = "LDI";
 }
 
 uint64_t LDI::Execute(uint16_t instruction, uint16_t &ProgramCounter)

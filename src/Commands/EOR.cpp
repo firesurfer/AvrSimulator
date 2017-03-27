@@ -9,6 +9,7 @@ EOR::EOR(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     numArgs = 2;
     commandSize = 1;
     commandMask = 0b1111110000000000;
+    name = "EOR";
 }
 
 uint64_t EOR::Execute(uint16_t instruction, uint16_t &ProgramCounter)

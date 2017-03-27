@@ -6,6 +6,7 @@ RCALL::RCALL(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0xF000;
     numArgs = 1;
     commandSize = 1;
+    name = "RCALL";
 }
 
 uint64_t RCALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)

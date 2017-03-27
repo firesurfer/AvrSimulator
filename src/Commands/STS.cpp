@@ -6,6 +6,7 @@ STS::STS(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111111000001111;
     numArgs = 2;
     commandSize = 2;
+    name = "STS";
 }
 
 uint64_t STS::Execute(uint16_t instruction, uint16_t &ProgramCounter)

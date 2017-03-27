@@ -6,6 +6,7 @@ SBIC::SBIC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111110000000000;
     numArgs = 2;
     commandSize = 1;
+    name = "SBIC";
 }
 
 uint64_t SBIC::Execute(uint16_t instruction, uint16_t &ProgramCounter)

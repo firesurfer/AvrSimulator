@@ -6,6 +6,7 @@ SLEEP::SLEEP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0xFF;
     numArgs = 0;
     commandSize = 1;
+    name = "SLEEP";
 }
 
 uint64_t SLEEP::Execute(uint16_t instruction, uint16_t &ProgramCounter)

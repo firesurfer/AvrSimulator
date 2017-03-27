@@ -6,6 +6,7 @@ IN::IN(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111100000000000;
     numArgs = 2;
     commandSize = 1;
+    name = "IN";
 }
 
 uint64_t IN::Execute(uint16_t instruction, uint16_t &ProgramCounter)

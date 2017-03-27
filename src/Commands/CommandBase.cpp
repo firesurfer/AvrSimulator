@@ -7,6 +7,7 @@ CommandBase::CommandBase(MemoryMapper *_dataMemory)
     commandMask = 0;
     commandSize = 0;
     numArgs = 0;
+    name = "CommandBase";
 }
 
 uint16_t CommandBase::GetCommand() const
@@ -32,4 +33,9 @@ uint16_t CommandBase::CommandMask() const
 uint64_t CommandBase::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
     return 0;
+}
+
+std::__cxx11::string CommandBase::Name()
+{
+    return name;
 }

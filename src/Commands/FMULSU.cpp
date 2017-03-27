@@ -6,6 +6,7 @@ FMULSU::FMULSU(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111110000000000;
     numArgs = 2;
     commandSize = 1;
+    name = "FMULSU";
 }
 
 uint64_t FMULSU::Execute(uint16_t instruction, uint16_t &ProgramCounter)

@@ -6,6 +6,7 @@ OUT::OUT(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     commandMask = 0b1111100000000000;
     numArgs = 0;
     commandSize = 1;
+    name = "OUT";
 }
 
 uint64_t OUT::Execute(uint16_t instruction, uint16_t &ProgramCounter)
