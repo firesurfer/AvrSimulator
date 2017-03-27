@@ -12,7 +12,7 @@ BRBC::BRBC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 uint64_t BRBC::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
     uint8_t bit = instruction&0x07;
-    int32_t offset = instruction<<6;
+    int16_t offset = instruction<<6;
     offset = offset/512+1;
     uint8_t sreg = data_memory->getSREG(1<<bit);
     if(!sreg){

@@ -32,7 +32,18 @@ bool Processor::ExecuteStep()
             {
                 std::cout << " " << it->Name() << std::endl;
 #ifdef DEBUG
-                std::cout << "Stackptr: 0x" << std::hex << this->memory_mapper->getStackPtr() << std::dec << std::endl;
+                std::cout << "    SREG: 0x" << std::hex << (int)this->memory_mapper->getSREG();
+                std::cout << "   "<< "Stackptr: 0x" << std::hex << this->memory_mapper->getStackPtr();
+                try{
+                    int sp1 = this->memory_mapper->getSRAM(this->memory_mapper->getStackPtr()+1);
+                    std::cout << " SP+1: 0x" << sp1;
+                }catch(...){}
+                try{
+                    int sp2 = this->memory_mapper->getSRAM(this->memory_mapper->getStackPtr()+2);
+                    std::cout << " SP+2 0x" << sp2;
+                }catch(...){}
+                std::cout<< std::dec << std::endl;
+
 #endif
                 uint16_t cycles = it->Execute(instruction,this->program_counter);
                 this->periph_handler->handlePeriphery(cycles);
@@ -42,7 +53,9 @@ bool Processor::ExecuteStep()
         }
         if(!found)
         {
-            std::cout << "Illegal instruction: " << std::hex << instruction <<  std::dec << " Programcounter: " << program_counter<<std::endl;
+            std::cout << std::endl ;
+            std::cout << std::endl;
+            std::cout<< "Illegal instruction: " << std::hex << instruction <<  std::dec << " Programcounter: " << program_counter<<std::endl;
             throw std::runtime_error("Error: illegal instruction!");
         }
     }

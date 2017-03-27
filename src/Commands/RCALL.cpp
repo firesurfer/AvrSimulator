@@ -11,7 +11,7 @@ RCALL::RCALL(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint64_t RCALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
-    uint16_t address = instruction & ~commandMask;
+    int16_t address = ((int16_t)(instruction & ~commandMask)<<4)/16;
     uint8_t low_byte = (uint8_t)(ProgramCounter+1);
     uint8_t high_byte = (uint8_t)((ProgramCounter+1) >> 1);
 

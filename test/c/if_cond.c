@@ -2,17 +2,18 @@ int main(void)
 {
     volatile int i = 0;
     i = i + 10;
+    volatile int k = 0;
     if(i > 10)
     {
-        return 1;
+        k++;
     }
     if(i < 10)
     {
-        return 2;
+        k++;
     }
     if(i == 0)
     {
-        return 3;
+        k++;
     }
     return 0;
 }
