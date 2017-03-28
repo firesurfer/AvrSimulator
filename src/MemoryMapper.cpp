@@ -106,7 +106,7 @@ void MemoryMapper::setSRAM16(uint32_t reg, uint16_t val)
 
 void MemoryMapper::setSREG(uint8_t sreg, uint8_t mask)
 {
-    data_memory->Set(getSREG(~mask)|(mask&sreg),0x5F);
+    data_memory->Set(0x5F,getSREG(~mask)|(mask&sreg));
 }
 
 void MemoryMapper::pushStack(uint8_t data)

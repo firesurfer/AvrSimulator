@@ -1,5 +1,5 @@
 #include "DataMemory.h"
-
+using namespace std;
 DataMemory::DataMemory(uint32_t _size, uint32_t _offset)
 {
     this->size = _size;
@@ -25,17 +25,18 @@ uint8_t DataMemory::Get(uint32_t address)
         return data[address];
     }
     else
-        throw std::out_of_range("SRAM: Argument out of range!");
+        throw std::out_of_range("SRAM Get: Argument out of range!");
 }
 
 void DataMemory::Set(uint32_t address, uint8_t value)
 {
     if(address < size)
     {
+        cout<<" Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
         data[address] = value;
     }
     else
-        throw std::out_of_range("SRAM: Argument out of range!");
+        throw std::out_of_range("SRAM Set: Argument out of range!");
 }
 
 uint8_t *DataMemory::GetDataPtr()
