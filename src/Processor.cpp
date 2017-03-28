@@ -54,7 +54,7 @@ bool Processor::ExecuteStep()
         if(!found)
         {
 
-            LOG(Fatal) <<std::endl << std::endl << "Illegal instruction: " << std::hex << instruction <<  std::dec << " Programcounter: " << program_counter<<std::endl;
+            LOG(Fatal) << "Illegal instruction: " << std::hex << instruction <<  std::dec << " Programcounter: " << program_counter<<std::endl;
             throw std::runtime_error("Error: illegal instruction!");
         }
     }

@@ -60,6 +60,11 @@
 #include "Commands/LD_dec_Y.h"
 #include "Commands/LD_dec_Z.h"
 
+#include "Commands/MUL.h"
+#include "Commands/MULS.h"
+#include "Commands/MOV.h"
+#include "Commands/MOVW.h"
+
 CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
 {
     processor->RegisterCommand(new RJMP(mapper));
@@ -124,6 +129,11 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new LD_dec_Y(mapper));
     processor->RegisterCommand(new LD_dec_Z(mapper));
 
+    processor->RegisterCommand(new MUL(mapper));
+    processor->RegisterCommand(new MULS(mapper));
 
+
+    processor->RegisterCommand(new MOV(mapper));
+    processor->RegisterCommand(new MOVW(mapper));
 
 }
