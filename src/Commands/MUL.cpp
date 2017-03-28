@@ -22,8 +22,8 @@ uint64_t MUL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     data_memory->setSREG(sreg);
     uint8_t high_byte = (uint8_t)(result >>8);
     uint8_t low_byte = (uint8_t) result;
-    data_memory->setRegister(R0,high_byte);
-    data_memory->setRegister(R0+1, low_byte);
+    data_memory->setRegister(R0+1,high_byte);
+    data_memory->setRegister(R0, low_byte);
     ProgramCounter+=1;
     return 2;
 }
