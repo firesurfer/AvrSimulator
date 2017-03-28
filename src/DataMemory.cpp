@@ -24,7 +24,7 @@ uint8_t DataMemory::Get(uint32_t address)
 {
     if(address < size)
     {
-        LOG(Debug3)<<"Get addr 0x"<<hex<<address<< ": 0x"<<(int)data[address] << endl;
+        //LOG(Debug3)<<"Get addr 0x"<<hex<<address<< ": 0x"<<(int)data[address] << endl;
         return data[address];
     }
     else

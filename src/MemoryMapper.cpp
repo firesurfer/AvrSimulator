@@ -1,5 +1,8 @@
 #include "MemoryMapper.h"
 #include "DataMemory.h"
+
+using namespace std;
+
 MemoryMapper::MemoryMapper(DataMemory* _memory, ProgramMemory *_pgm_mem)
 {
     this->data_memory = _memory;
@@ -21,7 +24,9 @@ uint8_t MemoryMapper::getRegister(uint32_t reg)
     if(reg>=0x20){
         throw std::out_of_range("Only 32 Processorregisters available");
     }
-    return data_memory->Get(reg);
+    uint8_t value = data_memory->Get(reg);
+    LOG(Debug3) << "Get r" << dec << reg << ": 0x" << hex << (int)value << endl;
+    return value;
 }
 
 uint16_t MemoryMapper::getRegister16(uint32_t reg)
@@ -34,7 +39,9 @@ uint8_t MemoryMapper::getIORegister(uint32_t reg)
     if(reg>=0x40){
         throw std::out_of_range("Only 64 IO-Registers available");
     }
-    return data_memory->Get(reg+0x20);
+    uint8_t value = data_memory->Get(reg);
+    LOG(Debug3) << "Get IOReg 0x" << hex << reg << ": 0x" << (int)value << endl;
+    return value;
 }
 
 uint16_t MemoryMapper::getIORegister16(uint32_t reg)
@@ -44,7 +51,9 @@ uint16_t MemoryMapper::getIORegister16(uint32_t reg)
 
 uint8_t MemoryMapper::getSRAM(uint32_t pos)
 {
-    return data_memory->Get(pos);
+    uint8_t value = data_memory->Get(pos);
+    LOG(Debug3) << "Get data address 0x" << hex << pos << ": 0x" << (int)value << endl;
+    return value;
 }
 
 uint16_t MemoryMapper::getSRAM16(uint32_t pos)
@@ -62,7 +71,9 @@ uint8_t MemoryMapper::popStack()
     uint16_t SP=getStackPtr();
     SP++;
     setStackPtr(SP);
-    return data_memory->Get(SP);
+    uint8_t value = data_memory->Get(SP);
+    LOG(Debug3) << "Pop Stack 0x" << hex << SP << ": 0x" << (int)value << endl;
+    return value;
 }
 
 void MemoryMapper::setRegister(uint32_t reg, uint8_t val)
