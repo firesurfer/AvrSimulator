@@ -22,14 +22,17 @@ bool Processor::ExecuteStep()
         int sp1=0,sp2=0,sp=this->memory_mapper->getStackPtr();
         try{
             sp1 = this->memory_mapper->getSRAM(sp+1);
-        }catch(...){sp1=0;}
+        }catch(...){sp1=-1;}
         try{
             sp2 = this->memory_mapper->getSRAM(sp+2);
-        }catch(...){sp2=0;}
-        LOG(Debug) << "SREG: 0x" << hex << (int)this->memory_mapper->getSREG()
-                   << "  Stackptr: 0x" << hex << sp
-                   << " SP+1: 0x" << sp1
-                   << " SP+2: 0x" << sp2 << endl;
+        }catch(...){sp2=-1;}
+        LOG(Debug) << "SREG: 0x" << hex << (int)this->memory_mapper->getSREG();
+        LOG_APPEND << "  Stackptr: 0x" << hex << sp;
+        if(sp1 != -1)
+            LOG_APPEND << " SP+1: 0x" << sp1;
+        if(sp2 != -1)
+            LOG_APPEND << " SP+2: 0x" << sp2;
+        LOG_APPEND << endl;
 
         uint16_t instruction = program_memory->Get(program_counter);
         bool found = false;

@@ -30,8 +30,10 @@ typedef enum
  */
 #define LOG(level) simpleLogger::getInstance()->getStream(level)
 #define LOG_LINE simpleLogger::getInstance()->pushLine
+#define LOG_APPEND (*(simpleLogger::getInstance()))
 
 #define LOGLEVEL(level) simpleLogger::getInstance()->setLogLevel(level)
+#define LOGPATH(path) simpleLogger::getInstance()->setLogFilePath(path)
 
 class simpleLogger : public std::ostream, std::streambuf
 {
@@ -86,7 +88,7 @@ private:
     std::stringstream log_stream;
 
     std::string logFilePath = "";
-    std::ofstream* logFileWriter = NULL;
+    std::ofstream logFileWriter;
     LogLevel currentLogLevel = LogLevel::Info;
     /**
      * @brief emptyLog - used if the current message is beneath the set log level

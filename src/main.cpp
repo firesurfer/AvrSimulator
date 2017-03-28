@@ -56,6 +56,7 @@ int main(int argc, char* argv[])
     {
         LOG(LogLevel::Info) << "Programm path: " << programMemoryPath << std::endl;
         programMemory = ProgramMemory::FromFile(programMemoryPath);
+        LOGPATH(programMemoryPath + ".log");
     }
     else
     {

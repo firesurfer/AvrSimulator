@@ -15,12 +15,7 @@ simpleLogger *simpleLogger::getInstance()
 
 simpleLogger::~simpleLogger()
 {
-    if(logFileWriter != NULL)
-    {
-        logFileWriter->flush();
-        delete logFileWriter;
-    }
-
+    logFileWriter.close();
 }
 
 void simpleLogger::setDatetimeState(bool state)
@@ -31,6 +26,8 @@ void simpleLogger::setDatetimeState(bool state)
 void simpleLogger::pushLine()
 {
     std::cout << std::endl;
+    if(logFileWriter.is_open())
+        logFileWriter << std::endl;
 }
 
 void simpleLogger::setLogLevel(LogLevel level)
@@ -40,19 +37,11 @@ void simpleLogger::setLogLevel(LogLevel level)
 
 void simpleLogger::setLogFilePath(std::__cxx11::string path)
 {
-    std::ofstream writer(path);
-    if(writer.is_open())
-    {
-        if(logFilePath == "" && path != "")
-            logFileWriter = new std::ofstream(path);
-        else
-        {
-            delete logFileWriter;
-            if(path != "")
-                logFileWriter = new std::ofstream(path);
-        }
-        this->logFilePath = path;
-    }
+    if(path != "" && logFileWriter.is_open())
+        logFileWriter.close();
+
+    logFileWriter.open(path);
+    logFilePath = path;
 }
 
 simpleLogger &simpleLogger::getStream(LogLevel level)
@@ -65,7 +54,7 @@ simpleLogger &simpleLogger::getStream(LogLevel level)
     if(level > currentLogLevel)
     {
         emptyLog = true;
-        return *this;
+        //return *this;//no return, write to logfile on all debuglevels
     }
     //clear log_stream
     log_stream.str("");
@@ -122,9 +111,6 @@ simpleLogger &simpleLogger::getStream(LogLevel level)
     return *this;
 }
 
-
-
-
 simpleLogger::simpleLogger():std::ostream(this)
 {
 
@@ -132,23 +118,14 @@ simpleLogger::simpleLogger():std::ostream(this)
 
 int simpleLogger::overflow(int c)
 {
-    char ch = (char)c;
-    if(ch == '\n')
-    {
-        if(emptyLog)
-            return 0;
-        std::cout << log_stream.str()  << std::endl;
-        if(logFilePath != "")
-            *logFileWriter << log_stream.str() << std::endl;
-        log_stream.str("");
+    std::string s;
+    if(c!=EOF)//Check if there is a character to append
+        s+=(char)c;
 
-    }
-    else
-    {
-        if(emptyLog)
-            return 0;
-        log_stream << ch;
-
-    }
-    return 0;
+    if(logFileWriter.is_open())
+        logFileWriter << log_stream.str() << s << std::flush;
+    if(!emptyLog)
+        std::cout << log_stream.str() << s << std::flush;
+    log_stream.str("");
+    return c;
 }
