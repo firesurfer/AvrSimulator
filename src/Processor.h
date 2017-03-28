@@ -8,7 +8,7 @@
 #include "ProcessorDefines.h"
 #include "Commands/CommandBase.h"
 #include "PeripheryHandler.h"
-
+#include "Logger/Logger.h"
 
 class Processor
 {

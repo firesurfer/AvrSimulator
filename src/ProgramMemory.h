@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstring>
 #include <sstream>
+#include "Logger/Logger.h"
 class ProgramMemory
 {
 public:

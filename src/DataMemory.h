@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include "Logger/Logger.h"
 class DataMemory
 {
 public:

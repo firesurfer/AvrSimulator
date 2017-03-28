@@ -1,5 +1,5 @@
 #include "DataMemory.h"
-using namespace std;
+
 DataMemory::DataMemory(uint32_t _size, uint32_t _offset)
 {
     this->size = _size;
@@ -32,7 +32,8 @@ void DataMemory::Set(uint32_t address, uint8_t value)
 {
     if(address < size)
     {
-        cout<<" Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
+
+        LOG(Debug)<<"  Change of addr 0x"<<std::hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << std::endl;
         data[address] = value;
     }
     else

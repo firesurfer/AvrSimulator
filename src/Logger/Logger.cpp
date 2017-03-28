@@ -23,6 +23,16 @@ simpleLogger::~simpleLogger()
 
 }
 
+void simpleLogger::setDatetimeState(bool state)
+{
+    this->enableDatetime = state;
+}
+
+void simpleLogger::pushLine()
+{
+    std::cout << std::endl;
+}
+
 void simpleLogger::setLogLevel(LogLevel level)
 {
     currentLogLevel = level;
@@ -89,13 +99,19 @@ simpleLogger &simpleLogger::getStream(LogLevel level)
         levelStr = printInColor("Fatal ", ConsoleColor::FG_RED, ConsoleColor::BG_WHITE);
         break;
     }
+    if(enableDatetime)
+    {
     //Write preset into log_stream
 #if __GNUC__ >= 5
     log_stream<< std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X") << " : " << levelStr << " : ";
 #else
     log_stream << ctime (&in_time_t) << " : " << levelStr << " : ";
 #endif
-
+    }
+    else
+    {
+         log_stream<< levelStr << " : ";
+    }
     //Return this as stream
     return *this;
 }

@@ -18,31 +18,31 @@ bool Processor::ExecuteStep()
     else
     {
         uint16_t instruction = program_memory->Get(program_counter);
-        std::cout << "Instruction 0x" << std::hex << program_counter*2 << ": 0x" << instruction << std::dec;
+        LOG(Info) << "Instruction 0x" << std::hex << program_counter*2 << ": 0x" << instruction << std::dec;
         bool found = false;
 
         if(instruction == 0xCFFF)
         {
-            std::cout << "Found endless loop (without content)- Aborting programm" << std::endl;
-            return false;
+            LOG(Fatal)<< "Found endless loop (without content)- Aborting programm" << std::endl;
+            return Warning;
         }
         for(auto & it: commands)
         {
             if((instruction & it->CommandMask()) == (it->GetCommand() & it->CommandMask()))
             {
-                std::cout << " " << it->Name() << std::endl;
+                LOG(Info)<< " " << it->Name() << std::endl;
 #ifdef DEBUG
-                std::cout << "    SREG: 0x" << std::hex << (int)this->memory_mapper->getSREG();
-                std::cout << "   "<< "Stackptr: 0x" << std::hex << this->memory_mapper->getStackPtr();
+                LOG(Debug) << "    SREG: 0x" << std::hex << (int)this->memory_mapper->getSREG();
+               LOG(Debug) << "   "<< "Stackptr: 0x" << std::hex << this->memory_mapper->getStackPtr();
                 try{
                     int sp1 = this->memory_mapper->getSRAM(this->memory_mapper->getStackPtr()+1);
-                    std::cout << " SP+1: 0x" << sp1;
+                    LOG(Debug) << " SP+1: 0x" << sp1;
                 }catch(...){}
                 try{
                     int sp2 = this->memory_mapper->getSRAM(this->memory_mapper->getStackPtr()+2);
-                    std::cout << " SP+2 0x" << sp2;
+                    LOG(Debug) << " SP+2 0x" << sp2;
                 }catch(...){}
-                std::cout<< std::dec << std::endl;
+                LOG_LINE();
 
 #endif
                 uint16_t cycles = it->Execute(instruction,this->program_counter);
@@ -53,9 +53,8 @@ bool Processor::ExecuteStep()
         }
         if(!found)
         {
-            std::cout << std::endl ;
-            std::cout << std::endl;
-            std::cout<< "Illegal instruction: " << std::hex << instruction <<  std::dec << " Programcounter: " << program_counter<<std::endl;
+
+            LOG(Fatal) <<std::endl << std::endl << "Illegal instruction: " << std::hex << instruction <<  std::dec << " Programcounter: " << program_counter<<std::endl;
             throw std::runtime_error("Error: illegal instruction!");
         }
     }
@@ -68,10 +67,10 @@ void Processor::RegisterCommand(CommandBase *cmd)
 
 void Processor::PrintRegisteredCommands()
 {
-    std::cout << "List of all known instructions: " << std::endl;
+    LOG(LogLevel::Info)  << "List of all known instructions: " << std::endl;
     for(auto & it: commands)
     {
-        std::cout << "    0x" << std::hex << it->GetCommand() << std::dec  << " " << it->Name()<< std::endl;
+        LOG(LogLevel::Info)<< "    0x" << std::hex << it->GetCommand() << std::dec  << " " << it->Name()<< std::endl;
     }
-    std::cout << "#######################################" <<std::endl;
+   LOG(LogLevel::Info) << "#######################################" <<std::endl;
 }

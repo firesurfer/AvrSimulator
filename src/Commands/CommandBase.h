@@ -7,7 +7,7 @@
 
 #include "ProcessorDefines.h"
 #include "BitHelpers.h"
-
+#include "Logger/Logger.h"
 class CommandBase
 {
 public:

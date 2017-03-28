@@ -27,7 +27,8 @@ typedef enum
  * Easy access to the simpleLogger Singleton: Usage: LOG(<LogLevel>)<< "message" << "other message" << std:endl;
  */
 #define LOG(level) simpleLogger::getInstance()->getStream(level)
-#define INIT_LOGGER simpleLogger::getInstance()->initLogger
+#define LOG_LINE simpleLogger::getInstance()->pushLine
+
 #define LOGLEVEL(level) simpleLogger::getInstance()->setLogLevel(level)
 
 class simpleLogger : public std::ostream, std::streambuf
@@ -63,7 +64,8 @@ public:
      * Clean up of file descriptors
      */
     virtual ~simpleLogger();
-
+    void setDatetimeState(bool state = false);
+    void pushLine();
 private:
 
     /**
@@ -88,7 +90,7 @@ private:
      * @brief emptyLog - used if the current message is beneath the set log level
      */
     bool emptyLog = false;
-
+    bool enableDatetime = false;
    
 
 
