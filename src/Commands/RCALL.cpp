@@ -13,7 +13,7 @@ uint64_t RCALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 {
     int16_t address = ((int16_t)(instruction & ~commandMask)<<4)/16;
     uint8_t low_byte = (uint8_t)(ProgramCounter+1);
-    uint8_t high_byte = (uint8_t)((ProgramCounter+1) >> 1);
+    uint8_t high_byte = (uint8_t)((ProgramCounter+1) >> 8);
 
     data_memory->pushStack(low_byte);
     data_memory->pushStack(high_byte);
