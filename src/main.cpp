@@ -6,15 +6,52 @@
 #include "PeripheryHandler.h"
 #include "PeripheryRegister.h"
 #include "Logger/Logger.h"
+#include <locale>
+#include <algorithm>
 int main(int argc, char* argv[])
 {
+    LogLevel loglevel = LogLevel::Info;
+    std::string programMemoryPath = "";
+
+    for(int i = 0; i < argc;i++)
+    {
+        std::string arg = std::string(argv[i]);
+        if( arg.find("-log") != std::string::npos)
+        {
+
+            //Okey this is the log argument
+            std::string level = arg.substr(arg.find("=")+1, arg.length());
+            std::transform(level.begin(), level.end(), level.begin(), ::tolower);
+            if(level != "")
+            {
+
+                if(level == "debug")
+                    loglevel = LogLevel::Debug;
+                else if(level == "info")
+                    loglevel = LogLevel::Info;
+                else if(level == "important")
+                    loglevel = LogLevel::Important;
+                else if(level == "warning")
+                    loglevel = LogLevel::Warning;
+                else if(level == "wrror")
+                    loglevel = LogLevel::Error;
+                else if(level == "fatal")
+                    loglevel = LogLevel::Fatal;
+            }
+        }
+        //Last argument is file
+        if(i+1 == argc)
+            programMemoryPath = std::string(argv[i]);
+
+    }
+    LOGLEVEL(loglevel);
     DataMemory * dataMemory = new DataMemory(2048+0x60,0);
 
     ProgramMemory * programMemory;
 
-    if(argc > 1)
+    if(programMemoryPath != "")
     {
-        std::string programMemoryPath = std::string(argv[1]);
+
         LOG(LogLevel::Info) << "Programm path: " << programMemoryPath << std::endl;
         programMemory = ProgramMemory::FromFile(programMemoryPath);
 

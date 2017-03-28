@@ -62,7 +62,7 @@ simpleLogger &simpleLogger::getStream(LogLevel level)
     std::lock_guard<std::mutex> lock(globalLogger_mutex);
 
     emptyLog = false;
-    if(level < currentLogLevel)
+    if(level > currentLogLevel)
     {
         emptyLog = true;
         return *this;

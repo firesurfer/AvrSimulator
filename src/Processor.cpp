@@ -24,7 +24,7 @@ bool Processor::ExecuteStep()
         if(instruction == 0xCFFF)
         {
             LOG(Fatal)<< "Found endless loop (without content)- Aborting programm" << std::endl;
-            return Warning;
+            return false;
         }
         for(auto & it: commands)
         {
