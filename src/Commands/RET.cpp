@@ -15,9 +15,9 @@ uint64_t RET::Execute(uint16_t instruction, uint16_t &ProgramCounter)
     uint8_t low_byte = data_memory->popStack();
 
     uint16_t address = (uint16_t)low_byte | ((uint16_t)high_byte<<8);
-#ifdef DEBUG
-    LOG(Debug) << "Address: "<<std::hex<< address << std::endl;
-#endif
+
+    LOG(Debug) << "RET: Address: 0x"<<std::hex<< address << std::endl;
+
     ProgramCounter = address;
     return 4;
 }

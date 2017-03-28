@@ -79,38 +79,44 @@ simpleLogger &simpleLogger::getStream(LogLevel level)
     std::string levelStr = "";
     switch(level)
     {
+    case Debug3:
+        levelStr = printInColor("Debug3 ", ConsoleColor::FG_BLUE);
+        break;
+    case Debug2:
+        levelStr = printInColor("Debug2 ", ConsoleColor::FG_BLUE);
+        break;
     case Debug:
-        levelStr = printInColor("Debug", ConsoleColor::FG_DEFAULT, ConsoleColor::BG_GREEN);
+        levelStr = printInColor("Debug1 ", ConsoleColor::FG_BLUE);
         break;
     case Info:
-        levelStr = printInColor("Info ", ConsoleColor::FG_GREEN);
+        levelStr = printInColor("Info   ", ConsoleColor::FG_GREEN);
         break;
     case Important:
-        levelStr = printInColor("Important ", ConsoleColor::FG_BLUE);
+        levelStr = printInColor("Important", ConsoleColor::FG_WHITE, ConsoleColor::BG_GREEN);
         break;
     case Warning:
-        levelStr = printInColor("Warning ", ConsoleColor::FG_RED);
+        levelStr = printInColor("Warning", ConsoleColor::FG_RED);
         break;
     case Error:
-        levelStr = printInColor("Error ", ConsoleColor::FG_RED, ConsoleColor::BG_YELLOW);
+        levelStr = printInColor("Error  ", ConsoleColor::FG_RED, ConsoleColor::BG_YELLOW);
         break;
 
     case Fatal:
-        levelStr = printInColor("Fatal ", ConsoleColor::FG_RED, ConsoleColor::BG_WHITE);
+        levelStr = printInColor("Fatal  ", ConsoleColor::FG_RED, ConsoleColor::BG_WHITE);
         break;
     }
     if(enableDatetime)
     {
     //Write preset into log_stream
 #if __GNUC__ >= 5
-    log_stream<< std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X") << " : " << levelStr << " : ";
+    log_stream<< std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X") << " : " << levelStr << ": ";
 #else
-    log_stream << ctime (&in_time_t) << " : " << levelStr << " : ";
+    log_stream << ctime (&in_time_t) << " : " << levelStr << ": ";
 #endif
     }
     else
     {
-         log_stream<< levelStr << " : ";
+         log_stream<< levelStr << ": ";
     }
     //Return this as stream
     return *this;

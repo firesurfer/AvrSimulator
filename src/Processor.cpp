@@ -1,5 +1,7 @@
 #include "Processor.h"
 
+using namespace std;
+
 Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_handler)
 {
     this->program_counter = 0;
@@ -17,34 +19,31 @@ bool Processor::ExecuteStep()
         return false;
     else
     {
+        int sp1=0,sp2=0,sp=this->memory_mapper->getStackPtr();
+        try{
+            sp1 = this->memory_mapper->getSRAM(sp+1);
+        }catch(...){sp1=0;}
+        try{
+            sp2 = this->memory_mapper->getSRAM(sp+2);
+        }catch(...){sp2=0;}
+        LOG(Debug) << "SREG: 0x" << hex << (int)this->memory_mapper->getSREG()
+                   << "  Stackptr: 0x" << hex << sp
+                   << " SP+1: 0x" << sp1
+                   << " SP+2: 0x" << sp2 << endl;
+
         uint16_t instruction = program_memory->Get(program_counter);
-        LOG(Info) << "Instruction 0x" << std::hex << program_counter*2 << ": 0x" << instruction << std::dec;
         bool found = false;
 
         if(instruction == 0xCFFF)
         {
-            LOG(Fatal)<< "Found endless loop (without content)- Aborting programm" << std::endl;
+            LOG(Warning)<< "Found empty endless loop (0xCFFF) on address 0x" << hex << program_counter*2 << " - Aborting programm" << endl;
             return false;
         }
         for(auto & it: commands)
         {
             if((instruction & it->CommandMask()) == (it->GetCommand() & it->CommandMask()))
             {
-                LOG(Info)<< " " << it->Name() << std::endl;
-#ifdef DEBUG
-                LOG(Debug) << "    SREG: 0x" << std::hex << (int)this->memory_mapper->getSREG();
-               LOG(Debug) << "   "<< "Stackptr: 0x" << std::hex << this->memory_mapper->getStackPtr();
-                try{
-                    int sp1 = this->memory_mapper->getSRAM(this->memory_mapper->getStackPtr()+1);
-                    LOG(Debug) << " SP+1: 0x" << sp1;
-                }catch(...){}
-                try{
-                    int sp2 = this->memory_mapper->getSRAM(this->memory_mapper->getStackPtr()+2);
-                    LOG(Debug) << " SP+2 0x" << sp2;
-                }catch(...){}
-                LOG_LINE();
-
-#endif
+                LOG(Info) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << it->Name() << endl;
                 uint16_t cycles = it->Execute(instruction,this->program_counter);
                 this->periph_handler->handlePeriphery(cycles);
                 found = true;
@@ -53,9 +52,8 @@ bool Processor::ExecuteStep()
         }
         if(!found)
         {
-
-            LOG(Fatal) << "Illegal instruction: " << std::hex << instruction <<  std::dec << " Programcounter: " << program_counter<<std::endl;
-            throw std::runtime_error("Error: illegal instruction!");
+            LOG(Fatal) << "Illegal instruction: " << hex << instruction << " on address: " << program_counter*2 <<endl;
+            throw runtime_error("Error: illegal instruction!");
         }
     }
 }
@@ -67,10 +65,10 @@ void Processor::RegisterCommand(CommandBase *cmd)
 
 void Processor::PrintRegisteredCommands()
 {
-    LOG(LogLevel::Info)  << "List of all known instructions: " << std::endl;
+    LOG(Debug)  << "List of all known instructions: " << endl;
     for(auto & it: commands)
     {
-        LOG(LogLevel::Info)<< "    0x" << std::hex << it->GetCommand() << std::dec  << " " << it->Name()<< std::endl;
+        LOG(Debug)<< "    0x" << hex << it->GetCommand() << " " << it->Name()<< endl;
     }
-   LOG(LogLevel::Info) << "#######################################" <<std::endl;
+   LOG(Debug) << "#######################################" << endl;
 }

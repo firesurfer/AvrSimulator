@@ -13,6 +13,8 @@
 
 typedef enum
 {
+    Debug3 = 7,
+    Debug2 = 6,
     Debug = 5,
     Info = 4,
     Important = 3,

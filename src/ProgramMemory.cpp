@@ -61,7 +61,7 @@ ProgramMemory *ProgramMemory::FromFile(std::string path)
             hex_file.push_back(line);
         }
         file.close();
-        LOG(Info)<< "Programmemory file: " << std::endl;
+        LOG(Info)<< "Program memory file: " << std::endl;
         int line_count = 0;
         ProgramMemory * mem = new ProgramMemory(32*1024,0);
         int size_total = 0;
@@ -86,20 +86,17 @@ ProgramMemory *ProgramMemory::FromFile(std::string path)
                     data = lobyte << 8 | hibyte;
                     mem->Set(address/2+i,data);
                 }
-                LOG(Info) << "  Line:         " << line_count << std::endl;
-                LOG(Info) << "  Size:         " << size <<std::endl;
-                LOG(Info) << "  Startaddress: " << address << std::endl;
+                LOG(Debug) << "  Line:         " << line_count << std::endl;
+                LOG(Debug) << "  Bytes:         " << size <<std::endl;
+                LOG(Debug) << "  Startaddress: " << address << std::endl;
                 line_count ++;
                 size_total += size;
             }
             else
                 break;
         }
-        LOG(Info) << std::endl;
-        LOG(Info)<< "  Lines read:   " << line_count << std::endl;
-        LOG(Info) << "  Total size:   " << size_total << std::endl;
-
-
+        LOG(Info)<< "Lines read:   " << line_count << std::endl;
+        LOG(Info) << "Total Bytes:   " << size_total << std::endl;
 
         return mem;
     }

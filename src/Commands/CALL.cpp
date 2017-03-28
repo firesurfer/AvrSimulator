@@ -17,10 +17,9 @@ uint64_t CALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
 
     uint8_t low_byte = (uint8_t)ProgramCounter+2;
     uint8_t high_byte = (uint8_t)((ProgramCounter+2) >> 8);
-#ifdef DEBUG
-    LOG(Debug) << "CALL: Address: " << std::hex<< address << std::endl;
-    LOG(Debug) << "CALL: Stack:   " << std::hex << (int)low_byte << " " << (int)high_byte << std::endl;
-#endif
+
+    LOG(Debug) << "CALL: Address: 0x" << std::hex<< address << ", Stack: 0x" << std::hex << (int)low_byte << " 0x" << (int)high_byte << std::endl;
+
     data_memory->pushStack(low_byte);
     data_memory->pushStack(high_byte);
     ProgramCounter = address;
