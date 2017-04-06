@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <vector>
 #include "Logger/Logger.h"
 class DataMemory
 {
@@ -18,9 +19,12 @@ public:
     void Set(uint32_t address, uint8_t value);
     uint8_t *GetDataPtr();
 
+    void watch(uint32_t address);
+
 private:
     uint32_t size;
     uint32_t offset;
     uint8_t* data;
+    std::vector<uint32_t> watchlist;
 };
 

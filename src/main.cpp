@@ -49,7 +49,9 @@ int main(int argc, char* argv[])
     }
     LOGLEVEL(loglevel);
     DataMemory * dataMemory = new DataMemory(2048+0x60,0);
-
+    dataMemory->watch(0x3F);
+    dataMemory->watch(0x5F);
+    dataMemory->watch(0x3F);
     ProgramMemory * programMemory;
 
     if(programMemoryPath != "")

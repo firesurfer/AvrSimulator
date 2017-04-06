@@ -35,7 +35,14 @@ void DataMemory::Set(uint32_t address, uint8_t value)
 {
     if(address < size)
     {
-        LOG(Debug2)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
+        bool watched=false;
+        for(auto it : watchlist){
+            if(it == address) watched=true;
+        }
+        if(watched)
+            LOG(Important)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
+        else
+            LOG(Debug2)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
         data[address] = value;
     }
     else
@@ -45,6 +52,11 @@ void DataMemory::Set(uint32_t address, uint8_t value)
 uint8_t *DataMemory::GetDataPtr()
 {
     return data;
+}
+
+void DataMemory::watch(uint32_t address)
+{
+    watchlist.push_back(address);
 }
 
 
