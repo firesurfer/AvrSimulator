@@ -8,8 +8,7 @@ Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_han
     this->memory_mapper = _memory_mapper;
     this->program_memory = memory_mapper->getProgramMemory();
     this->periph_handler =_periph_handler;
-
-
+    this->decoder = new Decoder(commands);
 }
 
 bool Processor::ExecuteStep()
@@ -42,23 +41,19 @@ bool Processor::ExecuteStep()
             LOG(Warning)<< "Found empty endless loop (0xCFFF) on address 0x" << hex << program_counter*2 << " - Aborting programm" << endl;
             return false;
         }
-        for(auto & it: commands)
-        {
-            if((instruction & it->CommandMask()) == (it->GetCommand() & it->CommandMask()))
-            {
-                LOG(Info) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << it->Name() << endl;
-                uint16_t cycles = it->Execute(instruction,this->program_counter);
-                this->periph_handler->handlePeriphery(cycles);
-                found = true;
-                return true;
-            }
-        }
-        if(!found)
+        CommandBase* next_command = decoder->decode(instruction);
+        if(!next_command)
         {
             LOG(Fatal) << "Illegal instruction: " << hex << instruction << " on address: " << program_counter*2 <<endl;
             throw runtime_error("Error: illegal instruction!");
         }
+        LOG(Info) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
+        uint16_t cycles = next_command->Execute(instruction,this->program_counter);
+        this->periph_handler->handlePeriphery(cycles);
+
+        return true;
     }
+
 }
 
 void Processor::RegisterCommand(CommandBase *cmd)
@@ -73,5 +68,5 @@ void Processor::PrintRegisteredCommands()
     {
         LOG(Debug)<< "    0x" << hex << it->GetCommand() << " " << it->Name()<< endl;
     }
-   LOG(Debug) << "#######################################" << endl;
+    LOG(Debug) << "#######################################" << endl;
 }

@@ -9,7 +9,7 @@
 #include "Commands/CommandBase.h"
 #include "PeripheryHandler.h"
 #include "Logger/Logger.h"
-
+#include "Decoder.h"
 class Processor
 {
 public:
@@ -26,6 +26,7 @@ private:
     MemoryMapper * memory_mapper;
     PeripheryHandler* periph_handler;
     std::vector<CommandBase*> commands;
+    Decoder* decoder;
 
 
 
