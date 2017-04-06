@@ -9,6 +9,7 @@ class Decoder
 public:
     Decoder(std::vector<CommandBase*> & _commands);
     CommandBase* decode(uint16_t instruction);
+    bool available(uint16_t instruction);
 private:
     std::vector<CommandBase*> & commands;
 };
