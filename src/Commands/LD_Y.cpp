@@ -9,7 +9,7 @@ LD_Y::LD_Y(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "LD_Y";
 }
 
-uint64_t LD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t LD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t reg = (instruction>>4) & 0x1F;
 

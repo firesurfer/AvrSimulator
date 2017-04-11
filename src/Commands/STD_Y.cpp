@@ -9,7 +9,7 @@ STD_Y::STD_Y(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "STD_Y";
 }
 
-uint64_t STD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t STD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
 
     uint16_t offset = (instruction&0x07)|((instruction&0x0C00)>>7)|((instruction&0x2000)>>8);

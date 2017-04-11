@@ -47,8 +47,15 @@ bool Processor::ExecuteStep()
             LOG(Fatal) << "Illegal instruction: " << hex << instruction << " on address: " << program_counter*2 <<endl;
             throw runtime_error("Error: illegal instruction!");
         }
-        LOG(Info) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
-        uint16_t cycles = next_command->Execute(instruction,this->program_counter);
+        uint32_t cycles=0;
+        if(!flags.skipNextInstruction){
+            LOG(Info) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
+            cycles = next_command->Execute(instruction,this->program_counter, flags);
+        }else{
+            cycles = next_command->CommandSize();
+            program_counter += next_command->CommandSize();
+            flags.skipNextInstruction = false;
+        }
         this->periph_handler->handlePeriphery(cycles);
 
         return true;

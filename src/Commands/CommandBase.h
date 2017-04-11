@@ -8,6 +8,7 @@
 #include "ProcessorDefines.h"
 #include "BitHelpers.h"
 #include "Logger/Logger.h"
+#include "processorflags.h"
 class CommandBase
 {
 public:
@@ -16,8 +17,8 @@ public:
     virtual uint16_t NumberOfArguments() const;
     virtual uint16_t CommandSize() const;
     virtual uint16_t CommandMask() const;
-    virtual uint64_t Execute(uint16_t instruction,uint16_t &ProgramCounter);
-    virtual std::string Name();
+    virtual uint32_t Execute(uint16_t instruction,uint16_t &ProgramCounter, ProcessorFlags &flags);
+    virtual std::string Name() const;
 
 protected :
     MemoryMapper* data_memory;

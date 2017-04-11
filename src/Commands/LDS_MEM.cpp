@@ -9,7 +9,7 @@ LDS_MEM::LDS_MEM(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "LDS";
 }
 
-uint64_t LDS_MEM::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t LDS_MEM::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t reg = (instruction>>4) & 0x1F;
     uint16_t address = data_memory->getProgramMemory()->Get(ProgramCounter+1);

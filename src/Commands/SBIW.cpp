@@ -12,7 +12,7 @@ SBIW::SBIW(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "SBIW";
 }
 
-uint64_t SBIW::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t SBIW::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint16_t summand = (instruction&0x0F)|((instruction>>2)&0x30);
     uint32_t addrRd = 24 + ((instruction>>3)&0x06);

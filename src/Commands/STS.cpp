@@ -9,7 +9,7 @@ STS::STS(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "STS";
 }
 
-uint64_t STS::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t STS::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t reg = (instruction>>4) & 0x1F;
     uint16_t address = data_memory->getProgramMemory()->Get(ProgramCounter+1);

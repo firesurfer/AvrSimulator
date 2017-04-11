@@ -10,6 +10,7 @@
 #include "PeripheryHandler.h"
 #include "Logger/Logger.h"
 #include "Decoder.h"
+#include "processorflags.h"
 class Processor
 {
 public:
@@ -27,6 +28,7 @@ private:
     PeripheryHandler* periph_handler;
     std::vector<CommandBase*> commands;
     Decoder* decoder;
+    ProcessorFlags flags;
 
 
 

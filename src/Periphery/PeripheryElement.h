@@ -7,7 +7,7 @@ class PeripheryElement
 {
 public:
     PeripheryElement(MemoryMapper* mapper);
-    virtual void handle();
+    virtual void handle(uint32_t cycles);
 private:
     MemoryMapper* mem_mapper;
 };

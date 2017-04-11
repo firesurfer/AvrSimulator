@@ -9,7 +9,7 @@ SBRS::SBRS(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "SBRS";
 }
 
-uint64_t SBRS::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t SBRS::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
   /*  uint8_t & sreg = SpecialRegisters[SREG];
     uint8_t registers = (uint8_t)(instruction >> 8);

@@ -9,7 +9,7 @@ ST_X::ST_X(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "ST_X";
 }
 
-uint64_t ST_X::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t ST_X::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t ld_x = (instruction) & 0b00000011;
     uint8_t reg = (instruction>>4) & 0x1F;

@@ -9,7 +9,7 @@ MOVW::MOVW(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "MOVW";
 }
 
-uint64_t MOVW::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t MOVW::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t src = (instruction & 0xF) | ((instruction & 0x0200) >> 5);
     uint8_t dest = (instruction & 0x1F0) >> 4;

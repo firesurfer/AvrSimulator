@@ -9,7 +9,7 @@ RET::RET(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "RET";
 }
 
-uint64_t RET::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t RET::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t high_byte = data_memory->popStack();
     uint8_t low_byte = data_memory->popStack();

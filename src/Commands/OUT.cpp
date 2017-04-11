@@ -9,7 +9,7 @@ OUT::OUT(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "OUT";
 }
 
-uint64_t OUT::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t OUT::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t reg = (instruction & 0b0000000111110000) >>4;
     uint8_t ioreg = (instruction & 0xF) | ((instruction & 0x0600)>>5);

@@ -9,7 +9,7 @@ BRBC::BRBC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "BRBC";
 }
 
-uint64_t BRBC::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t BRBC::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t bit = instruction&0x07;
     int16_t offset = instruction<<6;

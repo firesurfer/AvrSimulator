@@ -12,7 +12,7 @@ SUBI::SUBI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "SUBI";
 }
 
-uint64_t SUBI::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t SUBI::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t operand = (instruction&0x0F)|((instruction>>4)&0xF0);
     uint32_t addrRd = 16 + ((instruction>>4)&0xF);

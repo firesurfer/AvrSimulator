@@ -9,7 +9,7 @@ ST_Y_inc::ST_Y_inc(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "ST_Y_inc";
 }
 
-uint64_t ST_Y_inc::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t ST_Y_inc::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t reg = (instruction>>4) & 0x1F;
 

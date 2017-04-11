@@ -9,7 +9,7 @@ SPM::SPM(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "SPM";
 }
 
-uint64_t SPM::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t SPM::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t high_byte = data_memory->getRegister(R0+1);
     uint8_t low_byte = data_memory->getRegister(R0);

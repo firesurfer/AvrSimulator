@@ -9,7 +9,7 @@ CALL::CALL(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "CALL";
 }
 
-uint64_t CALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t CALL::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
 
     uint32_t address = data_memory->getProgramMemory()->Get(ProgramCounter+1);

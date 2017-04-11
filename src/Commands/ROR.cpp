@@ -14,7 +14,7 @@ ROR::ROR(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "ROR";
 }
 
-uint64_t ROR::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t ROR::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint32_t addrRd = (instruction>>4)&0x1F;
     uint8_t Rd = data_memory->getRegister(addrRd);

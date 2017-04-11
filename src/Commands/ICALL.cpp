@@ -9,7 +9,7 @@ ICALL::ICALL(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "ICALL";
 }
 
-uint64_t ICALL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t ICALL::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint16_t dest = data_memory->getZReg();
     uint8_t low_byte = (uint8_t)ProgramCounter+1;

@@ -12,7 +12,7 @@ LPM_R0::LPM_R0(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "LMP_R0";
 }
 
-uint64_t LPM_R0::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t LPM_R0::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     UNUSED(instruction);
     uint16_t address = data_memory->getZReg();

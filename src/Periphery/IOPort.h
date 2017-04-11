@@ -13,7 +13,7 @@ class IOPort: public PeripheryElement
 {
 public:
     IOPort(MemoryMapper* mapper, Port _port);
-    void handle();
+    void handle(uint32_t cycles);
 private:
     Port port;
 };

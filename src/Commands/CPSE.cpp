@@ -9,7 +9,7 @@ CPSE::CPSE(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "CPSE";
 }
 
-uint64_t CPSE::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t CPSE::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
   /*  uint8_t & sreg = SpecialRegisters[SREG];
     uint8_t registers = (uint8_t)(instruction >> 8);

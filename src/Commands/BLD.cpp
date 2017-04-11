@@ -14,7 +14,7 @@ BLD::BLD(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "BLD";
 }
 
-uint64_t BLD::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t BLD::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t bit = instruction&0x07;
     uint32_t addrRd = (instruction>>4)&0x1F;

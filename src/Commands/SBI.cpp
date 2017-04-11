@@ -9,7 +9,7 @@ SBI::SBI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "SBI";
 }
 
-uint64_t SBI::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t SBI::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint16_t addresses = instruction & ~CommandMask();
     uint8_t ioregister = (addresses & 0b0000000011111000)>>3;

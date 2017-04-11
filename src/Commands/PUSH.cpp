@@ -9,7 +9,7 @@ PUSH::PUSH(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "PUSH";
 }
 
-uint64_t PUSH::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t PUSH::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
 
     uint8_t reg = (instruction>>4) & 0x1F;

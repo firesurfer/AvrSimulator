@@ -9,7 +9,7 @@ BREAK::BREAK(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "BREAK";
 }
 
-uint64_t BREAK::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t BREAK::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
 
 #ifdef JTAG_ENABLED

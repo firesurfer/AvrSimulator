@@ -9,7 +9,7 @@ IJMP::IJMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "IJMP";
 }
 
-uint64_t IJMP::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t IJMP::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint16_t address = data_memory->getZReg();
     ProgramCounter = address;

@@ -5,7 +5,7 @@ Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
 
 }
 
-void Uart::handle()
+void Uart::handle(uint32_t cycles)
 {
 
 }

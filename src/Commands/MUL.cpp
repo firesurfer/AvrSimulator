@@ -9,7 +9,7 @@ MUL::MUL(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "MUL";
 }
 
-uint64_t MUL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t MUL::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t reg1 = (instruction & 0xF) | ((instruction & 0x200) >> 5);
     uint8_t reg2 = (instruction & 0x1F0)>>4;

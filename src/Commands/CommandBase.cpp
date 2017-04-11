@@ -30,12 +30,12 @@ uint16_t CommandBase::CommandMask() const
     return commandMask;
 }
 
-uint64_t CommandBase::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t CommandBase::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     return 0;
 }
 
-std::__cxx11::string CommandBase::Name()
+std::string CommandBase::Name() const
 {
     return name;
 }

@@ -14,7 +14,7 @@ BSET::BSET(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "BSET";
 }
 
-uint64_t BSET::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t BSET::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t bit = (instruction>>4)&0x07;
 

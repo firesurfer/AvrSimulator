@@ -12,7 +12,7 @@ COM::COM(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "COM";
 }
 
-uint64_t COM::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t COM::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint32_t addrRd = (instruction>>4)&0x1F;
     uint8_t Rd = data_memory->getRegister(addrRd);

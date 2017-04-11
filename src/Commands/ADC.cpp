@@ -12,7 +12,7 @@ ADC::ADC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "ADC";
 }
 
-uint64_t ADC::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t ADC::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint32_t addrRr = (instruction&0x0F)|((instruction>>5)&0x10);
     uint32_t addrRd = (instruction>>4)&0x1F;

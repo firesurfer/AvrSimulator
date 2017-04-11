@@ -14,7 +14,7 @@ BCLR::BCLR(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "BCLR";
 }
 
-uint64_t BCLR::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t BCLR::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t bit = (instruction>>4)&0x07;
 

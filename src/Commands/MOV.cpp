@@ -9,7 +9,7 @@ MOV::MOV(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "MOV";
 }
 
-uint64_t MOV::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t MOV::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t src = (instruction & 0xF) | ((instruction & 0x0200) >> 5);
     uint8_t dest = (instruction & 0x1F0) >> 4;

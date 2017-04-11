@@ -14,7 +14,7 @@ BST::BST(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "BST";
 }
 
-uint64_t BST::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t BST::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t bit = instruction&0x07;
     uint32_t addrRd = (instruction>>4)&0x1F;

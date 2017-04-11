@@ -9,7 +9,7 @@ NOP::NOP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "NOP";
 }
 
-uint64_t NOP::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t NOP::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     ProgramCounter++;
 }

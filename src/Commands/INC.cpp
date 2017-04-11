@@ -12,7 +12,7 @@ INC::INC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "INC";
 }
 
-uint64_t INC::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t INC::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint32_t addrRd = (instruction>>4)&0x1F;
     uint8_t Rd = data_memory->getRegister(addrRd);

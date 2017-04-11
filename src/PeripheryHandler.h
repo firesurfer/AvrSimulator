@@ -8,7 +8,7 @@ class PeripheryHandler
 {
 public:
     PeripheryHandler(MemoryMapper* _mem_mapper);
-    void handlePeriphery(uint16_t cycles);
+    void handlePeriphery(uint32_t cycles);
     void addPeripheryElement(PeripheryElement* element);
 private:
     MemoryMapper* memory_mapper;

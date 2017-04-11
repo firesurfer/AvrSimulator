@@ -9,7 +9,7 @@ SLEEP::SLEEP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "SLEEP";
 }
 
-uint64_t SLEEP::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t SLEEP::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     //HOW to fucking sleep ?
     ProgramCounter = ProgramCounter+1;

@@ -9,7 +9,7 @@ FMUL::FMUL(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "FMUL";
 }
 
-uint64_t FMUL::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t FMUL::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t reg1 = (instruction & 0x7) + 16;
     uint8_t reg2 = (instruction & 0x70) +16;

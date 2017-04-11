@@ -9,7 +9,7 @@ LDI::LDI(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
     name = "LDI";
 }
 
-uint64_t LDI::Execute(uint16_t instruction, uint16_t &ProgramCounter)
+uint32_t LDI::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
     uint8_t constant = (instruction & 0xF)| ((instruction & 0x0F00) >> 4);
     uint8_t reg = (instruction & 0x00F0) >> 4;
