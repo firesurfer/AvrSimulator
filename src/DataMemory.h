@@ -7,6 +7,8 @@
 #include <fstream>
 #include <cstring>
 #include <vector>
+#include <unordered_map>
+#include <functional>
 #include "Logger/Logger.h"
 class DataMemory
 {
@@ -19,12 +21,18 @@ public:
     void Set(uint32_t address, uint8_t value);
     uint8_t *GetDataPtr();
 
-    void watch(uint32_t address);
+    ///
+    /// \brief watch write accesses to a specific address and print a message or call a function
+    /// \param address to be monitored
+    /// \param callback to be registered (optional), if empty, write a log message on change
+    ///                 callback gets the address, the old and the new value as parameters
+    ///
+    void watch(uint32_t address, std::function<void(uint32_t,uint8_t,uint8_t)> callback=nullptr);
 
 private:
     uint32_t size;
     uint32_t offset;
     uint8_t* data;
-    std::vector<uint32_t> watchlist;
+    std::unordered_multimap<uint32_t, std::function<void(uint32_t,uint8_t,uint8_t)> > watchlist;
 };
 
