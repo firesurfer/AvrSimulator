@@ -8,7 +8,7 @@ const int UDRE=5;
 Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
 {
     mapper->watch(UDR, std::bind(&Uart::onChange,this,_1,_2,_3));
-    mapper->watch(UDR);
+    //mapper->watch(UDR);
     //mapper->watch(UCSRA);
 }
 
