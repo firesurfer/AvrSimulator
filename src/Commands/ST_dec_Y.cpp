@@ -15,7 +15,7 @@ uint32_t ST_dec_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter, Proce
 
     uint16_t y_reg = data_memory->getYReg();
     y_reg--;
-    data_memory->setSRAM(y_reg,data_memory->getRegister(reg));
+    data_memory->setData(y_reg,data_memory->getRegister(reg));
     data_memory->setYReg(y_reg);
 
     ProgramCounter += 1;

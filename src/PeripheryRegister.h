@@ -5,7 +5,7 @@
 class PeripheryRegister
 {
 public:
-    PeripheryRegister(PeripheryHandler* handler, MemoryMapper* mapper);
+    static void registerPeriphery(PeripheryHandler* handler, MemoryMapper* mapper);
 };
 
 #endif // PERIPHERYREGISTER_H

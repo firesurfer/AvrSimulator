@@ -2,7 +2,7 @@
 
 SBIC::SBIC(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-    command = 0xb1001100100000000;
+    command = 0b1001100100000000;
     commandMask = 0xFF00;
     numArgs = 2;
     commandSize = 1;

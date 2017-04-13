@@ -15,7 +15,7 @@ uint32_t LD_dec_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter, Proce
 
     uint16_t y_reg = data_memory->getYReg();
     y_reg -= 1;
-    data_memory->setRegister(reg,data_memory->getSRAM(y_reg));
+    data_memory->setRegister(reg,data_memory->getData(y_reg));
     data_memory->setYReg(y_reg);
 
     ProgramCounter = ProgramCounter+1;

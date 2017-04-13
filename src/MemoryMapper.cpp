@@ -39,7 +39,7 @@ uint8_t MemoryMapper::getIORegister(uint32_t reg)
     if(reg>=0x40){
         throw std::out_of_range("Only 64 IO-Registers available");
     }
-    uint8_t value = data_memory->Get(reg);
+    uint8_t value = data_memory->Get(reg+0x20);
     LOG(Debug3) << "Get IOReg 0x" << hex << reg << ": 0x" << (int)value << endl;
     return value;
 }
@@ -49,16 +49,16 @@ uint16_t MemoryMapper::getIORegister16(uint32_t reg)
     return (uint16_t)getIORegister(reg+1)<<8|getIORegister(reg);
 }
 
-uint8_t MemoryMapper::getSRAM(uint32_t pos)
+uint8_t MemoryMapper::getData(uint32_t pos)
 {
     uint8_t value = data_memory->Get(pos);
     LOG(Debug3) << "Get data address 0x" << hex << pos << ": 0x" << (int)value << endl;
     return value;
 }
 
-uint16_t MemoryMapper::getSRAM16(uint32_t pos)
+uint16_t MemoryMapper::getData16(uint32_t pos)
 {
-    return (uint16_t)getSRAM(pos+1)<<8|getSRAM(pos);
+    return (uint16_t)getData(pos+1)<<8|getData(pos);
 }
 
 uint8_t MemoryMapper::getSREG(uint8_t mask)
@@ -104,15 +104,15 @@ void MemoryMapper::setIORegister16(uint32_t reg, uint16_t val)
     setIORegister(reg+1,val>>8);
 }
 
-void MemoryMapper::setSRAM(uint32_t reg, uint8_t val)
+void MemoryMapper::setData(uint32_t reg, uint8_t val)
 {
     data_memory->Set(reg,val);
 }
 
-void MemoryMapper::setSRAM16(uint32_t reg, uint16_t val)
+void MemoryMapper::setData16(uint32_t reg, uint16_t val)
 {
-    setSRAM(reg,val);
-    setSRAM(reg+1,val>>8);
+    setData(reg,val);
+    setData(reg+1,val>>8);
 }
 
 void MemoryMapper::setSREG(uint8_t sreg, uint8_t mask)
@@ -148,7 +148,7 @@ uint16_t MemoryMapper::getZReg()
 
 uint16_t MemoryMapper::getStackPtr()
 {
-    return getSRAM16(SPL);
+    return getData16(SPL);
 }
 
 void MemoryMapper::setXReg(uint16_t data)
@@ -168,7 +168,7 @@ void MemoryMapper::setZReg(uint16_t data)
 
 void MemoryMapper::setStackPtr(uint16_t data)
 {
-    setSRAM16(SPL,data);
+    setData16(SPL,data);
 }
 
 

@@ -18,17 +18,17 @@ uint32_t LD_X::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processor
     switch(ld_x)
     {
     case 0b00:
-        data_memory->setRegister(reg,data_memory->getSRAM(x_reg));
+        data_memory->setRegister(reg,data_memory->getData(x_reg));
         //Unchanged
         break;
     case 0b01:
-        data_memory->setRegister(reg,data_memory->getSRAM(x_reg));
+        data_memory->setRegister(reg,data_memory->getData(x_reg));
         //Post increment
         x_reg++;
         break;
     case 0b10:
         x_reg--;
-        data_memory->setRegister(reg,data_memory->getSRAM(x_reg));
+        data_memory->setRegister(reg,data_memory->getData(x_reg));
         //Pre decrement
         break;
     }

@@ -5,7 +5,7 @@
 class CommandRegister
 {
 public:
-    CommandRegister(Processor* processor, MemoryMapper* mapper);
+    static void registerCommand(Processor* processor, MemoryMapper* mapper);
 };
 
 #endif // COMMANDREGISTER_H

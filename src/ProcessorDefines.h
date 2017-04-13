@@ -16,29 +16,29 @@
 
 //These addresses locate the io registers in the global address space
 //These are for a atmega32
-#define MCUCR 0x55
-#define MCUCSR 0x54
-#define SREG 0x5F
-#define SPH 0x5E
-#define SPL 0x5D
+#define MCUCR   0x55
+#define MCUCSR  0x54
+#define SREG    0x5F
+#define SPH     0x5E
+#define SPL     0x5D
 
-#define PORTA 0x3B
-#define DDRA 0x3A
-#define PINA 0x39
-#define PORTB 0x38
-#define DDRB 0x37
-#define PINB 0x36
-#define PORTC 0x35
-#define DDRC 0x34
-#define PINC 0x33
-#define PORTD 0x32
-#define DDRD 0x31
-#define PIND 0x30
+#define PORTA   0x3B
+#define DDRA    0x3A
+#define PINA    0x39
+#define PORTB   0x38
+#define DDRB    0x37
+#define PINB    0x36
+#define PORTC   0x35
+#define DDRC    0x34
+#define PINC    0x33
+#define PORTD   0x32
+#define DDRD    0x31
+#define PIND    0x30
 
-#define UDR 0x2C
-#define UCSRA 0x2B
-#define UCSRB 0x2A
-#define UBRRL 0x29
+#define UDR     0x2C
+#define UCSRA   0x2B
+#define UCSRB   0x2A
+#define UBRRL   0x29
 
 
 #define SREG_I 7

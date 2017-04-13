@@ -15,7 +15,7 @@ uint32_t LDD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processo
     uint8_t reg = (instruction>>4) & 0x1F;
 
     uint16_t y_reg = data_memory->getYReg();
-    data_memory->setRegister(reg,data_memory->getSRAM(y_reg+offset));
+    data_memory->setRegister(reg,data_memory->getData(y_reg+offset));
 
     ProgramCounter += 1;
     return 2;

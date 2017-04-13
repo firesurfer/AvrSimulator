@@ -21,7 +21,7 @@ uint32_t ADIW::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processor
     uint8_t sreg = 0;
 
     Rdl = additionFlags(Rdl,summand,sreg);
-    Rdh = additionFlags(Rdh,0,sreg);
+    Rdh = additionFlags(Rdh,0,sreg,true);
     data_memory->setRegister(addrRd,Rdl);
     data_memory->setRegister(addrRd+1,Rdh);
     data_memory->setSREG(sreg,MASK_S|MASK_V|MASK_N|MASK_Z|MASK_C);

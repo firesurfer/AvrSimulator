@@ -15,7 +15,7 @@ uint32_t STD_Z::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processo
     uint8_t reg = (instruction>>4) & 0x1F;
 
     uint16_t z_reg = data_memory->getZReg();
-    data_memory->setSRAM(z_reg+offset,data_memory->getRegister(reg));
+    data_memory->setData(z_reg+offset,data_memory->getRegister(reg));
 
     ProgramCounter += 1;
     return 2;
