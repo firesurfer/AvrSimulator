@@ -13,7 +13,7 @@ uint32_t STS::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorF
 {
     uint8_t reg = (instruction>>4) & 0x1F;
     uint16_t address = data_memory->getProgramMemory()->Get(ProgramCounter+1);
-    data_memory->setSRAM(address,data_memory->getRegister(reg));
+    data_memory->setData(address,data_memory->getRegister(reg));
     ProgramCounter = ProgramCounter+2;
     return 2;
 }

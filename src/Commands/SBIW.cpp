@@ -21,7 +21,7 @@ uint32_t SBIW::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processor
     uint8_t sreg = 0;
 
     Rdl = subtractionFlags(Rdl,summand,sreg);
-    Rdh = subtractionFlags(Rdh,0,sreg);
+    Rdh = subtractionFlags(Rdh,0,sreg,true);
     data_memory->setRegister(addrRd,Rdl);
     data_memory->setRegister(addrRd+1,Rdh);
     data_memory->setSREG(sreg,MASK_S|MASK_V|MASK_N|MASK_Z|MASK_C);

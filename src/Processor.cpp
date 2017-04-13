@@ -20,10 +20,10 @@ bool Processor::ExecuteStep()
     {
         int sp1=0,sp2=0,sp=this->memory_mapper->getStackPtr();
         try{
-            sp1 = this->memory_mapper->getSRAM(sp+1);
+            sp1 = this->memory_mapper->getData(sp+1);
         }catch(...){sp1=-1;}
         try{
-            sp2 = this->memory_mapper->getSRAM(sp+2);
+            sp2 = this->memory_mapper->getData(sp+2);
         }catch(...){sp2=-1;}
         LOG(Debug) << "SREG: 0x" << hex << (int)this->memory_mapper->getSREG();
         LOG_APPEND << "  Stackptr: 0x" << hex << sp;
@@ -52,6 +52,7 @@ bool Processor::ExecuteStep()
             LOG(Info) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
             cycles = next_command->Execute(instruction,this->program_counter, flags);
         }else{
+            LOG(Info) << "skipping 0x" << hex <<program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
             cycles = next_command->CommandSize();
             program_counter += next_command->CommandSize();
             flags.skipNextInstruction = false;

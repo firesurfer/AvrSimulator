@@ -8,7 +8,7 @@ class PeripheryElement
 public:
     PeripheryElement(MemoryMapper* mapper);
     virtual void handle(uint32_t cycles);
-private:
+protected:
     MemoryMapper* mem_mapper;
 };
 

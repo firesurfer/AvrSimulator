@@ -17,7 +17,7 @@ uint32_t STD_Y::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processo
 
     uint16_t y_reg = data_memory->getYReg();
 
-    data_memory->setSRAM(y_reg+offset,data_memory->getRegister(reg));
+    data_memory->setData(y_reg+offset,data_memory->getRegister(reg));
 
     ProgramCounter += 1;
     return 2;

@@ -29,6 +29,7 @@
 #include "Commands/ROR.h"
 #include "Commands/SBC.h"
 #include "Commands/SBIC.h"
+#include "Commands/SBIS.h"
 #include "Commands/SBI.h"
 #include "Commands/SBIW.h"
 #include "Commands/SUB.h"
@@ -42,6 +43,8 @@
 #include "Commands/PUSH.h"
 #include "Commands/RCALL.h"
 #include "Commands/SPM.h"
+#include "Commands/LPM.h"
+#include "Commands/LPM_R0.h"
 #include "Commands/BREAK.h"
 
 #include "Commands/ST_dec_Y.h"
@@ -55,17 +58,22 @@
 #include "Commands/STD_Z.h"
 #include "Commands/STS.h"
 
+#include "Commands/LD_X.h"
+#include "Commands/LD_Y.h"
+#include "Commands/LD_Z.h"
 #include "Commands/LDD_Y.h"
 #include "Commands/LDD_Z.h"
 #include "Commands/LD_dec_Y.h"
 #include "Commands/LD_dec_Z.h"
+#include "Commands/LD_Y_inc.h"
+#include "Commands/LD_Z_inc.h"
 
 #include "Commands/MUL.h"
 #include "Commands/MULS.h"
 #include "Commands/MOV.h"
 #include "Commands/MOVW.h"
 
-CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
+void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper)
 {
     processor->RegisterCommand(new RJMP(mapper));
     processor->RegisterCommand(new NOP(mapper));
@@ -97,6 +105,7 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new ROR(mapper));
     processor->RegisterCommand(new SBC(mapper));
     processor->RegisterCommand(new SBIC(mapper));
+    processor->RegisterCommand(new SBIS(mapper));
     processor->RegisterCommand(new SBI(mapper));
     processor->RegisterCommand(new SBIW(mapper));
     processor->RegisterCommand(new SUB(mapper));
@@ -110,6 +119,8 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new PUSH(mapper));
     processor->RegisterCommand(new RCALL(mapper));
     processor->RegisterCommand(new SPM(mapper));
+    processor->RegisterCommand(new LPM(mapper));
+    processor->RegisterCommand(new LPM_R0(mapper));
     processor->RegisterCommand(new BREAK(mapper));
 
 
@@ -124,8 +135,13 @@ CommandRegister::CommandRegister(Processor *processor, MemoryMapper *mapper)
     processor->RegisterCommand(new STD_Z(mapper));
     processor->RegisterCommand(new STS(mapper));
 
+    processor->RegisterCommand(new LD_X(mapper));
+    processor->RegisterCommand(new LD_Y(mapper));
+    processor->RegisterCommand(new LD_Z(mapper));
     processor->RegisterCommand(new LDD_Y(mapper));
     processor->RegisterCommand(new LDD_Z(mapper));
+    processor->RegisterCommand(new LD_Y_inc(mapper));
+    processor->RegisterCommand(new LD_Z_inc(mapper));
     processor->RegisterCommand(new LD_dec_Y(mapper));
     processor->RegisterCommand(new LD_dec_Z(mapper));
 

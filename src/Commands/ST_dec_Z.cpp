@@ -15,7 +15,7 @@ uint32_t ST_dec_Z::Execute(uint16_t instruction, uint16_t &ProgramCounter, Proce
 
     uint16_t z_reg = data_memory->getZReg();
     z_reg--;
-    data_memory->setSRAM(z_reg,data_memory->getRegister(reg));
+    data_memory->setData(z_reg,data_memory->getRegister(reg));
     data_memory->setZReg(z_reg);
 
     ProgramCounter += 1;

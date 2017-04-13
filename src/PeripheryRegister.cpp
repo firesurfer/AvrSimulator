@@ -2,7 +2,7 @@
 
 #include "Periphery/IOPort.h"
 #include "Periphery/Uart.h"
-PeripheryRegister::PeripheryRegister(PeripheryHandler *handler, MemoryMapper *mapper)
+void PeripheryRegister::registerPeriphery(PeripheryHandler *handler, MemoryMapper *mapper)
 {
     handler->addPeripheryElement(new Uart(mapper));
 }

@@ -16,8 +16,8 @@ public:
     uint16_t getRegister16(uint32_t reg);
     uint8_t getIORegister(uint32_t reg);
     uint16_t getIORegister16(uint32_t reg);
-    uint8_t getSRAM(uint32_t pos);
-    uint16_t getSRAM16(uint32_t pos);
+    uint8_t getData(uint32_t pos);
+    uint16_t getData16(uint32_t pos);
     uint8_t getSREG(uint8_t mask=0xFF);
     uint8_t popStack();
 
@@ -25,8 +25,8 @@ public:
     void setRegister16(uint32_t reg, uint16_t val);
     void setIORegister(uint32_t reg, uint8_t val);
     void setIORegister16(uint32_t reg, uint16_t val);
-    void setSRAM(uint32_t reg, uint8_t val);
-    void setSRAM16(uint32_t reg, uint16_t val);
+    void setData(uint32_t reg, uint8_t val);
+    void setData16(uint32_t reg, uint16_t val);
     void setSREG(uint8_t sreg, uint8_t mask=0xFF);
     void pushStack(uint8_t data);
 
@@ -38,6 +38,18 @@ public:
     void setYReg(uint16_t data);
     void setZReg(uint16_t data);
     void setStackPtr(uint16_t data);
+
+    ///
+    /// \brief watch write accesses to a specific address and print a message or call a function
+    /// \param address to be monitored
+    /// \param callback to be registered (optional), if empty, write a log message on change
+    ///                 callback gets the address, the old and the new value as parameters
+    ///
+    void watch(uint32_t address, std::function<void(uint32_t,uint8_t,uint8_t)> callback=nullptr){
+        if(data_memory)
+            data_memory->watch(address, callback);
+    }
+
 
 private:
     DataMemory* data_memory;

@@ -15,7 +15,7 @@ uint32_t LDD_Z::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processo
     uint8_t reg = (instruction>>4) & 0x1F;
 
     uint16_t z_reg = data_memory->getZReg();
-    data_memory->setRegister(reg,data_memory->getSRAM(z_reg+offset));
+    data_memory->setRegister(reg,data_memory->getData(z_reg+offset));
 
     ProgramCounter += 1;
     return 2;

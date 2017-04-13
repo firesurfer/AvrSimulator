@@ -11,10 +11,10 @@ MOVW::MOVW(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint32_t MOVW::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
-    uint8_t src = (instruction & 0xF) | ((instruction & 0x0200) >> 5);
-    uint8_t dest = (instruction & 0x1F0) >> 4;
-    data_memory->setRegister(dest,data_memory->getRegister(src));
-    data_memory->setRegister(dest+1,data_memory->getRegister(src+1));
+    uint8_t src = (instruction & 0xF);
+    uint8_t dest = (instruction & 0xF0) >> 4;
+    data_memory->setRegister(dest*2,data_memory->getRegister(src*2));
+    data_memory->setRegister(dest*2+1,data_memory->getRegister(src*2+1));
     ProgramCounter+=1;
     return 1;
 }

@@ -20,7 +20,7 @@ uint32_t CPC::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorF
     uint8_t Rd = data_memory->getRegister(addrRd);
     uint8_t sreg = data_memory->getSREG(MASK_C|MASK_Z);
 
-    subtractionFlags(Rd,Rr,sreg);
+    subtractionFlags(Rd,Rr,sreg,true);
     data_memory->setSREG(sreg,MASK_H|MASK_S|MASK_V|MASK_N|MASK_Z|MASK_C);
 
     ProgramCounter += 1;

@@ -12,8 +12,8 @@ namespace FlagCalculator
 /// \param sreg optional previos sreg state with V Flag for S flag or Z flag for 16bit Zflag
 /// \return temporary SREG with Z,N and S flag, other flags are 0
 ///
-uint8_t simpleFlags(uint8_t value,uint8_t sreg){
-    if(value==0 && bit_set(sreg,SREG_Z))
+uint8_t simpleFlags(uint8_t value, uint8_t sreg, bool wordcheck){
+    if(value==0 && (!wordcheck || bit_set(sreg,SREG_Z)))
         set_bit(sreg,SREG_Z);
     else
         clear_bit(sreg,SREG_Z);
@@ -38,7 +38,7 @@ uint8_t simpleFlags(uint8_t value,uint8_t sreg){
 /// \param sreg optional previos SREG value for carryadd/16bit operations
 /// \return SREG with calculated flags, other Flags are 0
 ///
-uint8_t additionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg){
+uint8_t additionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg, bool wordcheck){
     if(((r1&0xF)+(r2&0xF)+bit_set(sreg,SREG_C))&0x10)
         set_bit(sreg,SREG_H);
     else
@@ -55,11 +55,11 @@ uint8_t additionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg){
     else
         clear_bit(sreg,SREG_V);
 
-    sreg = simpleFlags(res, sreg);
+    sreg = simpleFlags(res, sreg, wordcheck);
     return res;
 }
 
-uint8_t subtractionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg){
+uint8_t subtractionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg, bool wordcheck){
     if((r1&0xF)<((r2&0xF)+bit_set(sreg,SREG_C)))
         set_bit(sreg,SREG_H);
     else
@@ -76,7 +76,7 @@ uint8_t subtractionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg){
     else
         clear_bit(sreg,SREG_V);
 
-    sreg = simpleFlags(res, sreg);
+    sreg = simpleFlags(res, sreg, wordcheck);
     return res;
 }
 
