@@ -56,19 +56,10 @@ void uart_puts_p(const char *progmem_s )
 
 int main(void)
 {
-    volatile char x='\n';
     uart_init();
     uart_puts("Hallo");
     uart_putc(' ');
-    uart_puts("Welt!\n");
-    uart_puts_p(PSTR("Hi\n"));
-    
-    uart_putc('H');
-    uart_putc('a');
-    uart_putc('l');
-    uart_putc('l');
-    uart_putc('o');
-    uart_putc(x);
-    while(1);
+    uart_puts_p(PSTR("Welt!\n"));
+
     return 0;
 }
