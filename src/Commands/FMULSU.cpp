@@ -2,8 +2,8 @@
 
 FMULSU::FMULSU(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-    command = 0b0001110000000000;
-    commandMask = 0b1111110000000000;
+    command = 0b0000001110001000;
+    commandMask = 0xFF88;
     numArgs = 2;
     commandSize = 1;
     name = "FMULSU";
@@ -11,35 +11,20 @@ FMULSU::FMULSU(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint32_t FMULSU::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
-  /*  uint8_t & sreg = SpecialRegisters[SREG];
-    uint8_t registers = (uint8_t)(instruction >> 8);
-    uint8_t regd = registers & 0xF0;
-    uint8_t regr = registers >> 4;
-    if(BitHelpers::bit_set(registers, 7))
-    {
-        regd+=16;
-    }
-    if(BitHelpers::bit_set(registers,8))
-    {
-        regr+=16;
-    }
-    uint8_t temp = Registers[regd] + Registers[regr];
-    if(BitHelpers::bit_set(Registers[regd],3)&& BitHelpers::bit_set(Registers[regr],3)|| BitHelpers::bit_set(Registers[regr],3) && !BitHelpers::bit_set(temp,3) || !BitHelpers::bit_set(temp,3) && BitHelpers::bit_set(Registers[regd],3))
-        BitHelpers::set_bit(sreg,SREG_H);
-    if(BitHelpers::bit_set(temp,7))
-        BitHelpers::set_bit(sreg,SREG_N);
-    if(BitHelpers::bit_set(sreg, SREG_N) != BitHelpers::bit_set(sreg,SREG_V))
-        BitHelpers::set_bit(sreg,SREG_S);
-    if(temp = 0)
-        BitHelpers::set_bit(sreg,SREG_Z);
-    else
-        BitHelpers::clear_bit(sreg,SREG_Z);
-    if(BitHelpers::bit_set(Registers[regd],7) && BitHelpers::bit_set(Registers[regr],7) || BitHelpers::bit_set(Registers[regr],7)  && !BitHelpers::bit_set(temp,7) || !BitHelpers::bit_set(temp,7), BitHelpers::bit_set(Registers[regd],7))
-        BitHelpers::set_bit(sreg,SREG_C);
-    if(BitHelpers::bit_set(Registers[regd],7)&& BitHelpers::bit_set(Registers[regr],7) && !BitHelpers::bit_set(temp,7) || !BitHelpers::bit_set(Registers[regd],7) || !BitHelpers::bit_set(Registers[regr],7) || BitHelpers::bit_set(temp,7))
-        BitHelpers::set_bit(sreg,SREG_V);
-
-
-    Registers[regd] = temp;*/
-    return ProgramCounter+1;
+    uint8_t reg1 = (instruction & 0x7) +16;
+    uint8_t reg2 = ((instruction & 0x70)>>4)+16;
+    int16_t result = (uint8_t)data_memory->getRegister(reg1) * (int8_t)data_memory->getRegister(reg2);
+    uint8_t sreg = 0;
+    if(BIT_SET((uint16_t)result,15))
+        sreg |= MASK_C;
+    result <<=1;
+    if(result == 0)
+        sreg |= MASK_Z;
+    data_memory->setSREG(sreg,MASK_C|MASK_Z);
+    uint8_t high_byte = (uint8_t)(result >>7);
+    uint8_t low_byte = (uint8_t) result;
+    data_memory->setRegister(R0+1,high_byte);
+    data_memory->setRegister(R0, low_byte);
+    ProgramCounter+=1;
+    return 2;
 }
