@@ -70,6 +70,10 @@
 
 #include "Commands/MUL.h"
 #include "Commands/MULS.h"
+#include "Commands/MULSU.h"
+#include "Commands/FMUL.h"
+#include "Commands/FMULS.h"
+#include "Commands/FMULSU.h"
 #include "Commands/MOV.h"
 #include "Commands/MOVW.h"
 
@@ -147,7 +151,10 @@ void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper
 
     processor->RegisterCommand(new MUL(mapper));
     processor->RegisterCommand(new MULS(mapper));
-
+    processor->RegisterCommand(new MULSU(mapper));
+    processor->RegisterCommand(new FMUL(mapper));
+    processor->RegisterCommand(new FMULS(mapper));
+    processor->RegisterCommand(new FMULSU(mapper));
 
     processor->RegisterCommand(new MOV(mapper));
     processor->RegisterCommand(new MOVW(mapper));
