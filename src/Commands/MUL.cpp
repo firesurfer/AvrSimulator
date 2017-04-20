@@ -14,12 +14,12 @@ uint32_t MUL::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorF
     uint8_t reg1 = (instruction & 0xF) | ((instruction & 0x200) >> 5);
     uint8_t reg2 = (instruction & 0x1F0)>>4;
     uint16_t result = data_memory->getRegister(reg1) * data_memory->getRegister(reg2);
-    uint8_t sreg = data_memory->getSREG();
-    if(BIT_SET(result,15))
-        sreg |= (1<<SREG_C);
+    uint8_t sreg = 0;
+    if(BIT_SET((uint16_t)result,15))
+        sreg |= MASK_C;
     if(result == 0)
-        sreg |= (1<<SREG_Z);
-    data_memory->setSREG(sreg);
+        sreg |= MASK_Z;
+    data_memory->setSREG(sreg,MASK_C|MASK_Z);
     uint8_t high_byte = (uint8_t)(result >>8);
     uint8_t low_byte = (uint8_t) result;
     data_memory->setRegister(R0+1,high_byte);
