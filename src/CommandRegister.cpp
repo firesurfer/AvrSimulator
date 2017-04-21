@@ -22,6 +22,7 @@
 #include "Commands/DEC.h"
 #include "Commands/EOR.h"
 #include "Commands/INC.h"
+#include "Commands/ASR.h"
 #include "Commands/LSR.h"
 #include "Commands/NEG.h"
 #include "Commands/OR.h"
@@ -30,6 +31,9 @@
 #include "Commands/SBC.h"
 #include "Commands/SBIC.h"
 #include "Commands/SBIS.h"
+#include "Commands/SBRC.h"
+#include "Commands/SBRS.h"
+#include "Commands/CPSE.h"
 #include "Commands/SBI.h"
 #include "Commands/SBIW.h"
 #include "Commands/SUB.h"
@@ -103,6 +107,7 @@ void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper
     processor->RegisterCommand(new EOR(mapper));
     processor->RegisterCommand(new INC(mapper));
     processor->RegisterCommand(new LSR(mapper));
+    processor->RegisterCommand(new ASR(mapper));
     processor->RegisterCommand(new NEG(mapper));
     processor->RegisterCommand(new OR(mapper));
     processor->RegisterCommand(new ORI(mapper));
@@ -110,6 +115,9 @@ void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper
     processor->RegisterCommand(new SBC(mapper));
     processor->RegisterCommand(new SBIC(mapper));
     processor->RegisterCommand(new SBIS(mapper));
+    processor->RegisterCommand(new SBRC(mapper));
+    processor->RegisterCommand(new SBRS(mapper));
+    processor->RegisterCommand(new CPSE(mapper));
     processor->RegisterCommand(new SBI(mapper));
     processor->RegisterCommand(new SBIW(mapper));
     processor->RegisterCommand(new SUB(mapper));

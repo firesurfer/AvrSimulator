@@ -24,7 +24,7 @@ uint32_t ASR::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorF
         set_bit(sreg,SREG_C);
     else
         clear_bit(sreg,SREG_C);
-    Rd = (int8_t)Rd/2;
+    Rd = (Rd&0x80) | (Rd>>1);
     sreg = shiftFlags(Rd,sreg);
     data_memory->setRegister(addrRd,Rd);
     data_memory->setSREG(sreg,MASK_S|MASK_V|MASK_N|MASK_Z|SREG_C);
