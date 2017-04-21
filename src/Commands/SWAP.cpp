@@ -11,7 +11,7 @@ SWAP::SWAP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint32_t SWAP::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
-    uint8_t reg = (instruction & !commandMask) >> 4;
+    uint8_t reg = (instruction & ~commandMask) >> 4;
     uint8_t value = data_memory->getRegister(reg);
     uint8_t lownibble = value & 0b00001111;
     uint8_t highnibble = value & 0b11110000;
