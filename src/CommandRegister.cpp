@@ -80,6 +80,7 @@
 #include "Commands/FMULSU.h"
 #include "Commands/MOV.h"
 #include "Commands/MOVW.h"
+#include "Commands/SWAP.h"
 
 void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper)
 {
@@ -166,5 +167,6 @@ void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper
 
     processor->RegisterCommand(new MOV(mapper));
     processor->RegisterCommand(new MOVW(mapper));
+    processor->RegisterCommand(new SWAP(mapper));
 
 }
