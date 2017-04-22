@@ -82,11 +82,12 @@ uint8_t subtractionFlags(uint8_t r1, uint8_t r2, uint8_t &sreg, bool wordcheck){
 
 uint8_t shiftFlags(uint8_t value, uint8_t sreg)
 {
-    sreg = simpleFlags(value,sreg);
+    sreg = simpleFlags(value,sreg);//for Z and N
     if(bit_set(sreg,SREG_N)^bit_set(sreg,SREG_C))
         set_bit(sreg,SREG_V);
     else
         clear_bit(sreg,SREG_V);
+    sreg = simpleFlags(value,sreg);//for S
     return sreg;
 }
 

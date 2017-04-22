@@ -43,12 +43,15 @@
 #include "Commands/LDI.h"
 #include "Commands/CALL.h"
 #include "Commands/RET.h"
+#include "Commands/RETI.h"
 #include "Commands/POP.h"
 #include "Commands/PUSH.h"
 #include "Commands/RCALL.h"
 #include "Commands/SPM.h"
 #include "Commands/LPM.h"
 #include "Commands/LPM_R0.h"
+#include "Commands/SLEEP.h"
+#include "Commands/WDR.h"
 #include "Commands/BREAK.h"
 
 #include "Commands/ST_dec_Y.h"
@@ -71,6 +74,11 @@
 #include "Commands/LD_dec_Z.h"
 #include "Commands/LD_Y_inc.h"
 #include "Commands/LD_Z_inc.h"
+
+#include "Commands/LAC.h"
+#include "Commands/LAS.h"
+#include "Commands/LAT.h"
+#include "Commands/XCH.h"
 
 #include "Commands/MUL.h"
 #include "Commands/MULS.h"
@@ -128,14 +136,16 @@ void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper
     processor->RegisterCommand(new LDI(mapper));
     processor->RegisterCommand(new CALL(mapper));
     processor->RegisterCommand(new RET(mapper));
+    processor->RegisterCommand(new RETI(mapper));
     processor->RegisterCommand(new POP(mapper));
     processor->RegisterCommand(new PUSH(mapper));
     processor->RegisterCommand(new RCALL(mapper));
     processor->RegisterCommand(new SPM(mapper));
     processor->RegisterCommand(new LPM(mapper));
     processor->RegisterCommand(new LPM_R0(mapper));
+    processor->RegisterCommand(new SLEEP(mapper));
+    processor->RegisterCommand(new WDR(mapper));
     processor->RegisterCommand(new BREAK(mapper));
-
 
     processor->RegisterCommand(new ST_dec_Y(mapper));
     processor->RegisterCommand(new ST_dec_Z(mapper));
@@ -157,6 +167,11 @@ void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper
     processor->RegisterCommand(new LD_Z_inc(mapper));
     processor->RegisterCommand(new LD_dec_Y(mapper));
     processor->RegisterCommand(new LD_dec_Z(mapper));
+
+    processor->RegisterCommand(new LAC(mapper));
+    processor->RegisterCommand(new LAS(mapper));
+    processor->RegisterCommand(new LAT(mapper));
+    processor->RegisterCommand(new XCH(mapper));
 
     processor->RegisterCommand(new MUL(mapper));
     processor->RegisterCommand(new MULS(mapper));

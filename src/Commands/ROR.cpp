@@ -21,12 +21,12 @@ uint32_t ROR::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorF
     uint8_t sreg = data_memory->getSREG(MASK_C);
     uint8_t temp = 0;
     if(sreg)temp=0x80;
-
     if(Rd&0x01)
         set_bit(sreg,SREG_C);
     else
         clear_bit(sreg,SREG_C);
     Rd >>= 1;
+    Rd |= temp;
     sreg = shiftFlags(Rd,sreg);
     data_memory->setRegister(addrRd,Rd);
     data_memory->setSREG(sreg,MASK_S|MASK_V|MASK_N|MASK_Z|SREG_C);

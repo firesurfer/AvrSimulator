@@ -18,7 +18,7 @@ uint32_t BSET::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processor
 {
     uint8_t bit = (instruction>>4)&0x07;
 
-    data_memory->setSREG(1<<bit);
+    data_memory->setSREG(1<<bit,1<<bit);
 
     ProgramCounter += 1;
     return 1;

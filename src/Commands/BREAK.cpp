@@ -17,6 +17,7 @@ uint32_t BREAK::Execute(uint16_t instruction, uint16_t &ProgramCounter, Processo
 #else
     //We do nothing
 #endif
+    LOG(Info) << "Breakpoint" << std::endl;
     ProgramCounter+=1;
     return 1;
 }

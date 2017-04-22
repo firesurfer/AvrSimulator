@@ -21,7 +21,7 @@ uint32_t BST::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorF
     uint8_t Rd = data_memory->getRegister(addrRd);
     uint8_t sreg = 0;
     if(bit_set(Rd,bit))
-        sreg = 0xFF;
+        sreg = MASK_T;
     data_memory->setSREG(sreg,MASK_T);
 
     ProgramCounter += 1;
