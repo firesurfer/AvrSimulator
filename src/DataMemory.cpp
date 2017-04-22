@@ -31,23 +31,26 @@ uint8_t DataMemory::Get(uint32_t address)
         throw out_of_range("SRAM Get: Argument out of range!");
 }
 
-void DataMemory::Set(uint32_t address, uint8_t value)
+void DataMemory::Set(uint32_t address, uint8_t value, bool watch)
 {
     if(address < size)
     {
-        bool watched = false;
-        auto range = watchlist.equal_range(address);
-        for(auto it = range.first; it != range.second; ++it){
-            if(it->second)
-                it->second(address, data[address], value);
+        if(watch)
+        {
+            bool watched = false;
+            auto range = watchlist.equal_range(address);
+            for(auto it = range.first; it != range.second; ++it){
+                if(it->second)
+                    it->second(address, data[address], value);
+                else
+                    watched=true;
+            }
+            if(watched)
+                LOG(Important)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
             else
-                watched=true;
+                LOG(Debug2)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
+            data[address] = value;
         }
-        if(watched)
-            LOG(Important)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
-        else
-            LOG(Debug2)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
-        data[address] = value;
     }
     else
         throw out_of_range("SRAM Set: Argument out of range!");

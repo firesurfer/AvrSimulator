@@ -18,7 +18,7 @@ public:
     uint32_t GetSize();
 
     uint8_t Get(uint32_t address);
-    void Set(uint32_t address, uint8_t value);
+    void Set(uint32_t address, uint8_t value, bool watch = true);
     uint8_t *GetDataPtr();
 
     ///
