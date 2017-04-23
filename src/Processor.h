@@ -8,6 +8,7 @@
 #include "ProcessorDefines.h"
 #include "Commands/CommandBase.h"
 #include "PeripheryHandler.h"
+#include "InterruptController.h"
 #include "Logger/Logger.h"
 #include "Decoder.h"
 #include "processorflags.h"
@@ -26,6 +27,7 @@ private:
     ProgramMemory * program_memory;
     MemoryMapper * memory_mapper;
     PeripheryHandler* periph_handler;
+    InterruptController intController;
     std::vector<CommandBase*> commands;
     Decoder* decoder;
     ProcessorFlags flags;

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_handler)
+Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_handler):intController(_memory_mapper)
 {
     this->program_counter = 0;
     this->memory_mapper = _memory_mapper;
@@ -58,6 +58,7 @@ bool Processor::ExecuteStep()
             flags.skipNextInstruction = false;
         }
         this->periph_handler->handlePeriphery(cycles);
+        intController.handleInterrupts(cycles,program_counter,flags);
 
         return true;
     }
