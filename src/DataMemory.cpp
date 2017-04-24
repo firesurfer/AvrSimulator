@@ -36,22 +36,24 @@ void DataMemory::Set(uint32_t address, uint8_t value, bool watch)
     if(address < size)
     {
         bool watched = false;
+        uint8_t ref = value;
         if(watch)
         {
             auto range = watchlist.equal_range(address);
             for(auto it = range.first; it != range.second; ++it){
                 if(it->second)
-                    it->second(address, data[address], value);
+                    it->second(address, data[address], value, ref);
                 else
                     watched=true;
             }
-        }
-        if(watched)
-            LOG(Important)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
-        else
-            LOG(Debug2)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
+            if(watched)
+                LOG(Important)<<"watched change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
+            else
+                LOG(Debug2)<<"Change of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
+        }else
+            LOG(Debug3)<<"Direct access of addr 0x"<<hex<<address<< " from 0x"<<(int)data[address]<< " to 0x" <<(int)value << endl;
 
-        data[address] = value;
+        data[address] = ref;
     }
     else
         throw out_of_range("SRAM Set: Argument out of range!");
@@ -62,7 +64,7 @@ uint8_t *DataMemory::GetDataPtr()
     return data;
 }
 
-void DataMemory::watch(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t)> callback)
+void DataMemory::watch(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t&)> callback)
 {
     watchlist.emplace(address, callback);
 }

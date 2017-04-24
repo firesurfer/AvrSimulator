@@ -27,12 +27,12 @@ public:
     /// \param callback to be registered (optional), if empty, write a log message on change
     ///                 callback gets the address, the old and the new value as parameters
     ///
-    void watch(uint32_t address, std::function<void(uint32_t,uint8_t,uint8_t)> callback=nullptr);
+    void watch(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t &)> callback=nullptr);
 
 private:
     uint32_t size;
     uint32_t offset;
     uint8_t* data;
-    std::unordered_multimap<uint32_t, std::function<void(uint32_t,uint8_t,uint8_t)> > watchlist;
+    std::unordered_multimap<uint32_t, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t &)> > watchlist;
 };
 

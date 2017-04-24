@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     DataMemory * dataMemory = new DataMemory(2048+0x60,0);
 
     //dataMemory->watch(0x5F); //Print important Message when changed
-    dataMemory->watch(0x5F,[](uint32_t adr,uint8_t old, uint8_t nw){if(old!=nw)LOG(Important)<<"SREG changed: "<<(int)old<<" -> "<<(int)nw<<std::endl;});//call this lambda expression when changed
+    dataMemory->watch(0x5F,[](uint32_t adr,uint8_t old, uint8_t nw,uint8_t &ref){if(old!=nw)LOG(Important)<<"SREG changed: "<<(int)old<<" -> "<<(int)nw<<std::endl;});//call this lambda expression when changed
 
     ProgramMemory * programMemory;
 

@@ -45,7 +45,7 @@ public:
     /// \param callback to be registered (optional), if empty, write a log message on change
     ///                 callback gets the address, the old and the new value as parameters
     ///
-    void watch(uint32_t address, std::function<void(uint32_t,uint8_t,uint8_t)> callback=nullptr){
+    void watch(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t &)> callback=nullptr){
         if(data_memory)
             data_memory->watch(address, callback);
     }
