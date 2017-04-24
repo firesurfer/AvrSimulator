@@ -48,10 +48,10 @@ int main(int argc, char* argv[])
             programMemoryPath = std::string(argv[i]);
     }
     LOGLEVEL(loglevel);
-    DataMemory * dataMemory = new DataMemory(2048+0x60,0);
+    DataMemory dataMemory(2048+0x60,0);
 
     //dataMemory->watch(0x5F); //Print important Message when changed
-    dataMemory->watch(0x5F,[](uint32_t adr,uint8_t old, uint8_t nw,uint8_t &ref){if(old!=nw)LOG(Important)<<"SREG changed: "<<(int)old<<" -> "<<(int)nw<<std::endl;});//call this lambda expression when changed
+    dataMemory.watch(0x5F,[](uint32_t adr,uint8_t old, uint8_t nw,uint8_t &ref){if(old!=nw)LOG(Important)<<"SREG changed: "<<(int)old<<" -> "<<(int)nw<<std::endl;});//call this lambda expression when changed
 
     ProgramMemory * programMemory;
 
@@ -65,15 +65,16 @@ int main(int argc, char* argv[])
     {
         throw std::runtime_error("Please pass program memory path as first argument!");
     }
-    MemoryMapper *dataMapper = new MemoryMapper(dataMemory, programMemory);
-    PeripheryHandler* periphHandler = new PeripheryHandler(dataMapper);
-    PeripheryRegister::registerPeriphery(periphHandler,dataMapper);
-    Processor * processor = new Processor( dataMapper,periphHandler);
-    CommandRegister::registerCommand(processor,dataMapper);
-    processor->PrintRegisteredCommands();
+    MemoryMapper dataMapper(&dataMemory, programMemory);
+    PeripheryHandler periphHandler(&dataMapper);
+    InterruptController intController(&dataMapper);
+    PeripheryRegister::registerPeriphery(&periphHandler, &dataMapper, &intController);
+    Processor processor( &dataMapper, &periphHandler, &intController);
+    CommandRegister::registerCommand(&processor, &dataMapper);
+    processor.PrintRegisteredCommands();
     LOG(LogLevel::Info) << "Starting execution" << std::endl;
     int count_steps=0;
-    while(processor->ExecuteStep()&&count_steps<102400)
+    while(processor.ExecuteStep()&&count_steps<102400)
     {
         count_steps++;
     }
@@ -81,8 +82,5 @@ int main(int argc, char* argv[])
     LOG(LogLevel::Info) << "Finished execution" << std::endl;
     LOG(LogLevel::Info) << "Execution steps:   " << count_steps << std::endl;
     LOG(LogLevel::Info) << "Exit!" << std::endl;
-    delete processor;
-    delete dataMemory;
     delete programMemory;
-
 }

@@ -10,7 +10,7 @@ public:
     void handle(uint32_t cycles);
 
 private:
-    void onChange(uint32_t addr, uint8_t oldval, uint8_t newval);
+    void onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref);
     std::string buffer;
 };
 

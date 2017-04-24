@@ -2,12 +2,13 @@
 
 using namespace std;
 
-Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_handler):intController(_memory_mapper)
+Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_handler, InterruptController *_intcontrl)
 {
     this->program_counter = 0;
     this->memory_mapper = _memory_mapper;
     this->program_memory = memory_mapper->getProgramMemory();
     this->periph_handler =_periph_handler;
+    this->intController = _intcontrl;
     this->decoder = new Decoder(commands);
 }
 
@@ -57,8 +58,8 @@ bool Processor::ExecuteStep()
             program_counter += next_command->CommandSize();
             flags.skipNextInstruction = false;
         }
-        this->periph_handler->handlePeriphery(cycles);
-        intController.handleInterrupts(cycles,program_counter,flags);
+        periph_handler->handlePeriphery(cycles);
+        intController->handleInterrupts(cycles,program_counter,flags);
 
         return true;
     }

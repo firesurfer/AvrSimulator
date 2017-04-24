@@ -7,7 +7,8 @@ const int UDRE=5;
 
 Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
 {
-    mapper->watch(UDR, std::bind(&Uart::onChange,this,_1,_2,_3));
+    mapper->watch(UDR, std::bind(&Uart::onChange,this,_1,_2,_3,_4));
+    mapper->watch(UCSRA, std::bind(&Uart::onChange,this,_1,_2,_3,_4));
     //mapper->watch(UDR);
     //mapper->watch(UCSRA);
 }
@@ -18,19 +19,28 @@ void Uart::handle(uint32_t cycles)
     mem_mapper->setData(UCSRA,tmp | (1<<UDRE));
 }
 
-void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval)
+void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
 {
-    if(addr!=UDR){
+    if(addr==UDR){
+        LOG(Info)<<"Uart: '"<<newval<<"'"<<endl;
+        if((mem_mapper->getData(UCSRA)>>UDRE) & 1){
+            if(newval=='\n'){
+                LOG(Important)<<"UART: "<<buffer<<endl;
+                buffer="";
+            }else
+                buffer+=newval;
+        }
+    }else if(addr==UCSRA){
+        if(newval & (1<<UDRE)){
+            ref &= ~(1<<UDRE);
+        }else{
+            if(oldval & (1<<UDRE))
+                ref |= (1<<UDRE);
+            else
+                ref &= ~(1<<UDRE);
+        }
+    }else{
         LOG(Fatal)<<"Falscher callback"<<endl;
         return;
     }
-    LOG(Info)<<"Uart: '"<<newval<<"'"<<endl;
-    if((mem_mapper->getData(UCSRA)>>UDRE) & 1){
-        if(newval=='\n'){
-            LOG(Important)<<"UART: "<<buffer<<endl;
-            buffer="";
-        }else
-            buffer+=newval;
-    }
-
 }

@@ -15,7 +15,7 @@
 class Processor
 {
 public:
-    Processor(MemoryMapper* _memory_mapper, PeripheryHandler *_periph_handler);
+    Processor(MemoryMapper* _memory_mapper, PeripheryHandler *_periph_handler, InterruptController *_intcontrl);
     bool ExecuteStep();
     void RegisterCommand(CommandBase* cmd);
     void PrintRegisteredCommands();
@@ -27,7 +27,7 @@ private:
     ProgramMemory * program_memory;
     MemoryMapper * memory_mapper;
     PeripheryHandler* periph_handler;
-    InterruptController intController;
+    InterruptController *intController;
     std::vector<CommandBase*> commands;
     Decoder* decoder;
     ProcessorFlags flags;
