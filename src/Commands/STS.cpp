@@ -2,7 +2,7 @@
 
 STS::STS(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 {
-    command = 0b1000001000000000;
+    command = 0b1001001000000000;
     commandMask = 0b1111111000001111;
     numArgs = 2;
     commandSize = 2;

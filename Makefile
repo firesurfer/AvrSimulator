@@ -7,6 +7,6 @@ tests:
 	mkdir -p build/tests
 	cd build/tests && cmake -DCMAKE_TOOLCHAIN_FILE=../../test/c/Toolchain-avr-gcc.cmake -DBUILD_TESTS=ON ../../test/c && make -j4
 	cp build/tests/*.hex bin/
-	cp build/tests/*.txt bin/
+	cp build/tests/*.lss bin/
 
 all: machine tests
