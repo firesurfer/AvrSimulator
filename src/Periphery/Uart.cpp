@@ -32,7 +32,7 @@ void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
         uint8_t tmp = mem_mapper->getData(UCSRA);
         mem_mapper->getDataMemory()->Set(UCSRA,tmp | (1<<UDRE),false);
     }else if(addr==UCSRA){
-        LOG(Important)<<"UCSRA changed: "<<(int)oldval<<" -> "<<(int)newval<<" : "<<(int)ref<<endl;
+        LOG(Info)<<"UCSRA changed: "<<(int)oldval<<" -> "<<(int)newval<<" : "<<(int)ref<<endl;
         //clear flag if 1 is written
         if(newval & (1<<UDRE)){
             ref &= ~(1<<UDRE);
