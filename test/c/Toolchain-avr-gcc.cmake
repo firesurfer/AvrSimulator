@@ -65,7 +65,7 @@ macro(build_ihex ELF_NAME BINDIR)
     )
 
    add_custom_target(listing_${ELF_NAME} ALL
-	COMMAND avr-objdump -s -D ${ELF_NAME}.elf > ${ELF_NAME}.txt
+	COMMAND avr-objdump -s -D ${ELF_NAME}.elf > ${ELF_NAME}.lss
     DEPENDS ${ELF_NAME}.elf
     WORKING_DIRECTORY ${BINDIR}
     VERBATIM

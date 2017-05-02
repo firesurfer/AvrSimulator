@@ -12,4 +12,4 @@ cmake -DCMAKE_TOOLCHAIN_FILE=../../test/c/Toolchain-avr-gcc.cmake -DBUILD_TESTS=
 make -j2
 
 cp *.hex ../../bin
-cp *.txt ../../bin
+cp *.lss ../../bin

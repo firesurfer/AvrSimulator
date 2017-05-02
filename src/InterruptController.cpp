@@ -9,10 +9,14 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
 {
     if(!memory_mapper->getSREG(MASK_I))
         return 0;
-    for(intvector_t & element: this->interruptVectors)
+    if(flags.skipNextInstruction)
+        return 0;
+    for(auto & it: this->interruptVectors)
     {
+        auto element = it.second;
         if(memory_mapper->getData(element.maskaddr)&(1<<element.maskbit)){
             if(memory_mapper->getData(element.flagaddr)&(1<<element.flagbit)){
+                LOG(Info)<<"UDRE interrupt started:\n";
                 uint8_t low_byte = (uint8_t)ProgramCounter;
                 uint8_t high_byte = (uint8_t)((ProgramCounter) >> 8);
                 memory_mapper->pushStack(low_byte);
@@ -32,5 +36,5 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
 
 void InterruptController::addInterruptVector(intvector_t element)
 {
-    this->interruptVectors.push_back(element);
+    this->interruptVectors.emplace(element.vectoraddress,element);
 }

@@ -2,7 +2,7 @@
 #define INTERRUPTCONTROLLER_H
 
 #include "MemoryMapper.h"
-#include <vector>
+#include <map>
 #include <processorflags.h>
 
 typedef struct{
@@ -23,7 +23,7 @@ public:
     void addInterruptVector(intvector_t element);
 private:
     MemoryMapper* memory_mapper;
-    std::vector<intvector_t> interruptVectors;
+    std::multimap<uint32_t,intvector_t> interruptVectors;
 };
 
 #endif // PERIPHERYHANDLER_H

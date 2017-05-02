@@ -29,6 +29,7 @@
 #include "Commands/ORI.h"
 #include "Commands/ROR.h"
 #include "Commands/SBC.h"
+#include "Commands/SBCI.h"
 #include "Commands/SBIC.h"
 #include "Commands/SBIS.h"
 #include "Commands/SBRC.h"
@@ -122,6 +123,7 @@ void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper
     processor->RegisterCommand(new ORI(mapper));
     processor->RegisterCommand(new ROR(mapper));
     processor->RegisterCommand(new SBC(mapper));
+    processor->RegisterCommand(new SBCI(mapper));
     processor->RegisterCommand(new SBIC(mapper));
     processor->RegisterCommand(new SBIS(mapper));
     processor->RegisterCommand(new SBRC(mapper));
