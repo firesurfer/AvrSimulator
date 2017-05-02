@@ -14,6 +14,8 @@ private:
     PeripheryHandler* PeriphHandler;
     Server* NetworkServer;
 
+    void OnNewConnection(TcpConnection::SharedPtr connection);
+
 };
 
 #endif // NETWORKHANDLER_H

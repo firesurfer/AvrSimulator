@@ -10,6 +10,7 @@ public:
     PeripheryHandler(MemoryMapper* _mem_mapper);
     void handlePeriphery(uint32_t cycles);
     void addPeripheryElement(PeripheryElement* element);
+    std::vector<PeripheryElement*> get_all_elements();
 private:
     MemoryMapper* memory_mapper;
     std::vector<PeripheryElement*> periphery_elements;
