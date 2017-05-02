@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     processor.PrintRegisteredCommands();
     LOG(LogLevel::Info) << "Starting execution" << std::endl;
     int count_steps=0;
-    while(processor.ExecuteStep()&&count_steps<102400)
+    while(processor.ExecuteStep())//&&count_steps<102400)
     {
         count_steps++;
     }
