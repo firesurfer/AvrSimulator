@@ -1,4 +1,4 @@
-find_package(Boost 1.62 REQUIRED COMPONENTS system)
+find_package(Boost 1.58 REQUIRED COMPONENTS system)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
