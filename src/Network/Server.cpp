@@ -26,6 +26,7 @@ void Server::Run()
 
 void Server::accept_handler(const boost::system::error_code &ec)
 {
+    LOG(Debug) << "Got new connection" << std::endl;
     if (!ec)
     {
         TcpConnection::SharedPtr connection = std::make_shared<TcpConnection>(tcp_acceptor.get_io_service());

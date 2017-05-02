@@ -5,6 +5,7 @@ NetworkHandler::NetworkHandler(PeripheryHandler *_periphHandler, int Port)
     this->PeriphHandler = _periphHandler;
     this->NetworkServer = new Server(Port);
     this->NetworkServer->Start();
+    LOG(Info) << "Started network server" << std::endl;
 }
 
 int NetworkHandler::GetListenerPort()

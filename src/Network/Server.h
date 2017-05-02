@@ -10,6 +10,7 @@
 #include <thread>
 #include "TcpConnection.h"
 #include <functional>
+#include "../Logger/Logger.h"
 using namespace boost::asio;
 using namespace boost::asio::ip;
 

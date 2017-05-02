@@ -1,6 +1,7 @@
 find_package(Boost 1.58 REQUIRED COMPONENTS system)
 
-include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Logger)
 
 file(GLOB SRC_FILES_NETWORK ${CMAKE_CURRENT_SOURCE_DIR}/*.c*
 				${CMAKE_CURRENT_SOURCE_DIR}/*.h*)
