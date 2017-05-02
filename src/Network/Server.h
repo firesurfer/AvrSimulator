@@ -23,6 +23,7 @@ public:
 
     void Start();
     void AddNewConnectionCallback(std::function<void(TcpConnection::SharedPtr)> _callback);
+    int GetPort(){return Port;}
 private:
     io_service ioservice;
     tcp::endpoint tcp_endpoint;

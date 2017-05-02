@@ -9,3 +9,8 @@ void PeripheryElement::handle(uint32_t cycles)
 {
 
 }
+
+void PeripheryElement::add_network_connection(TcpConnection::SharedPtr connection)
+{
+    this->network_connections.push_back(connection);
+}
