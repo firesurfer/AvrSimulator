@@ -2,10 +2,12 @@
 
 NetworkHandler::NetworkHandler(PeripheryHandler *_periphHandler, int Port)
 {
+    LOG(Info) << "Started network server: "<<std::dec<< Port << std::endl;
+
     this->PeriphHandler = _periphHandler;
     this->NetworkServer = new Server(Port);
     this->NetworkServer->Start();
-    LOG(Info) << "Started network server: "<< Port << std::endl;
+
 }
 
 int NetworkHandler::GetListenerPort()

@@ -5,6 +5,8 @@ Server::Server(int _Port)
     this->Port = _Port;
     LOG(Info) << "Listening on Port:" << Port << std::endl;
     this->tcp_endpoint = tcp::endpoint(boost::asio::ip::tcp::v4(),Port);
+    this->tcp_acceptor = tcp::acceptor(ioservice, tcp_endpoint);
+    this->tcp_socket = tcp::socket(ioservice);
 }
 
 void Server::Start()
