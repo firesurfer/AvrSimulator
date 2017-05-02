@@ -8,6 +8,8 @@
 #include <string>
 #include <ctime>
 #include <thread>
+#include "TcpConnection.h"
+#include <functional>
 using namespace boost::asio;
 using namespace boost::asio::ip;
 
@@ -20,6 +22,7 @@ public:
     Server(int _Port);
 
     void Start();
+    void AddNewConnectionCallback(std::function<void(TcpConnection::SharedPtr)> _callback);
 private:
     io_service ioservice;
     tcp::endpoint tcp_endpoint;
@@ -34,6 +37,8 @@ private:
     void run();
 
     void accept_handler(const boost::system::error_code &ec);
+    std::vector<TcpConnection::SharedPtr> Connections;
+    std::vector<std::function<void(TcpConnection::SharedPtr)>> NewConnectionHandlers;
 
 };
 

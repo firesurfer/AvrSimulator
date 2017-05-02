@@ -11,10 +11,16 @@ void Server::Start()
     this->handler_thread = new std::thread(std::bind(&Server::run,this));
 }
 
+void Server::AddNewConnectionCallback(std::function<void (TcpConnection::SharedPtr)> _callback)
+{
+    this->NewConnectionHandlers.push_back(_callback);
+}
+
 void Server::run()
 {
     tcp_acceptor.listen();
-    //tcp_acceptor.async_accept(tcp_socket, accept_handler);
+    using namespace std::placeholders;
+    tcp_acceptor.async_accept(tcp_socket, std::bind(&Server::accept_handler,this, _1));
     ioservice.run();
 }
 
@@ -22,8 +28,9 @@ void Server::accept_handler(const boost::system::error_code &ec)
 {
     if (!ec)
     {
-        std::time_t now = std::time(nullptr);
-        data = std::ctime(&now);
-       // async_write(tcp_socket, buffer(data), write_handler);
+        TcpConnection::SharedPtr connection = std::make_shared<TcpConnection>(tcp_acceptor.get_io_service());
+        Connections.push_back(connection);
     }
+     using namespace std::placeholders;
+     tcp_acceptor.async_accept(tcp_socket, std::bind(&Server::accept_handler,this, _1));
 }
