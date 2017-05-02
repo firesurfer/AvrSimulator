@@ -11,6 +11,8 @@ sei();
     uart_puts("Hallo");
     uart_putc(' ');
     uart_puts_p(PSTR("Welt!\n"));
-
+    while(1)
+    {
+    }
     return 0;
 }

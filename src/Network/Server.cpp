@@ -3,6 +3,7 @@
 Server::Server(int _Port)
 {
     this->Port = _Port;
+    LOG(Info) << "Listening on Port:" << Port << std::endl;
     this->tcp_endpoint = tcp::endpoint(boost::asio::ip::tcp::v4(),Port);
 }
 

@@ -37,11 +37,11 @@ bool Processor::ExecuteStep()
         uint16_t instruction = program_memory->Get(program_counter);
         bool found = false;
 
-        if(instruction == 0xCFFF)
+       /* if(instruction == 0xCFFF)
         {
             LOG(Warning)<< "Found empty endless loop (0xCFFF) on address 0x" << hex << program_counter*2 << " - Aborting programm" << endl;
             return false;
-        }
+        }*/
         CommandBase* next_command = decoder->decode(instruction);
         if(!next_command)
         {
