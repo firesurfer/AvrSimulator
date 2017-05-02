@@ -28,13 +28,12 @@ private:
     tcp::endpoint tcp_endpoint;
     tcp::acceptor tcp_acceptor{ioservice, tcp_endpoint};
     tcp::socket tcp_socket{ioservice};
-    std::string data;
 
     std::thread* handler_thread;
 
     int Port;
 
-    void run();
+    void Run();
 
     void accept_handler(const boost::system::error_code &ec);
     std::vector<TcpConnection::SharedPtr> Connections;

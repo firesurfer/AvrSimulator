@@ -8,7 +8,7 @@ Server::Server(int _Port)
 
 void Server::Start()
 {
-    this->handler_thread = new std::thread(std::bind(&Server::run,this));
+    this->handler_thread = new std::thread(std::bind(&Server::Run,this));
 }
 
 void Server::AddNewConnectionCallback(std::function<void (TcpConnection::SharedPtr)> _callback)
@@ -16,7 +16,7 @@ void Server::AddNewConnectionCallback(std::function<void (TcpConnection::SharedP
     this->NewConnectionHandlers.push_back(_callback);
 }
 
-void Server::run()
+void Server::Run()
 {
     tcp_acceptor.listen();
     using namespace std::placeholders;
@@ -30,6 +30,11 @@ void Server::accept_handler(const boost::system::error_code &ec)
     {
         TcpConnection::SharedPtr connection = std::make_shared<TcpConnection>(tcp_acceptor.get_io_service());
         Connections.push_back(connection);
+        for(auto & func: this->NewConnectionHandlers)
+        {
+            if(func)
+                func(connection);
+        }
     }
      using namespace std::placeholders;
      tcp_acceptor.async_accept(tcp_socket, std::bind(&Server::accept_handler,this, _1));

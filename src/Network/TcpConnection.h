@@ -4,6 +4,14 @@
 #include <memory>
 #include <boost/asio.hpp>
 
+typedef enum
+{
+    UART,
+    I2C,
+    SPI
+
+}ConnectionType;
+
 using boost::asio::ip::tcp;
 class TcpConnection: public std::enable_shared_from_this<TcpConnection>
 {
@@ -17,9 +25,12 @@ public:
     //TODO provide method that takes buffer instead
     std::vector<uint8_t> Read(int desired_length, int& actual_length);
 
+    ConnectionType GetSimulatedHardwareType() const;
+
 private:
     tcp::socket Socket;
     std::string Message;
+    ConnectionType SimulatedHardwareType;
 };
 
 #endif // TCPCONNECTION_H

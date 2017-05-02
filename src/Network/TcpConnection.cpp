@@ -30,3 +30,8 @@ std::vector<uint8_t> TcpConnection::Read(int desired_length, int &actual_length)
     }
     return return_vector;
 }
+
+ConnectionType TcpConnection::GetSimulatedHardwareType() const
+{
+    return SimulatedHardwareType;
+}
