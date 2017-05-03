@@ -14,4 +14,11 @@ void PeripheryRegister::registerPeriphery(PeripheryHandler *handler, MemoryMappe
     uartVector.maskbit = 5;
     uartVector.vectoraddress = 0x1C;
     intController->addInterruptVector(uartVector);
+    uartVector.clearflag = false;
+    uartVector.flagaddr = 0x2B;
+    uartVector.flagbit = 7;
+    uartVector.maskaddr = 0x2A;
+    uartVector.maskbit = 7;
+    uartVector.vectoraddress = 0x1A;
+    intController->addInterruptVector(uartVector);
 }
