@@ -20,6 +20,7 @@ void Uart::handle(uint32_t cycles)
     auto callback = [&](std::vector<uint8_t> data)
     {
         //Do something with the data
+        std::cout << data[0] << std::endl;
     };
     for(TcpConnection::SharedPtr & con :network_connections)
     {

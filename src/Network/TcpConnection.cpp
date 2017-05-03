@@ -44,10 +44,14 @@ void TcpConnection::AsyncRead(int desired_length, std::function<void (std::vecto
     {
         if(!err)
         {
-            std::vector<uint8_t> data;
-            for(int i= 0; i < bytes_transferred;i++)
-                data.push_back(buffer[i]);
-            callback(data);
+            if(bytes_transferred > 0)
+            {
+                std::vector<uint8_t> data;
+                for(int i= 0; i < bytes_transferred;i++)
+                    data.push_back(buffer[i]);
+                if(callback)
+                    callback(data);
+            }
         }
     };
 
