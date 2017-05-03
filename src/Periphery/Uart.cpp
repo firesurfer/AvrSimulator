@@ -17,17 +17,15 @@ Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
 
 void Uart::handle(uint32_t cycles)
 {
-    auto callback = [&](std::vector<uint8_t> data)
-    {
-        //Do something with the data
-        std::cout << data[0] << std::endl;
-    };
     for(TcpConnection::SharedPtr & con :network_connections)
     {
         //Simply take the first one
         if(con)
         {
-            con->AsyncRead(1,callback);
+            int actual_length = 0;
+            std::vector<uint8_t> data = con->Read(1,actual_length);
+            if(actual_length > 0)
+                LOG(Info) << data[0] << std::endl;
             break;
         }
     }

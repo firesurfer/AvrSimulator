@@ -28,13 +28,19 @@ void TcpConnection::Write(std::__cxx11::string _data)
 std::vector<uint8_t> TcpConnection::Read(int desired_length, int &actual_length)
 {
     uint8_t buffer[desired_length];
-    actual_length =boost::asio::read(Socket,boost::asio::buffer(buffer, desired_length));
-    std::vector<uint8_t> return_vector;
-    for(int i = 0; i < actual_length; i++)
+    if(Socket.available() > desired_length)
     {
-        return_vector.push_back(buffer[i]);
+        actual_length =boost::asio::read(Socket,boost::asio::buffer(buffer, desired_length));
+        std::vector<uint8_t> return_vector;
+        for(int i = 0; i < actual_length; i++)
+        {
+            return_vector.push_back(buffer[i]);
+        }
+        return return_vector;
     }
-    return return_vector;
+    actual_length = 0;
+    return std::vector<uint8_t>();
+
 }
 
 void TcpConnection::AsyncRead(int desired_length, std::function<void (std::vector<uint8_t>)> callback)
