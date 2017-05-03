@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <boost/asio.hpp>
-
+#include <functional>
 typedef enum
 {
     UART,
@@ -22,8 +22,10 @@ public:
 
 
     void Write(std::vector<uint8_t> _data);
+    void Write(std::string _data);
     //TODO provide method that takes buffer instead
     std::vector<uint8_t> Read(int desired_length, int& actual_length);
+    void AsyncRead(int desired_length, std::function<void(std::vector<uint8_t>)> callback);
 
     ConnectionType GetSimulatedHardwareType() const;
 

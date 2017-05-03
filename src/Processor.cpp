@@ -50,10 +50,10 @@ bool Processor::ExecuteStep()
         }
         uint32_t cycles=0;
         if(!flags.skipNextInstruction){
-            LOG(Info) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
+            //LOG(Info) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
             cycles = next_command->Execute(instruction,this->program_counter, flags);
         }else{
-            LOG(Info) << "skipping 0x" << hex <<program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
+            //LOG(Info) << "skipping 0x" << hex <<program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
             cycles = next_command->CommandSize();
             program_counter += next_command->CommandSize();
             flags.skipNextInstruction = false;

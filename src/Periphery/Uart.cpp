@@ -17,6 +17,20 @@ Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
 
 void Uart::handle(uint32_t cycles)
 {
+    auto callback = [&](std::vector<uint8_t> data)
+    {
+        //Do something with the data
+    };
+    for(TcpConnection::SharedPtr & con :network_connections)
+    {
+        //Simply take the first one
+        if(con)
+        {
+            con->AsyncRead(1,callback);
+            break;
+        }
+    }
+
 }
 
 void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
@@ -26,6 +40,14 @@ void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
         LOG(Info)<<"Uart: '"<<newval<<"'"<<endl;
         if(newval=='\n'){
             LOG(Important)<<"UART: "<<buffer<<endl;
+            for(TcpConnection::SharedPtr & con: network_connections)
+            {
+                if(con)
+                {
+                    LOG(Important) << "Writing to connection" << std::endl;
+                    con->Write(buffer);
+                }
+            }
             buffer="";
         }else
             buffer+=newval;

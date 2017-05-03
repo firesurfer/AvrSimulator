@@ -6,7 +6,7 @@
 
 int main(void)
 {
-sei();
+    sei();
     uart_init(UART_BAUD_SELECT(9600,16000000ul));
     uart_puts("Hallo");
     uart_putc(' ');

@@ -19,6 +19,12 @@ void TcpConnection::Write(std::vector<uint8_t> _data)
     //if(error != boost::system::error_code::)
 }
 
+void TcpConnection::Write(std::__cxx11::string _data)
+{
+    boost::system::error_code error;
+    boost::asio::write(Socket, boost::asio::buffer(_data),error);
+}
+
 std::vector<uint8_t> TcpConnection::Read(int desired_length, int &actual_length)
 {
     uint8_t buffer[desired_length];
@@ -29,6 +35,23 @@ std::vector<uint8_t> TcpConnection::Read(int desired_length, int &actual_length)
         return_vector.push_back(buffer[i]);
     }
     return return_vector;
+}
+
+void TcpConnection::AsyncRead(int desired_length, std::function<void (std::vector<uint8_t>)> callback)
+{
+    uint8_t buffer[desired_length];
+    auto func = [&](const boost::system::error_code& err, std::size_t bytes_transferred)
+    {
+        if(!err)
+        {
+            std::vector<uint8_t> data;
+            for(int i= 0; i < bytes_transferred;i++)
+                data.push_back(buffer[i]);
+            callback(data);
+        }
+    };
+
+    boost::asio::async_read(Socket, boost::asio::buffer(buffer, desired_length), func);
 }
 
 ConnectionType TcpConnection::GetSimulatedHardwareType() const
