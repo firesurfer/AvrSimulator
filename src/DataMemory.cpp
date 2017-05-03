@@ -69,4 +69,21 @@ void DataMemory::watch(uint32_t address, std::function<void(uint32_t, uint8_t, u
     watchlist.emplace(address, callback);
 }
 
+void DataMemory::registerFlag(uint32_t address, uint8_t bit)
+{
+    auto func = [bit](uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref){
+        if(newval & (1<<bit)){
+            ref &= ~(1<<bit);
+            LOG(Info)<<"Flag: "<<(int)bit<<" in 0x"<<hex<<addr<<" cleared"<<endl;
+        }else{
+            //keep old flagstate if 0 is written
+            if(oldval & (1<<bit))
+                ref |= (1<<bit);
+            else
+                ref &= ~(1<<bit);
+        }
+    };
+    watchlist.emplace(address,func);
+}
+
 

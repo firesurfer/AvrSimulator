@@ -29,6 +29,7 @@ public:
     ///
     void watch(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t &)> callback=nullptr);
 
+    void registerFlag(uint32_t address, uint8_t bit);
 private:
     uint32_t size;
     uint32_t offset;
