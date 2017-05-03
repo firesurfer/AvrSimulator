@@ -3,7 +3,7 @@
 
 #include "Network/Server.h"
 #include "PeripheryHandler.h"
-
+#include <functional>
 class NetworkHandler
 {
 public:
