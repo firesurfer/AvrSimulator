@@ -4,6 +4,7 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/write.hpp>
 #include <boost/asio/buffer.hpp>
+#include <boost/bind.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <string>
 #include <ctime>
@@ -28,8 +29,8 @@ public:
 private:
     io_service ioservice;
     tcp::endpoint tcp_endpoint;
-    tcp::acceptor tcp_acceptor{ioservice, tcp_endpoint};
-    tcp::socket tcp_socket{ioservice};
+    tcp::acceptor tcp_acceptor;
+    tcp::socket tcp_socket;
 
     std::thread* handler_thread;
 
@@ -37,9 +38,10 @@ private:
 
     void Run();
 
-    void accept_handler(const boost::system::error_code &ec);
+    void accept_handler(TcpConnection::SharedPtr connection, const boost::system::error_code &ec);
     std::vector<TcpConnection::SharedPtr> Connections;
     std::vector<std::function<void(TcpConnection::SharedPtr)>> NewConnectionHandlers;
+    void start_accept();
 
 };
 

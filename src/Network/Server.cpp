@@ -1,12 +1,10 @@
 #include "Server.h"
 
-Server::Server(int _Port)
+Server::Server(int _Port):tcp_endpoint{boost::asio::ip::tcp::v4(),_Port}, tcp_acceptor{ioservice, tcp_endpoint}, tcp_socket{ioservice}
 {
     this->Port = _Port;
     LOG(Info) << "Listening on Port:" << Port << std::endl;
-    this->tcp_endpoint = tcp::endpoint(boost::asio::ip::tcp::v4(),Port);
-    this->tcp_acceptor = tcp::acceptor(ioservice, tcp_endpoint);
-    this->tcp_socket = tcp::socket(ioservice);
+
 }
 
 void Server::Start()
@@ -23,16 +21,16 @@ void Server::Run()
 {
     tcp_acceptor.listen();
     using namespace std::placeholders;
-    tcp_acceptor.async_accept(tcp_socket, std::bind(&Server::accept_handler,this, _1));
+    start_accept();
     ioservice.run();
 }
 
-void Server::accept_handler(const boost::system::error_code &ec)
+void Server::accept_handler(TcpConnection::SharedPtr connection, const boost::system::error_code &ec)
 {
-    LOG(Debug) << "Got new connection" << std::endl;
+    std::cout << "Got new connection" << std::endl;
     if (!ec)
     {
-        TcpConnection::SharedPtr connection = std::make_shared<TcpConnection>(tcp_acceptor.get_io_service());
+
         Connections.push_back(connection);
         for(auto & func: this->NewConnectionHandlers)
         {
@@ -40,6 +38,16 @@ void Server::accept_handler(const boost::system::error_code &ec)
                 func(connection);
         }
     }
-     using namespace std::placeholders;
-     tcp_acceptor.async_accept(tcp_socket, std::bind(&Server::accept_handler,this, _1));
+
+    start_accept();;
+}
+
+void Server::start_accept()
+{
+    TcpConnection::SharedPtr connection = std::make_shared<TcpConnection>(tcp_acceptor.get_io_service());
+    using namespace std::placeholders;
+    tcp_acceptor.async_accept(connection->GetSocket(),
+           boost::bind(&Server::accept_handler, this, connection,
+             boost::asio::placeholders::error));
+
 }
