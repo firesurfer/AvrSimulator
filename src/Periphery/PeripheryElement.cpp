@@ -2,7 +2,8 @@
 
 PeripheryElement::PeripheryElement(MemoryMapper *mapper)
 {
-    this->mem_mapper = mapper;
+    this->memMapper = mapper;
+    this->dataMem = mapper->getDataMemory();
 }
 
 void PeripheryElement::handle(uint32_t cycles)

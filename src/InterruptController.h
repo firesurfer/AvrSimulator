@@ -22,7 +22,8 @@ public:
     uint32_t handleInterrupts(uint32_t cycles, uint16_t &ProgramCounter, ProcessorFlags &flags);
     void addInterruptVector(intvector_t element);
 private:
-    MemoryMapper* memory_mapper;
+    MemoryMapper* memoryMapper;
+    DataMemory* dataMem;
     std::multimap<uint32_t,intvector_t> interruptVectors;
 };
 

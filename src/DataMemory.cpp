@@ -25,10 +25,26 @@ uint8_t DataMemory::Get(uint32_t address)
     if(address < size)
     {
         //LOG(Debug3)<<"Get addr 0x"<<hex<<address<< ": 0x"<<(int)data[address] << endl;
+        auto range = watchlistRead.equal_range(address);
+        for(auto it = range.first; it != range.second; ++it){
+            if(it->second)
+                it->second(address, data[address]);
+        }
         return data[address];
     }
     else
         throw out_of_range("SRAM Get: Argument out of range!");
+}
+
+uint8_t DataMemory::GetDirect(uint32_t address)
+{
+    if(address < size)
+    {
+        return data[address];
+    }
+    else
+        LOG(Fatal)<<"Data GetDirect get out of range"<<endl;
+
 }
 
 void DataMemory::Set(uint32_t address, uint8_t value, bool watch)
@@ -39,7 +55,7 @@ void DataMemory::Set(uint32_t address, uint8_t value, bool watch)
         uint8_t ref = value;
         if(watch)
         {
-            auto range = watchlist.equal_range(address);
+            auto range = watchlistWrite.equal_range(address);
             for(auto it = range.first; it != range.second; ++it){
                 if(it->second)
                     it->second(address, data[address], value, ref);
@@ -64,9 +80,14 @@ uint8_t *DataMemory::GetDataPtr()
     return data;
 }
 
-void DataMemory::watch(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t&)> callback)
+void DataMemory::watchWrite(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t&)> callback)
 {
-    watchlist.emplace(address, callback);
+    watchlistWrite.emplace(address, callback);
+}
+
+void DataMemory::watchRead(uint32_t address, std::function<void (uint32_t, uint8_t)> callback)
+{
+    watchlistRead.emplace(address, callback);
 }
 
 void DataMemory::registerFlag(uint32_t address, uint8_t bit)
@@ -83,7 +104,7 @@ void DataMemory::registerFlag(uint32_t address, uint8_t bit)
                 ref &= ~(1<<bit);
         }
     };
-    watchlist.emplace(address,func);
+    watchlistWrite.emplace(address,func);
 }
 
 

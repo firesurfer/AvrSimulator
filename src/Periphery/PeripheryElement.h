@@ -11,7 +11,8 @@ public:
     virtual void handle(uint32_t cycles);
     virtual void add_network_connection(TcpConnection::SharedPtr connection);
 protected:
-    MemoryMapper* mem_mapper;
+    MemoryMapper* memMapper;
+    DataMemory* dataMem;
     std::vector<TcpConnection::SharedPtr> network_connections;
 };
 

@@ -18,7 +18,9 @@ public:
     uint32_t GetSize();
 
     uint8_t Get(uint32_t address);
-    void Set(uint32_t address, uint8_t value, bool watch = true);
+    uint8_t GetDirect(uint32_t address);
+    void Set(uint32_t address, uint8_t value, bool watchWrite = true);
+    void SetDirect(uint32_t address, uint8_t value){Set(address,value,false);}
     uint8_t *GetDataPtr();
 
     ///
@@ -27,13 +29,16 @@ public:
     /// \param callback to be registered (optional), if empty, write a log message on change
     ///                 callback gets the address, the old and the new value as parameters
     ///
-    void watch(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t &)> callback=nullptr);
+    void watchWrite(uint32_t address, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t &)> callback=nullptr);
+
+    void watchRead(uint32_t address, std::function<void(uint32_t, uint8_t)> callback);
 
     void registerFlag(uint32_t address, uint8_t bit);
 private:
     uint32_t size;
     uint32_t offset;
     uint8_t* data;
-    std::unordered_multimap<uint32_t, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t &)> > watchlist;
+    std::unordered_multimap<uint32_t, std::function<void(uint32_t, uint8_t, uint8_t, uint8_t &)> > watchlistWrite;
+    std::unordered_multimap<uint32_t, std::function<void(uint32_t, uint8_t)> > watchlistRead;
 };
 
