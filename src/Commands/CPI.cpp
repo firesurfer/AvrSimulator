@@ -20,7 +20,7 @@ uint32_t CPI::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorF
     uint8_t sreg = 0;
 
     subtractionFlags(Rd,operand,sreg);
-    data_memory->setSREG(sreg,MASK_S|MASK_V|MASK_N|MASK_Z);
+    data_memory->setSREG(sreg,MASK_H|MASK_S|MASK_V|MASK_N|MASK_Z|MASK_C);
 
     ProgramCounter += 1;
     return 1;
