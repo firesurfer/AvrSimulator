@@ -13,6 +13,11 @@ int main(void)
     uart_puts_p(PSTR("Welt!\n"));
     while(1)
     {
+      int c=uart_getc();
+      if((c&0xFF00)==UART_FRAME_ERROR)uart_puts("FrameError\n");
+      if((c&0xFF00)==UART_OVERRUN_ERROR)uart_puts("OverrunError\n");
+      if((c&0xFF00)==UART_BUFFER_OVERFLOW)uart_puts("BufferOverflow\n");
+      if(c!=UART_NO_DATA)uart_putc(c);
     }
     return 0;
 }

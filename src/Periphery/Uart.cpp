@@ -22,7 +22,7 @@ Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
 void Uart::handle(uint32_t cycles)
 {
     receiveCycles += cycles;
-    if(receiveCycles>20){
+    if(receiveCycles>100){
         for(TcpConnection::SharedPtr & con :network_connections)
         {
             //Simply take the first one
@@ -42,7 +42,7 @@ void Uart::handle(uint32_t cycles)
                         receiveCycles = 0;
                     }
                 }
-                break;
+                //break;
             }
         }
     }
@@ -53,16 +53,16 @@ void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
     if(addr==UDR){
         ref=oldval;//dont change UDR because its also the receive register
         LOG(Info)<<"Uart: '"<<newval<<"'"<<endl;
+        for(TcpConnection::SharedPtr & con: network_connections)
+        {
+            if(con)
+            {
+                LOG(Important) << "Writing to connection" << std::endl;
+                con->Write(string((char*)&newval,1));
+            }
+        }
         if(newval=='\n'){
             LOG(Important)<<"UART: "<<buffer<<endl;
-            for(TcpConnection::SharedPtr & con: network_connections)
-            {
-                if(con)
-                {
-                    LOG(Important) << "Writing to connection" << std::endl;
-                    con->Write(buffer);
-                }
-            }
             buffer="";
         }else
             buffer+=newval;
@@ -89,5 +89,5 @@ void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
 void Uart::onRead(uint32_t addr, uint8_t val)
 {
     uint8_t tmp = dataMem->GetDirect(UCSRA);
-    dataMem->SetDirect(UCSRA, tmp& ~(1<<RXC));
+    dataMem->SetDirect(UCSRA, tmp& ~(1<<RXC) & ~(1<<DOR));
 }
