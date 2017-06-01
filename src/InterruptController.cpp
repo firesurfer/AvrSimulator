@@ -17,7 +17,7 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
         auto element = it.second;
         if(memoryMapper->getData(element.maskaddr)&(1<<element.maskbit)){
             if(memoryMapper->getData(element.flagaddr)&(1<<element.flagbit)){
-                LOG(Info)<<"UDRE interrupt started:\n";
+                LOG(Info)<<"Interrupt started:\n";
                 uint8_t low_byte = (uint8_t)ProgramCounter;
                 uint8_t high_byte = (uint8_t)((ProgramCounter) >> 8);
                 memoryMapper->pushStack(low_byte);

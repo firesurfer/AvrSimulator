@@ -30,7 +30,7 @@ void Server::accept_handler(TcpConnection::SharedPtr connection, const boost::sy
     std::cout << "Got new connection" << std::endl;
     if (!ec)
     {
-
+        con_parser.Parse(connection);
         Connections.push_back(connection);
         for(auto & func: this->NewConnectionHandlers)
         {
@@ -38,12 +38,12 @@ void Server::accept_handler(TcpConnection::SharedPtr connection, const boost::sy
                 func(connection);
         }
     }
-
-    start_accept();;
+    start_accept();
 }
 
 void Server::start_accept()
 {
+
     TcpConnection::SharedPtr connection = std::make_shared<TcpConnection>(tcp_acceptor.get_io_service());
     using namespace std::placeholders;
     tcp_acceptor.async_accept(connection->GetSocket(),

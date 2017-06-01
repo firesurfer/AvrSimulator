@@ -12,6 +12,8 @@
 #include "TcpConnection.h"
 #include <functional>
 #include "../Logger/Logger.h"
+#include "TcpConnectionParser.h"
+
 using namespace boost::asio;
 using namespace boost::asio::ip;
 
@@ -42,6 +44,8 @@ private:
     std::vector<TcpConnection::SharedPtr> Connections;
     std::vector<std::function<void(TcpConnection::SharedPtr)>> NewConnectionHandlers;
     void start_accept();
+
+    TcpConnectionParser con_parser;
 
 };
 

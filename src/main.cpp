@@ -6,6 +6,8 @@
 #include "PeripheryHandler.h"
 #include "PeripheryRegister.h"
 #include "Logger/Logger.h"
+#include "TcpCommandStreamParser.h"
+#include "TcpCommandRegister.h"
 #include "NetworkHandler.h"
 #include <locale>
 #include <algorithm>
@@ -72,7 +74,9 @@ int main(int argc, char* argv[])
     PeripheryRegister::registerPeriphery(&periphHandler, &dataMapper, &intController);
     Processor processor( &dataMapper, &periphHandler, &intController);
     CommandRegister::registerCommand(&processor, &dataMapper);
-    NetworkHandler networkHandler(&periphHandler, 8081);
+    TcpCommandStreamParser cmdParser(&periphHandler, &processor);
+    TcpCommandRegister tcpCmdRegister(cmdParser);
+    NetworkHandler networkHandler(&periphHandler,&cmdParser, 8081);
     processor.PrintRegisteredCommands();
     LOG(LogLevel::Info) << "Starting execution" << std::endl;
     int count_steps=0;

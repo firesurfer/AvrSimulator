@@ -2,8 +2,9 @@
 
 TcpConnection::TcpConnection(boost::asio::io_service &io_service):Socket(io_service)
 {
-
+    this->ConnectionIdentifier = "Default";
 }
+
 
 tcp::socket &TcpConnection::GetSocket()
 {
@@ -25,6 +26,16 @@ void TcpConnection::Write(std::__cxx11::string _data)
     boost::asio::write(Socket, boost::asio::buffer(_data),error);
 }
 
+std::__cxx11::string TcpConnection::GetConnectionIdentifier()
+{
+    return ConnectionIdentifier;
+}
+
+void TcpConnection::SetConnectionIdentifier(std::__cxx11::string id)
+{
+    this->ConnectionIdentifier = id;
+}
+
 std::vector<uint8_t> TcpConnection::Read(int desired_length, int &actual_length)
 {
     uint8_t buffer[desired_length];
@@ -40,6 +51,20 @@ std::vector<uint8_t> TcpConnection::Read(int desired_length, int &actual_length)
     }
     actual_length = 0;
     return std::vector<uint8_t>();
+
+}
+
+std::vector<uint8_t> TcpConnection::ReadBlocking(int desired_length)
+{
+    uint8_t buffer[desired_length];
+
+    int actual_length =boost::asio::read(Socket,boost::asio::buffer(buffer, desired_length));
+    std::vector<uint8_t> return_vector;
+    for(int i = 0; i < actual_length; i++)
+    {
+        return_vector.push_back(buffer[i]);
+    }
+    return return_vector;
 
 }
 
@@ -64,7 +89,4 @@ void TcpConnection::AsyncRead(int desired_length, std::function<void (std::vecto
     boost::asio::async_read(Socket, boost::asio::buffer(buffer, desired_length), func);
 }
 
-ConnectionType TcpConnection::GetSimulatedHardwareType() const
-{
-    return SimulatedHardwareType;
-}
+

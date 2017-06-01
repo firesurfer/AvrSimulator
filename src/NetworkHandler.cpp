@@ -1,26 +1,27 @@
 #include "NetworkHandler.h"
 
-NetworkHandler::NetworkHandler(PeripheryHandler *_periphHandler, int Port)
+NetworkHandler::NetworkHandler(PeripheryHandler *_periphHandler,TcpCommandStreamParser* _cmd_parser, int Port):NetworkServer{Port}
 {
     LOG(Info) << "Started network server: "<<std::dec<< Port << std::endl;
 
     this->PeriphHandler = _periphHandler;
-    this->NetworkServer = new Server(Port);
-    this->NetworkServer->Start();
-    this->NetworkServer->AddNewConnectionCallback(std::bind(&NetworkHandler::OnNewConnection, this,std::placeholders::_1));
+    this->cmd_parser = _cmd_parser;
+    this->NetworkServer.Start();
+    this->NetworkServer.AddNewConnectionCallback(std::bind(&NetworkHandler::OnNewConnection, this,std::placeholders::_1));
 
 }
 
 int NetworkHandler::GetListenerPort()
 {
-    this->NetworkServer->GetPort();
+    this->NetworkServer.GetPort();
 }
 
 void NetworkHandler::OnNewConnection(TcpConnection::SharedPtr connection)
 {
-    int length = 0;
-    //auto result = connection->Read(4,length);
-    //TODO check type of connection
+
+    if(connection->GetConnectionIdentifier() == "CON_CONTROL")
+
+
     for(PeripheryElement* & periph: this->PeriphHandler->get_all_elements())
     {
 
