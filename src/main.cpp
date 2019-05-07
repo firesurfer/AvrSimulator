@@ -9,8 +9,10 @@
 #include "TcpCommandStreamParser.h"
 #include "TcpCommandRegister.h"
 #include "NetworkHandler.h"
+#include "Gui/RegisterMachineGui.h"
 #include <locale>
 #include <algorithm>
+
 int main(int argc, char* argv[])
 {
     LogLevel loglevel = LogLevel::Info;
@@ -45,6 +47,11 @@ int main(int argc, char* argv[])
                 else if(level[0] >= '0' && level[0] <= '9')
                     loglevel = (LogLevel)(level[0] - '0');
             }
+        }
+        if(arg.find("-gui") != std::string::npos)
+        {
+            RegisterMachineGui gui(argc,argv);
+            return gui.exec();
         }
         //Last argument is file
         if(i+1 == argc)

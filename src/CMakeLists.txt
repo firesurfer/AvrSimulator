@@ -2,12 +2,14 @@ add_subdirectory(Commands)
 add_subdirectory(Periphery)
 add_subdirectory(Logger)
 add_subdirectory(Network)
+add_subdirectory(Gui)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/Commands
-    ${CMAKE_CUREENT_SOURCE_DIR}/Periphery
-    ${CMAKE_CUREENT_SOURCE_DIR}/Logger
-    ${CMAKE_CUREENT_SOURCE_DIR}/Network
+    ${CMAKE_CURRENT_SOURCE_DIR}/Periphery
+    ${CMAKE_CURRENT_SOURCE_DIR}/Logger
+    ${CMAKE_CURRENT_SOURCE_DIR}/Network
+    ${CMAKE_CURRENT_SOURCE_DIR}/Gui
 )   
 
 
@@ -27,6 +29,5 @@ target_link_libraries(register_machine
     logger_lib
     network_lib
     Threads::Threads
-#qt core and network libs
-  #      Qt5::Core
+    gui_lib
 )
