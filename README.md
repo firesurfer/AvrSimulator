@@ -9,8 +9,14 @@ You will need the following dependencies installed:
 
 * cmake
 * gcc/g++
+
+The following are optional but useful, otherwise you have to change the `setup_build.sh` script:
+
 * ccache
 * gold
+
+For building avr code:
+
 * avr-gcc
 
 Afterwards you can simply step into the `build/machine` or `build/tests` folder and run `make`. 
