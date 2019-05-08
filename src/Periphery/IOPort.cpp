@@ -25,16 +25,16 @@ IOPort::IOPort(MemoryMapper *mapper,Port _port):PeripheryElement(mapper)
     portInput.resize(8,false);
 
     using namespace  std::placeholders;
-    memMapper->watch(port.inputRegister, std::bind(&IOPort::onPinChange, this, _1,_2,_3,_4));
+    dataMem->watchWrite(port.inputRegister, std::bind(&IOPort::onPinChange, this, _1,_2,_3,_4));
 }
 
 void IOPort::handle(uint32_t cycles)
 {
     //Get datadirection register
-    uint8_t ddr = memMapper->getData(port.dataDirection);
+    uint8_t ddr = dataMem->getDirect(port.dataDirection);
 
     //Get output register
-    uint8_t data = memMapper->getData(port.dataRegister);
+    uint8_t data = dataMem->getDirect(port.dataRegister);
 
     //Check if anything has changes
     bool change = false;
@@ -86,18 +86,12 @@ void IOPort::handle(uint32_t cycles)
 
 void IOPort::onPinChange(int32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
 {
-
-    uint8_t pin = newval;
-    //Get output register
-    uint8_t data = memMapper->getData(port.dataRegister);
-    for(uint8_t i = 0;i < 8;i++)
-    {
-        if(pin & (1<<i))
-        {
-            data = data ^ (1<<i);
-        }
-    }
-    memMapper->setData(port.dataRegister,data);
+    //avoid write access to PIN register
+    ref = oldval;
+    //toggle bits in PORT register
+    uint8_t data = dataMem->getDirect(port.dataRegister);
+    data = data ^ newval;
+    dataMem->setDirect(port.dataRegister,data);
 }
 
 void IOPort::setInput(std::vector<bool> data)
@@ -127,7 +121,6 @@ void IOPort::setInput(std::vector<bool> data)
         }
     }
     memMapper->setData(port.inputRegister, pin);
-
 }
 
 std::vector<IODirection> IOPort::getDirections()

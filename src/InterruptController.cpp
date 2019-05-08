@@ -43,7 +43,7 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
                 if(element.clearflag){
                     uint8_t flags = dataMem->getDirect(element.flagaddr);
                     flags &= ~(1<<element.flagbit);
-                    dataMem->getDirect(element.flagaddr,flags);
+                    dataMem->setDirect(element.flagaddr,flags);
                 }
                 return 4;
             }
