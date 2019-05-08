@@ -2,7 +2,7 @@
 
 mkdir -p build/machine
 cd build/machine
-CXX="ccache g++" CC="ccache gcc" cmake -DCMAKE_CXX_FLAGS=-fuse-ld=gold  -DBUILD_TESTS=ON ../..
+CXX="g++" CC="gcc" cmake -DCMAKE_CXX_FLAGS=-fuse-ld=gold  -DBUILD_TESTS=ON ../..
 make -j8
 
 cd ..

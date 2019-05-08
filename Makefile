@@ -1,6 +1,6 @@
 machine:
 	mkdir -p build/machine
-	cd build/machine && CXX="ccache g++" CC="ccache gcc" cmake -DCMAKE_CXX_FLAGS=-fuse-ld=gold  -DBUILD_TESTS=ON ../.. && make -j4
+	cd build/machine && CXX="g++" CC="gcc" cmake -DCMAKE_CXX_FLAGS=-fuse-ld=gold  -DBUILD_TESTS=ON ../.. && make -j4
 	cd ..
 
 tests:
