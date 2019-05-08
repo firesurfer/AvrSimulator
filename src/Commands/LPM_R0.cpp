@@ -33,9 +33,9 @@ uint32_t LPM_R0::Execute(uint16_t instruction, uint16_t &ProgramCounter, Process
     UNUSED(instruction);
     uint16_t address = data_memory->getZReg();
     if(address&0x01)
-        data_memory->setRegister(R0, data_memory->getProgramMemory()->Get(address>>1)>>8);
+        data_memory->setRegister(R0, data_memory->getProgramMemory()->get(address>>1)>>8);
     else
-        data_memory->setRegister(R0, data_memory->getProgramMemory()->Get(address>>1));
+        data_memory->setRegister(R0, data_memory->getProgramMemory()->get(address>>1));
     ProgramCounter += 1;
     return 3;
 }

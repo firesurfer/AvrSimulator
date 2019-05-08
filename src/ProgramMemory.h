@@ -30,12 +30,12 @@ class ProgramMemory
 public:
     ProgramMemory(uint64_t _size, uint64_t _offset);
     virtual ~ProgramMemory();
-    uint64_t GetSize();
+    uint64_t getSize();
 
-    uint16_t Get(uint16_t address);
-    void Set(uint16_t address, uint16_t value);
-    uint16_t *GetDataPtr();
-    static ProgramMemory* FromFile(std::string path);
+    uint16_t get(uint16_t address);
+    void set(uint16_t address, uint16_t value);
+    uint16_t *getDataPtr();
+    static ProgramMemory* gromFile(std::string path);
 private:
     uint64_t size;
     uint64_t offset;

@@ -23,7 +23,7 @@ ProgramMemory::ProgramMemory(uint64_t _size, uint64_t _offset)
     this->data = new uint16_t[_size];
     for(uint64_t i=0; i < size;i++ )
     {
-        Set(i,0xFFFF);
+        set(i,0xFFFF);
     }
 }
 
@@ -33,12 +33,12 @@ ProgramMemory::~ProgramMemory()
     data = NULL;
 }
 
-uint64_t ProgramMemory::GetSize()
+uint64_t ProgramMemory::getSize()
 {
     return this->size;
 }
 
-uint16_t ProgramMemory::Get(uint16_t address)
+uint16_t ProgramMemory::get(uint16_t address)
 {
     if(address < size)
     {
@@ -48,7 +48,7 @@ uint16_t ProgramMemory::Get(uint16_t address)
         throw std::runtime_error("Argument out of range!");
 }
 
-void ProgramMemory::Set(uint16_t address, uint16_t value)
+void ProgramMemory::set(uint16_t address, uint16_t value)
 {
     if(address < size)
     {
@@ -58,12 +58,12 @@ void ProgramMemory::Set(uint16_t address, uint16_t value)
         throw std::runtime_error("Argument out of range!");
 }
 
-uint16_t *ProgramMemory::GetDataPtr()
+uint16_t *ProgramMemory::getDataPtr()
 {
     return data;
 }
 
-ProgramMemory *ProgramMemory::FromFile(std::string path)
+ProgramMemory *ProgramMemory::gromFile(std::string path)
 {
     std::ifstream file (path,std::ios::binary );
     if(file.is_open())
@@ -100,7 +100,7 @@ ProgramMemory *ProgramMemory::FromFile(std::string path)
                     uint8_t hibyte = (data & 0xff00) >> 8;
                     uint8_t lobyte = (data & 0xff);
                     data = lobyte << 8 | hibyte;
-                    mem->Set(address/2+i,data);
+                    mem->set(address/2+i,data);
                 }
                 LOG(Debug) << "  Line:         " << line_count << std::endl;
                 LOG(Debug) << "  Bytes:         " << size <<std::endl;

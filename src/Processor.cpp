@@ -28,10 +28,10 @@ Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_han
     this->decoder = new Decoder(commands);
 }
 
-bool Processor::ExecuteStep()
+bool Processor::executeStep()
 {
 
-    if(program_counter >= program_memory->GetSize())
+    if(program_counter >= program_memory->getSize())
         return false;
     else
     {
@@ -60,7 +60,7 @@ bool Processor::ExecuteStep()
             LOG_APPEND << " SP+2: 0x" << sp2;
         LOG_APPEND << endl;
 
-        uint16_t instruction = program_memory->Get(program_counter);
+        uint16_t instruction = program_memory->get(program_counter);
 
        /* if(instruction == 0xCFFF) //TODO FIX
         {
@@ -94,12 +94,12 @@ bool Processor::ExecuteStep()
 
 }
 
-void Processor::RegisterCommand(CommandBase *cmd)
+void Processor::registerCommand(CommandBase *cmd)
 {
     this->commands.push_back(cmd);
 }
 
-void Processor::PrintRegisteredCommands()
+void Processor::printRegisteredCommands()
 {
     LOG(Debug)  << "List of all known instructions: " << endl;
     for(auto & it: commands)

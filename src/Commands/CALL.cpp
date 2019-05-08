@@ -28,7 +28,7 @@ CALL::CALL(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 uint32_t CALL::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
 
-    uint32_t address = data_memory->getProgramMemory()->Get(ProgramCounter+1);
+    uint32_t address = data_memory->getProgramMemory()->get(ProgramCounter+1);
     address |= uint32_t(instruction&0x0001)<<16 | uint32_t(instruction&0x01F0)<<13;
 
     uint8_t low_byte = (uint8_t)ProgramCounter+2;

@@ -31,12 +31,12 @@ DataMemory::~DataMemory()
     data = NULL;
 }
 
-uint32_t DataMemory::GetSize()
+uint32_t DataMemory::getSize()
 {
     return this->size;
 }
 
-uint8_t DataMemory::Get(uint32_t address)
+uint8_t DataMemory::get(uint32_t address)
 {
     if(address < size)
     {
@@ -52,7 +52,7 @@ uint8_t DataMemory::Get(uint32_t address)
         throw out_of_range("SRAM Get: Argument out of range!");
 }
 
-uint8_t DataMemory::GetDirect(uint32_t address)
+uint8_t DataMemory::getDirect(uint32_t address)
 {
     if(address < size)
     {
@@ -63,7 +63,7 @@ uint8_t DataMemory::GetDirect(uint32_t address)
 
 }
 
-void DataMemory::Set(uint32_t address, uint8_t value, bool watch)
+void DataMemory::get(uint32_t address, uint8_t value, bool watch)
 {
     if(address < size)
     {

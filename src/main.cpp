@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     if(programMemoryPath != "")
     {
         LOG(LogLevel::Info) << "Programm path: " << programMemoryPath << std::endl;
-        programMemory = ProgramMemory::FromFile(programMemoryPath);
+        programMemory = ProgramMemory::gromFile(programMemoryPath);
         LOGPATH(programMemoryPath + ".log");
     }
     else
@@ -100,10 +100,10 @@ int main(int argc, char* argv[])
     TcpCommandStreamParser cmdParser(&periphHandler, &processor);
     TcpCommandRegister tcpCmdRegister(cmdParser);
     NetworkHandler networkHandler(&periphHandler,&cmdParser, 8081);
-    processor.PrintRegisteredCommands();
+    processor.printRegisteredCommands();
     LOG(LogLevel::Info) << "Starting execution" << std::endl;
     int count_steps=0;
-    while(processor.ExecuteStep())//&&count_steps<102400)
+    while(processor.executeStep())//&&count_steps<102400)
     {
         count_steps++;
     }

@@ -30,8 +30,8 @@ Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
     mapper->getDataMemory()->watchRead(UDR, std::bind(&Uart::onRead,this,_1,_2));
     //mapper->watch(UDR);
     //mapper->watch(UCSRA);
-    uint8_t tmp = dataMem->GetDirect(UCSRA);
-    dataMem->SetDirect(UCSRA,tmp | (1<<UDRE));
+    uint8_t tmp = dataMem->getDirect(UCSRA);
+    dataMem->getDirect(UCSRA,tmp | (1<<UDRE));
     receiveCycles = 0;
 }
 
@@ -47,14 +47,14 @@ void Uart::handle(uint32_t cycles)
                 int actual_length = 0;
                 std::vector<uint8_t> data = con->Read(1,actual_length);
                 if(actual_length > 0){
-                    uint8_t tmp = dataMem->GetDirect(UCSRA);
+                    uint8_t tmp = dataMem->getDirect(UCSRA);
                     if(tmp & (1<<RXC)){
-                        dataMem->SetDirect(UCSRA,tmp | (1<<DOR));
+                        dataMem->getDirect(UCSRA,tmp | (1<<DOR));
                         LOG(Info) << "Uart receive overrun: "<< data[0] << std::endl;
                     }else{
                         LOG(Info) << "Uart receive: "<< data[0] << std::endl;
-                        dataMem->SetDirect(UDR,data[0]);
-                        dataMem->SetDirect(UCSRA,tmp | (1<<RXC));
+                        dataMem->getDirect(UDR,data[0]);
+                        dataMem->getDirect(UCSRA,tmp | (1<<RXC));
                         receiveCycles = 0;
                     }
                 }
@@ -82,8 +82,8 @@ void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
             buffer="";
         }else
             buffer+=newval;
-        uint8_t tmp = dataMem->GetDirect(UCSRA);
-        dataMem->SetDirect(UCSRA,tmp | (1<<UDRE));
+        uint8_t tmp = dataMem->getDirect(UCSRA);
+        dataMem->getDirect(UCSRA,tmp | (1<<UDRE));
     }else if(addr==UCSRA){
         LOG(Info)<<"UCSRA changed: "<<(int)oldval<<" -> "<<(int)newval<<" : "<<(int)ref<<endl;
         //clear flag if 1 is written
@@ -104,6 +104,6 @@ void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
 
 void Uart::onRead(uint32_t addr, uint8_t val)
 {
-    uint8_t tmp = dataMem->GetDirect(UCSRA);
-    dataMem->SetDirect(UCSRA, tmp& ~(1<<RXC) & ~(1<<DOR));
+    uint8_t tmp = dataMem->getDirect(UCSRA);
+    dataMem->getDirect(UCSRA, tmp& ~(1<<RXC) & ~(1<<DOR));
 }

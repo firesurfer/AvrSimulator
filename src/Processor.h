@@ -32,9 +32,9 @@ class Processor
 {
 public:
     Processor(MemoryMapper* _memory_mapper, PeripheryHandler *_periph_handler, InterruptController *_intcontrl);
-    bool ExecuteStep();
-    void RegisterCommand(CommandBase* cmd);
-    void PrintRegisteredCommands();
+    bool executeStep();
+    void registerCommand(CommandBase* cmd);
+    void printRegisteredCommands();
 private:
 
     uint16_t program_counter;

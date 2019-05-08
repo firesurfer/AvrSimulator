@@ -40,7 +40,7 @@ uint8_t MemoryMapper::getRegister(uint32_t reg)
     if(reg>=0x20){
         throw std::out_of_range("Only 32 Processorregisters available");
     }
-    uint8_t value = data_memory->Get(reg);
+    uint8_t value = data_memory->get(reg);
     LOG(Debug3) << "Get r" << dec << reg << ": 0x" << hex << (int)value << endl;
     return value;
 }
@@ -55,7 +55,7 @@ uint8_t MemoryMapper::getIORegister(uint32_t reg)
     if(reg>=0x40){
         throw std::out_of_range("Only 64 IO-Registers available");
     }
-    uint8_t value = data_memory->Get(reg+0x20);
+    uint8_t value = data_memory->get(reg+0x20);
     LOG(Debug3) << "Get IOReg 0x" << hex << reg << ": 0x" << (int)value << endl;
     return value;
 }
@@ -67,7 +67,7 @@ uint16_t MemoryMapper::getIORegister16(uint32_t reg)
 
 uint8_t MemoryMapper::getData(uint32_t pos)
 {
-    uint8_t value = data_memory->Get(pos);
+    uint8_t value = data_memory->get(pos);
     LOG(Debug3) << "Get data address 0x" << hex << pos << ": 0x" << (int)value << endl;
     return value;
 }
@@ -79,7 +79,7 @@ uint16_t MemoryMapper::getData16(uint32_t pos)
 
 uint8_t MemoryMapper::getSREG(uint8_t mask)
 {
-    return data_memory->Get(0x5F)&mask;
+    return data_memory->get(0x5F)&mask;
 }
 
 uint8_t MemoryMapper::popStack()
@@ -87,7 +87,7 @@ uint8_t MemoryMapper::popStack()
     uint16_t SP=getStackPtr();
     SP++;
     setStackPtr(SP);
-    uint8_t value = data_memory->Get(SP);
+    uint8_t value = data_memory->get(SP);
     LOG(Debug3) << "Pop Stack 0x" << hex << SP << ": 0x" << (int)value << endl;
     return value;
 }
@@ -97,7 +97,7 @@ void MemoryMapper::setRegister(uint32_t reg, uint8_t val)
     if(reg>=0x20){
         throw std::out_of_range("Only 32 Processorregisters available");
     }
-    data_memory->Set(reg,val);
+    data_memory->get(reg,val);
 }
 
 void MemoryMapper::setRegister16(uint32_t reg, uint16_t val)
@@ -111,7 +111,7 @@ void MemoryMapper::setIORegister(uint32_t reg, uint8_t val)
     if(reg>=0x40){
         throw std::out_of_range("Only 64 IO-Registers available");
     }
-    data_memory->Set(reg+0x20,val);
+    data_memory->get(reg+0x20,val);
     LOG(Debug3) << "Set io address 0x" << hex << reg << ": 0x" << (int)val << endl;
 }
 
@@ -123,7 +123,7 @@ void MemoryMapper::setIORegister16(uint32_t reg, uint16_t val)
 
 void MemoryMapper::setData(uint32_t reg, uint8_t val)
 {
-    data_memory->Set(reg,val);
+    data_memory->get(reg,val);
 }
 
 void MemoryMapper::setData16(uint32_t reg, uint16_t val)
@@ -134,7 +134,7 @@ void MemoryMapper::setData16(uint32_t reg, uint16_t val)
 
 void MemoryMapper::setSREG(uint8_t sreg, uint8_t mask)
 {
-    data_memory->Set(0x5F,getSREG(~mask)|(mask&sreg));
+    data_memory->get(0x5F,getSREG(~mask)|(mask&sreg));
 }
 
 void MemoryMapper::pushStack(uint8_t data)
@@ -143,7 +143,7 @@ void MemoryMapper::pushStack(uint8_t data)
     if(SP<=0x60){
         throw std::overflow_error("Stackoverflow, did you initialize the stackpointer?");
     }
-    data_memory->Set(SP,data);
+    data_memory->get(SP,data);
     SP--;
     setStackPtr(SP);
 }

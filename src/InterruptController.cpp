@@ -41,9 +41,9 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
                 memoryMapper->setSREG(0,MASK_I);
                 ProgramCounter = element.vectoraddress;
                 if(element.clearflag){
-                    uint8_t flags = dataMem->GetDirect(element.flagaddr);
+                    uint8_t flags = dataMem->getDirect(element.flagaddr);
                     flags &= ~(1<<element.flagbit);
-                    dataMem->SetDirect(element.flagaddr,flags);
+                    dataMem->getDirect(element.flagaddr,flags);
                 }
                 return 4;
             }

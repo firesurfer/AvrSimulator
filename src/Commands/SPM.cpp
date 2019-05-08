@@ -31,7 +31,7 @@ uint32_t SPM::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorF
     uint8_t low_byte = data_memory->getRegister(R0);
     uint16_t data = low_byte | (high_byte <<8);
     uint16_t address = data_memory->getZReg();
-    data_memory->getProgramMemory()->Set(address,data);
+    data_memory->getProgramMemory()->set(address,data);
     ProgramCounter+=1;
     return 2;//TODO
 }

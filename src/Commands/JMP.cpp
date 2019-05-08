@@ -27,7 +27,7 @@ JMP::JMP(MemoryMapper *_dataMemory):CommandBase(_dataMemory)
 
 uint32_t JMP::Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags)
 {
-    uint16_t address = this->data_memory->getProgramMemory()->Get(ProgramCounter+1);
+    uint16_t address = this->data_memory->getProgramMemory()->get(ProgramCounter+1);
     //TODO implement checks?
     ProgramCounter =address;
 

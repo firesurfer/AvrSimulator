@@ -31,12 +31,12 @@ class DataMemory
 public:
     DataMemory(uint32_t _size, uint32_t _offset);
     virtual ~DataMemory();
-    uint32_t GetSize();
+    uint32_t getSize();
 
-    uint8_t Get(uint32_t address);
-    uint8_t GetDirect(uint32_t address);
-    void Set(uint32_t address, uint8_t value, bool watchWrite = true);
-    void SetDirect(uint32_t address, uint8_t value){Set(address,value,false);}
+    uint8_t get(uint32_t address);
+    uint8_t getDirect(uint32_t address);
+    void get(uint32_t address, uint8_t value, bool watchWrite = true);
+    void getDirect(uint32_t address, uint8_t value){get(address,value,false);}
     uint8_t *GetDataPtr();
 
     ///
