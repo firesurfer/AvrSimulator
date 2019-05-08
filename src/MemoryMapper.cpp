@@ -97,7 +97,7 @@ void MemoryMapper::setRegister(uint32_t reg, uint8_t val)
     if(reg>=0x20){
         throw std::out_of_range("Only 32 Processorregisters available");
     }
-    data_memory->get(reg,val);
+    data_memory->set(reg,val);
 }
 
 void MemoryMapper::setRegister16(uint32_t reg, uint16_t val)
@@ -111,7 +111,7 @@ void MemoryMapper::setIORegister(uint32_t reg, uint8_t val)
     if(reg>=0x40){
         throw std::out_of_range("Only 64 IO-Registers available");
     }
-    data_memory->get(reg+0x20,val);
+    data_memory->set(reg+0x20,val);
     LOG(Debug3) << "Set io address 0x" << hex << reg << ": 0x" << (int)val << endl;
 }
 
@@ -123,7 +123,7 @@ void MemoryMapper::setIORegister16(uint32_t reg, uint16_t val)
 
 void MemoryMapper::setData(uint32_t reg, uint8_t val)
 {
-    data_memory->get(reg,val);
+    data_memory->set(reg,val);
 }
 
 void MemoryMapper::setData16(uint32_t reg, uint16_t val)
@@ -134,7 +134,7 @@ void MemoryMapper::setData16(uint32_t reg, uint16_t val)
 
 void MemoryMapper::setSREG(uint8_t sreg, uint8_t mask)
 {
-    data_memory->get(0x5F,getSREG(~mask)|(mask&sreg));
+    data_memory->set(0x5F,getSREG(~mask)|(mask&sreg));
 }
 
 void MemoryMapper::pushStack(uint8_t data)
@@ -143,7 +143,7 @@ void MemoryMapper::pushStack(uint8_t data)
     if(SP<=0x60){
         throw std::overflow_error("Stackoverflow, did you initialize the stackpointer?");
     }
-    data_memory->get(SP,data);
+    data_memory->set(SP,data);
     SP--;
     setStackPtr(SP);
 }

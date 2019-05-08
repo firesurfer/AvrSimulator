@@ -63,7 +63,7 @@ uint8_t DataMemory::getDirect(uint32_t address)
 
 }
 
-void DataMemory::get(uint32_t address, uint8_t value, bool watch)
+void DataMemory::set(uint32_t address, uint8_t value, bool watch)
 {
     if(address < size)
     {
@@ -91,7 +91,7 @@ void DataMemory::get(uint32_t address, uint8_t value, bool watch)
         throw out_of_range("SRAM Set: Argument out of range!");
 }
 
-uint8_t *DataMemory::GetDataPtr()
+uint8_t *DataMemory::getDataPtr()
 {
     return data;
 }
