@@ -24,7 +24,7 @@ Processor::Processor(MemoryMapper *_memory_mapper, PeripheryHandler* _periph_han
     this->memory_mapper = _memory_mapper;
     this->program_memory = memory_mapper->getProgramMemory();
     this->periph_handler =_periph_handler;
-    this->intController = _intcontrl;
+    this->interrupt_controller = _intcontrl;
     this->decoder = new Decoder(commands);
 }
 
@@ -36,12 +36,22 @@ bool Processor::ExecuteStep()
     else
     {
         int sp1=0,sp2=0,sp=this->memory_mapper->getStackPtr();
-        try{
+        try
+        {
             sp1 = this->memory_mapper->getData(sp+1);
-        }catch(...){sp1=-1;}
-        try{
+        }
+        catch(...)
+        {
+            sp1=-1;
+        }
+        try
+        {
             sp2 = this->memory_mapper->getData(sp+2);
-        }catch(...){sp2=-1;}
+        }
+        catch(...)
+        {
+            sp2=-1;
+        }
         LOG(Debug) << "SREG: 0x" << hex << (int)this->memory_mapper->getSREG();
         LOG_APPEND << "  Stackptr: 0x" << hex << sp;
         if(sp1 != -1)
@@ -51,9 +61,8 @@ bool Processor::ExecuteStep()
         LOG_APPEND << endl;
 
         uint16_t instruction = program_memory->Get(program_counter);
-        bool found = false;
 
-       /* if(instruction == 0xCFFF)
+       /* if(instruction == 0xCFFF) //TODO FIX
         {
             LOG(Warning)<< "Found empty endless loop (0xCFFF) on address 0x" << hex << program_counter*2 << " - Aborting programm" << endl;
             return false;
@@ -65,17 +74,20 @@ bool Processor::ExecuteStep()
             throw runtime_error("Error: illegal instruction!");
         }
         uint32_t cycles=0;
-        if(!flags.skipNextInstruction){
+        if(!flags.skipNextInstruction)
+        {
             LOG(Debug) << "Instruction 0x" << hex << program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
             cycles = next_command->Execute(instruction,this->program_counter, flags);
-        }else{
+        }
+        else
+        {
             LOG(Debug) << "skipping 0x" << hex <<program_counter*2 << ": 0x" << instruction << " " << next_command->Name() << endl;
             cycles = next_command->CommandSize();
             program_counter += next_command->CommandSize();
             flags.skipNextInstruction = false;
         }
         periph_handler->handlePeriphery(cycles);
-        intController->handleInterrupts(cycles,program_counter,flags);
+        interrupt_controller->handleInterrupts(cycles,program_counter,flags);
 
         return true;
     }

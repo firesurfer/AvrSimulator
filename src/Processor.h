@@ -43,7 +43,7 @@ private:
     ProgramMemory * program_memory;
     MemoryMapper * memory_mapper;
     PeripheryHandler* periph_handler;
-    InterruptController *intController;
+    InterruptController *interrupt_controller;
     std::vector<CommandBase*> commands;
     Decoder* decoder;
     ProcessorFlags flags;
