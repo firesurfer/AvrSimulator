@@ -100,10 +100,10 @@ void IOPort::setInput(std::vector<bool> data)
         throw  std::runtime_error("Wrong vector size: size != 8");
 
     //Get datadirection register
-    uint8_t ddr = memMapper->getData(port.dataDirection);
+    uint8_t ddr = dataMem->getDirect(port.dataDirection);
 
     //Get input register
-    uint8_t pin = memMapper->getData(port.inputRegister);
+    uint8_t pin = dataMem->getDirect(port.inputRegister);
 
     for(uint8_t i = 0;i < 8;i++)
     {
@@ -120,7 +120,7 @@ void IOPort::setInput(std::vector<bool> data)
             }
         }
     }
-    memMapper->setData(port.inputRegister, pin);
+    dataMem->setDirect(port.inputRegister, pin);
 }
 
 std::vector<IODirection> IOPort::getDirections()

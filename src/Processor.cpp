@@ -38,7 +38,7 @@ bool Processor::executeStep()
         int sp1=0,sp2=0,sp=this->memory_mapper->getStackPtr();
         try
         {
-            sp1 = this->memory_mapper->getData(sp+1);
+            sp1 = this->memory_mapper->getDataMemory()->getDirect(sp+1);
         }
         catch(...)
         {
@@ -46,7 +46,7 @@ bool Processor::executeStep()
         }
         try
         {
-            sp2 = this->memory_mapper->getData(sp+2);
+            sp2 = this->memory_mapper->getDataMemory()->getDirect(sp+2);
         }
         catch(...)
         {
