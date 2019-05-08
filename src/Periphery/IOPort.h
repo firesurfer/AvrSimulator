@@ -35,12 +35,18 @@ enum class IODirection
     INPUT = 0,
     OUTPUT = 1
 };
-
+/**
+ * @brief The IOPort class represents a single IO port. It also handles the access to this port
+ */
 class IOPort: public PeripheryElement
 {
 public:
     IOPort(MemoryMapper* mapper, Port _port);
     void handle(uint32_t cycles);
+    void setInput(std::vector<bool> data);
+    std::vector<IODirection> getDirections();
+    std::vector<bool> getOutput();
+    Port getPort();
 private:
     Port port;
 
@@ -53,6 +59,7 @@ private:
     uint8_t lastPIN = 0;
 
     void onPinChange(int32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref);
+
 };
 
 #endif // IOPORT_H

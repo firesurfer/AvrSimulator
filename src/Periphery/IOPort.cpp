@@ -15,6 +15,7 @@
 */
 
 #include "IOPort.h"
+#include "BitHelpers.h"
 
 IOPort::IOPort(MemoryMapper *mapper,Port _port):PeripheryElement(mapper)
 {
@@ -29,8 +30,6 @@ IOPort::IOPort(MemoryMapper *mapper,Port _port):PeripheryElement(mapper)
 
 void IOPort::handle(uint32_t cycles)
 {
-
-
     //Get datadirection register
     uint8_t ddr = memMapper->getData(port.dataDirection);
     //Get input register
@@ -38,6 +37,7 @@ void IOPort::handle(uint32_t cycles)
     //Get output register
     uint8_t data = memMapper->getData(port.dataRegister);
 
+    //Check if anything has changes
     bool change = false;
     if(ddr != lastDDR || pin != lastPIN || data != lastPORT)
     {
@@ -46,41 +46,42 @@ void IOPort::handle(uint32_t cycles)
         lastPIN = pin;
         lastPORT = data;
     }
-
-
-
+    //Step through all bits
     for(uint8_t i = 0;i < 8;i++)
     {
-        if( ddr & (1<<i))
+        if( ddr & (1<<i)) //Direction register
         {
             portDirections[i] = IODirection::OUTPUT;
         }
-        else {
+        else
+        {
             portDirections[i] = IODirection::INPUT;
         }
-        if(pin & (1<<i))
+
+        if(pin & (1<<i)) //Input register
         {
             //If a pin is configured as output writing a one to the PINx register results into toggling the pin
             if(portDirections[i] != IODirection::OUTPUT)
             {
                 portInput[i] = true;
             }
-
-
         }
-        else {
+        else
+        {
             portInput[i] = false;
         }
-        if(data & (1<<i))
+
+        if(data & (1<<i)) //Output register
         {
             portData[i] = true;
         }
-        else {
+        else
+        {
             portData[i] = false;
         }
     }
 
-    if(change)
+    if(change) // In case something has changed log it
     {
         LOG(Info) << "Port: " << port.portName << std::endl;
         std::string infoString = "Directions: ";
@@ -100,8 +101,7 @@ void IOPort::handle(uint32_t cycles)
 
 void IOPort::onPinChange(int32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
 {
-    //Get datadirection register
-    uint8_t ddr = memMapper->getData(port.dataDirection);
+
     uint8_t pin = newval;
     //Get output register
     uint8_t data = memMapper->getData(port.dataRegister);
@@ -121,4 +121,48 @@ void IOPort::onPinChange(int32_t addr, uint8_t oldval, uint8_t newval, uint8_t &
 
         }
     }
+}
+
+void IOPort::setInput(std::vector<bool> data)
+{
+    if(data.size() != 8)
+        throw  std::runtime_error("Wrong vector size: size != 8");
+
+    //Get datadirection register
+    uint8_t ddr = memMapper->getData(port.dataDirection);
+
+    //Get input register
+    uint8_t pin = memMapper->getData(port.inputRegister);
+
+    for(uint8_t i = 0;i < 8;i++)
+    {
+        //It is an input
+        if(!(ddr & (1<<i)))
+        {
+            if(data[i])
+            {
+                BitHelpers::set_bit(pin,i);
+            }
+            else {
+                BitHelpers::clear_bit(pin,i);
+            }
+            portData[i] = data[i];
+        }
+    }
+
+}
+
+std::vector<IODirection> IOPort::getDirections()
+{
+    return portDirections;
+}
+
+std::vector<bool> IOPort::getOutput()
+{
+    return portData;
+}
+
+Port IOPort::getPort()
+{
+    return port;
 }
