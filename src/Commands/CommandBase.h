@@ -24,7 +24,7 @@
 #include "ProcessorDefines.h"
 #include "BitHelpers.h"
 #include "Logger/Logger.h"
-#include "processorflags.h"
+#include "ProcessorFlags.h"
 class CommandBase
 {
 public:

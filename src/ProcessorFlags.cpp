@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-#include "processorflags.h"
+#include "ProcessorFlags.h"
 
 ProcessorFlags::ProcessorFlags()
 {

@@ -19,7 +19,7 @@
 
 #include "MemoryMapper.h"
 #include <map>
-#include <processorflags.h>
+#include <ProcessorFlags.h>
 
 typedef struct{
     uint32_t vectoraddress;

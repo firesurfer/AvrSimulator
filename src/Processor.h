@@ -27,7 +27,7 @@
 #include "InterruptController.h"
 #include "Logger/Logger.h"
 #include "Decoder.h"
-#include "processorflags.h"
+#include "ProcessorFlags.h"
 class Processor
 {
 public:
