@@ -2,7 +2,14 @@
 
 int main(void)
 {
-    DDRB |= (1<<PINB0) | (1<<PINB1);
-    PORTB |= (1<<PINB0) | (1<<PINB1);
+    DDRA |= (1<<PB0) | (1<<PB1);
+    DDRB |= (1<<PB0) | (1<<PB1);
+    PORTB |= (1<<PB0) | (1<<PB1);
+    PINB |= (1<<PB0);
+    while(1)
+    {
+       //PORTB &= ~(1<<PB0);
+        PINB |= (1<<PB0);
+    }
     return 0;
 }

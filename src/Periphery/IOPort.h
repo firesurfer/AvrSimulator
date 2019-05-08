@@ -17,13 +17,24 @@
 #ifndef IOPORT_H
 #define IOPORT_H
 #include "PeripheryElement.h"
-typedef enum
+
+typedef uint16_t DataDirection;
+typedef uint16_t DataRegister;
+typedef uint16_t InputRegister;
+
+struct Port
 {
-    PORT_A = PORTA,
-    PORT_B = PORTB,
-    PORT_C = PORTC,
-    PORT_D = PORTD
-}Port;
+    std::string portName;
+    DataDirection dataDirection;
+    DataRegister dataRegister;
+    InputRegister inputRegister;
+};
+
+enum class IODirection
+{
+    INPUT = 0,
+    OUTPUT = 1
+};
 
 class IOPort: public PeripheryElement
 {
@@ -32,6 +43,16 @@ public:
     void handle(uint32_t cycles);
 private:
     Port port;
+
+    std::vector<IODirection> portDirections;
+    std::vector<bool> portData;
+    std::vector<bool> portInput;
+
+    uint8_t lastDDR = 0;
+    uint8_t lastPORT = 0;
+    uint8_t lastPIN = 0;
+
+    void onPinChange(int32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref);
 };
 
 #endif // IOPORT_H

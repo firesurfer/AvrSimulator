@@ -112,6 +112,7 @@ void MemoryMapper::setIORegister(uint32_t reg, uint8_t val)
         throw std::out_of_range("Only 64 IO-Registers available");
     }
     data_memory->Set(reg+0x20,val);
+    LOG(Debug3) << "Set io address 0x" << hex << reg << ": 0x" << (int)val << endl;
 }
 
 void MemoryMapper::setIORegister16(uint32_t reg, uint16_t val)

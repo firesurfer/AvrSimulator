@@ -37,4 +37,9 @@ void PeripheryRegister::registerPeriphery(PeripheryHandler *handler, MemoryMappe
     uartVector.maskbit = 7;
     uartVector.vectoraddress = 0x1A;
     intController->addInterruptVector(uartVector);
+
+    handler->addPeripheryElement(new IOPort(mapper, {"PORTA", DDRA, PORTA, PINA}));
+    handler->addPeripheryElement(new IOPort(mapper, {"PORTB", DDRB, PORTB, PINB}));
+    handler->addPeripheryElement(new IOPort(mapper, {"PORTC", DDRC, PORTC, PINC}));
+    handler->addPeripheryElement(new IOPort(mapper, {"PORTD", DDRD, PORTD, PIND}));
 }
