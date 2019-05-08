@@ -56,7 +56,7 @@ private:
 
     uint8_t lastDDR = 0;
     uint8_t lastPORT = 0;
-    uint8_t lastPIN = 0;
+
 
     void onPinChange(int32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref);
 

@@ -32,18 +32,16 @@ void IOPort::handle(uint32_t cycles)
 {
     //Get datadirection register
     uint8_t ddr = memMapper->getData(port.dataDirection);
-    //Get input register
-    uint8_t pin = memMapper->getData(port.inputRegister);
+
     //Get output register
     uint8_t data = memMapper->getData(port.dataRegister);
 
     //Check if anything has changes
     bool change = false;
-    if(ddr != lastDDR || pin != lastPIN || data != lastPORT)
+    if(ddr != lastDDR || data != lastPORT)
     {
         change = true;
         lastDDR = ddr;
-        lastPIN = pin;
         lastPORT = data;
     }
     //Step through all bits
@@ -56,19 +54,6 @@ void IOPort::handle(uint32_t cycles)
         else
         {
             portDirections[i] = IODirection::INPUT;
-        }
-
-        if(pin & (1<<i)) //Input register
-        {
-            //If a pin is configured as output writing a one to the PINx register results into toggling the pin
-            if(portDirections[i] != IODirection::OUTPUT)
-            {
-                portInput[i] = true;
-            }
-        }
-        else
-        {
-            portInput[i] = false;
         }
 
         if(data & (1<<i)) //Output register
@@ -109,18 +94,10 @@ void IOPort::onPinChange(int32_t addr, uint8_t oldval, uint8_t newval, uint8_t &
     {
         if(pin & (1<<i))
         {
-            //If a pin is configured as output writing a one to the PINx register results into toggling the pin
-            if(portDirections[i] == IODirection::OUTPUT)
-            {
-                data = data ^ (1<<i);
-                memMapper->setData(port.dataRegister,data);
-            }
-            else {
-                portInput[i] = true;
-            }
-
+            data = data ^ (1<<i);
         }
     }
+    memMapper->setData(port.dataRegister,data);
 }
 
 void IOPort::setInput(std::vector<bool> data)
@@ -143,12 +120,13 @@ void IOPort::setInput(std::vector<bool> data)
             {
                 BitHelpers::set_bit(pin,i);
             }
-            else {
+            else
+            {
                 BitHelpers::clear_bit(pin,i);
             }
-            portData[i] = data[i];
         }
     }
+    memMapper->setData(port.inputRegister, pin);
 
 }
 
