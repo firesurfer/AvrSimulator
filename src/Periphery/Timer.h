@@ -23,6 +23,7 @@ typedef struct{
     uint16_t tcnt;
     register_bit_t cs0;
     register_bit_t tov;
+    uint16_t presc_table[8];
 }timer_registers_t;
 
 class Timer:public PeripheryElement
@@ -36,9 +37,9 @@ private:
     uint16_t readReg(uint32_t addr){if(bit16)return dataMem->getDirect16(addr); else return dataMem->getDirect(addr);}
     void writeReg(uint32_t addr, uint16_t val){if(bit16)dataMem->setDirect16(addr,val); else dataMem->setDirect(addr,val);}
     timer_registers_t timer;
-    uint32_t presc_cnt;
-    uint32_t presc_top;
-    uint32_t timer_top;
+    uint16_t presc_cnt;
+    uint16_t presc_top;
+    int32_t timer_top;
     bool bit16;
 };
 

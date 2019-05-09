@@ -37,7 +37,7 @@ void Timer::handle(uint32_t cycles)
 {
     //fetch configuration
     uint8_t presc = dataMem->getDirect(timer.cs0.addr) & (0x7 << timer.cs0.bit);
-    presc_top = presc_table[presc];
+    presc_top = timer.presc_table[presc];
     if(presc_top==0)
         return;
     while(cycles--){

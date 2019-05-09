@@ -113,7 +113,7 @@ void CommandRegister::registerCommand(Processor *processor, MemoryMapper *mapper
     processor->registerCommand(new NOP(mapper));
     processor->registerCommand(new JMP(mapper));
     processor->registerCommand(new LDS_MEM(mapper));
-    processor->registerCommand(new ADC(mapper));
+    processor->registerCommand(new cmdADC(mapper));
     processor->registerCommand(new ADD(mapper));
     processor->registerCommand(new ADIW(mapper));
     processor->registerCommand(new AND(mapper));
