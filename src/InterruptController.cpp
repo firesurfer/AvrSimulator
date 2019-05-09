@@ -30,7 +30,7 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
         return 0;
     for(auto & it: this->interruptVectors)
     {
-        auto element = it.second;
+        intvector_t element = it.second;
         if(dataMem->getDirect(element.mask.addr)&(1<<element.mask.bit)){
             if(dataMem->getDirect(element.flag.addr)&(1<<element.flag.bit)){
                 LOG(Info)<<"Interrupt started:\n";

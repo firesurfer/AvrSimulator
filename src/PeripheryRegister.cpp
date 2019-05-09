@@ -22,18 +22,18 @@
 
 void PeripheryRegister::registerPeriphery(PeripheryHandler *handler, MemoryMapper *mapper, InterruptController *intController)
 {
-    handler->addPeripheryElement(new Uart(mapper, UDR, {UCSRA, 5}, {UCSRA, 7}, {UCSRA, 3}));
+    handler->addPeripheryElement(new Uart(mapper, UDR, {UCSRA, UDRE}, {UCSRA, RXC}, {UCSRA, 3}));
 
     intvector_t uartVector;
     uartVector.clearflag = false;
-    uartVector.flag = {0x2B, 5};
-    uartVector.mask = {0x2A, 5};
-    uartVector.vectoraddress = 0x1C;
+    uartVector.flag = {UCSRA, UDRE};
+    uartVector.mask = {UCSRB, UDRIE};
+    uartVector.vectoraddress = USART_UDRE_vect_num*2;//JMP needs 2 words instead 1 word for RJMP
     intController->addInterruptVector(uartVector);
     uartVector.clearflag = false;
-    uartVector.flag = {0x2B, 7};
-    uartVector.mask = {0x2A, 7};
-    uartVector.vectoraddress = 0x1A;
+    uartVector.flag = {UCSRA, RXC};
+    uartVector.mask = {UCSRB, RXCIE};
+    uartVector.vectoraddress = USART_RXC_vect_num*2;
     intController->addInterruptVector(uartVector);
 
     handler->addPeripheryElement(new IOPort(mapper, {"PORTA", DDRA, PORTA, PINA}));
@@ -41,5 +41,21 @@ void PeripheryRegister::registerPeriphery(PeripheryHandler *handler, MemoryMappe
     handler->addPeripheryElement(new IOPort(mapper, {"PORTC", DDRC, PORTC, PINC}));
     handler->addPeripheryElement(new IOPort(mapper, {"PORTD", DDRD, PORTD, PIND}));
 
-    //handler->addPeripheryElement(new Timer(mapper, {TCNT0, {TCCR0,
+    handler->addPeripheryElement(new Timer(mapper, {TCNT0, {TCCR0, CS00}, {TIFR, TOV0}, {0,1,8,64,256,1024,1,1}}, false));
+    handler->addPeripheryElement(new Timer(mapper, {TCNT1, {TCCR1B, CS10}, {TIFR, TOV1}, {0,1,8,64,256,1024,1,1}}, true));
+    handler->addPeripheryElement(new Timer(mapper, {TCNT2, {TCCR2, CS20}, {TIFR, TOV2}, {0,1,8,32,64,128,256,1024}}, false));
+    intvector_t timerVector;
+    timerVector.clearflag = true;
+    timerVector.flag = {TIFR, TOV0};
+    timerVector.mask = {TIMSK, TOIE0};
+    timerVector.vectoraddress = TIMER0_OVF_vect_num*2;
+    intController->addInterruptVector(timerVector);
+    timerVector.flag = {TIFR, TOV1};
+    timerVector.mask = {TIMSK, TOIE1};
+    timerVector.vectoraddress = TIMER1_OVF_vect_num*2;
+    intController->addInterruptVector(timerVector);
+    timerVector.flag = {TIFR, TOV2};
+    timerVector.mask = {TIMSK, TOIE2};
+    timerVector.vectoraddress = TIMER2_OVF_vect_num*2;
+    intController->addInterruptVector(timerVector);
 }
