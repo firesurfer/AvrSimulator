@@ -35,6 +35,7 @@ public:
 
     uint8_t get(uint32_t address);
     uint8_t getDirect(uint32_t address);
+    uint16_t getDirect16(uint32_t address);
     void set(uint32_t address, uint8_t value, bool watchWrite = true);
     void setDirect16(uint32_t address, uint16_t value);
     void setDirect(uint32_t address, uint8_t value){set(address,value,false);}

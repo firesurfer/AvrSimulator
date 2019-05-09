@@ -63,6 +63,13 @@ uint8_t DataMemory::getDirect(uint32_t address)
 
 }
 
+uint16_t DataMemory::getDirect16(uint32_t address)
+{
+    uint16_t ret = getDirect(address);
+    ret |= uint16_t(getDirect(address+1)) << 8;
+    return ret;
+}
+
 void DataMemory::set(uint32_t address, uint8_t value, bool watch)
 {
     if(address < size)
