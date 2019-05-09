@@ -56,6 +56,12 @@
 #define UCSRB   0x2A
 #define UBRRL   0x29
 
+#define ACSR    0x28
+#define ADMUX   0x27
+#define ADCSRA  0x26
+#define ADCH    0x25
+#define ADCL    0x24
+
 
 #define SREG_I 7
 #define SREG_T 6

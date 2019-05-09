@@ -91,6 +91,12 @@ void DataMemory::set(uint32_t address, uint8_t value, bool watch)
         throw out_of_range("SRAM Set: Argument out of range!");
 }
 
+void DataMemory::setDirect16(uint32_t address, uint16_t value)
+{
+    set(address, value, false);
+    set(address+1, value >> 8, false);
+}
+
 uint8_t *DataMemory::getDataPtr()
 {
     return data;
