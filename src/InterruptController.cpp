@@ -31,8 +31,8 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
     for(auto & it: this->interruptVectors)
     {
         auto element = it.second;
-        if(memoryMapper->getData(element.maskaddr)&(1<<element.maskbit)){
-            if(memoryMapper->getData(element.flagaddr)&(1<<element.flagbit)){
+        if(dataMem->getDirect(element.mask.addr)&(1<<element.mask.bit)){
+            if(dataMem->getDirect(element.flag.addr)&(1<<element.flag.bit)){
                 LOG(Info)<<"Interrupt started:\n";
                 uint8_t low_byte = (uint8_t)ProgramCounter;
                 uint8_t high_byte = (uint8_t)((ProgramCounter) >> 8);
@@ -41,14 +41,15 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
                 memoryMapper->setSREG(0,MASK_I);
                 ProgramCounter = element.vectoraddress;
                 if(element.clearflag){
-                    uint8_t flags = dataMem->getDirect(element.flagaddr);
-                    flags &= ~(1<<element.flagbit);
-                    dataMem->setDirect(element.flagaddr,flags);
+                    uint8_t flags = dataMem->getDirect(element.flag.addr);
+                    flags &= ~(1<<element.flag.bit);
+                    dataMem->setDirect(element.flag.addr,flags);
                 }
                 return 4;
             }
         }
     }
+    return 0;
 }
 
 void InterruptController::addInterruptVector(intvector_t element)

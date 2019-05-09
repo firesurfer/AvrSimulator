@@ -23,10 +23,8 @@
 
 typedef struct{
     uint32_t vectoraddress;
-    uint32_t flagaddr;
-    uint32_t flagbit;
-    uint32_t maskaddr;
-    uint32_t maskbit;
+    register_bit_t flag;
+    register_bit_t mask;
     bool clearflag;
     //priority
 } intvector_t;

@@ -19,19 +19,19 @@
 using namespace std;
 using namespace std::placeholders;
 
-const int UDRE=5;
-const int RXC=7;
-const int DOR=3;
+//const int UDRE=5;
+//const int RXC=7;
+//const int DOR=3;
 
-Uart::Uart(MemoryMapper *mapper):PeripheryElement(mapper)
+Uart::Uart(MemoryMapper *mapper, uint16_t _udr, register_bit_t _udre, register_bit_t _rxc, register_bit_t _dor)
+    :PeripheryElement(mapper),udr(_udr),udre(_udre),rxc(_rxc),dor(_dor)
 {
-    dataMem->watchWrite(UDR, std::bind(&Uart::onChange,this,_1,_2,_3,_4));
-    dataMem->watchWrite(UCSRA, std::bind(&Uart::onChange,this,_1,_2,_3,_4));
-    dataMem->watchRead(UDR, std::bind(&Uart::onRead,this,_1,_2));
-    //mapper->watch(UDR);
-    //mapper->watch(UCSRA);
-    uint8_t tmp = dataMem->getDirect(UCSRA);
-    dataMem->setDirect(UCSRA,tmp | (1<<UDRE));
+    dataMem->watchWrite(udr, std::bind(&Uart::onChange,this,_1,_2,_3,_4));
+    dataMem->watchWrite(udre.addr, std::bind(&Uart::onStatus,this,_1,_2,_3,_4));
+    dataMem->watchRead(udr, std::bind(&Uart::onRead,this,_1,_2));
+
+    uint8_t tmp = dataMem->getDirect(udre.addr);
+    dataMem->setDirect(udre.addr,tmp | (1<<udre.bit));
     receiveCycles = 0;
 }
 
@@ -47,14 +47,14 @@ void Uart::handle(uint32_t cycles)
                 int actual_length = 0;
                 std::vector<uint8_t> data = con->Read(1,actual_length);
                 if(actual_length > 0){
-                    uint8_t tmp = dataMem->getDirect(UCSRA);
-                    if(tmp & (1<<RXC)){
-                        dataMem->setDirect(UCSRA,tmp | (1<<DOR));
+                    uint8_t tmp = dataMem->getDirect(rxc.addr);
+                    if(tmp & (1<<rxc.bit)){
+                        dataMem->setDirect(dor.addr,tmp | (1<<dor.bit));
                         LOG(Info) << "Uart receive overrun: "<< data[0] << std::endl;
                     }else{
                         LOG(Info) << "Uart receive: "<< data[0] << std::endl;
-                        dataMem->setDirect(UDR,data[0]);
-                        dataMem->setDirect(UCSRA,tmp | (1<<RXC));
+                        dataMem->setDirect(udr,data[0]);
+                        dataMem->setDirect(rxc.addr,tmp | (1<<rxc.bit));
                         receiveCycles = 0;
                     }
                 }
@@ -66,44 +66,42 @@ void Uart::handle(uint32_t cycles)
 
 void Uart::onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
 {
-    if(addr==UDR){
-        ref=oldval;//dont change UDR because its also the receive register
-        LOG(Info)<<"Uart: '"<<newval<<"'"<<endl;
-        for(TcpConnection::SharedPtr & con: network_connections)
+    ref=oldval;//dont change UDR because its also the receive register
+    LOG(Info)<<"Uart: '"<<newval<<"'"<<endl;
+    for(TcpConnection::SharedPtr & con: network_connections)
+    {
+        if(con)
         {
-            if(con)
-            {
-                LOG(Important) << "Writing to connection" << std::endl;
-                con->Write(string((char*)&newval,1));
-            }
+            LOG(Important) << "Writing to connection" << std::endl;
+            con->Write(string((char*)&newval,1));
         }
-        if(newval=='\n'){
-            LOG(Important)<<"UART: "<<buffer<<endl;
-            buffer="";
-        }else
-            buffer+=newval;
-        uint8_t tmp = dataMem->getDirect(UCSRA);
-        dataMem->setDirect(UCSRA,tmp | (1<<UDRE));
-    }else if(addr==UCSRA){
-        LOG(Info)<<"UCSRA changed: "<<(int)oldval<<" -> "<<(int)newval<<" : "<<(int)ref<<endl;
-        //clear flag if 1 is written
-        if(newval & (1<<UDRE)){
-            ref &= ~(1<<UDRE);
-        }else{
-            //keep old flagstate if 0 is written
-            if(oldval & (1<<UDRE))
-                ref |= (1<<UDRE);
-            else
-                ref &= ~(1<<UDRE);
-        }
+    }
+    if(newval=='\n'){
+        LOG(Important)<<"UART: "<<buffer<<endl;
+        buffer="";
+    }else
+        buffer+=newval;
+    uint8_t tmp = dataMem->getDirect(udre.addr);
+    dataMem->setDirect(udre.addr,tmp | (1<<udre.bit));
+}
+
+void Uart::onStatus(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref)
+{
+    LOG(Info)<<"UCSRA changed: "<<(int)oldval<<" -> "<<(int)newval<<" : "<<(int)ref<<endl;
+    //clear flag if 1 is written
+    if(newval & (1<<udre.bit)){
+        ref &= ~(1<<udre.bit);
     }else{
-        LOG(Fatal)<<"Falscher callback"<<endl;
-        return;
+        //keep old flagstate if 0 is written
+        if(oldval & (1<<udre.bit))
+            ref |= (1<<udre.bit);
+        else
+            ref &= ~(1<<udre.bit);
     }
 }
 
 void Uart::onRead(uint32_t addr, uint8_t val)
 {
-    uint8_t tmp = dataMem->getDirect(UCSRA);
-    dataMem->setDirect(UCSRA, tmp& ~(1<<RXC) & ~(1<<DOR));
+    uint8_t tmp = dataMem->getDirect(rxc.addr);
+    dataMem->setDirect(rxc.addr, tmp& ~(1<<rxc.bit) & ~(1<<dor.bit));
 }
