@@ -20,7 +20,7 @@
 #define _AVR_IO_H_
 #define _SFR_IO8(addr) ((addr)+0x20)
 #define _SFR_IO16(addr) ((addr)+0x20)
-#include "iom32.h"
+#include "avr/iom32.h"
 
 #define DEBUG
 
