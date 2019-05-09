@@ -17,6 +17,11 @@
 #ifndef PROCESSORDEFINES_H
 #define PROCESSORDEFINES_H
 
+#define _AVR_IO_H_
+#define _SFR_IO8(addr) ((addr)+0x20)
+#define _SFR_IO16(addr) ((addr)+0x20)
+#include "iom32.h"
+
 #define DEBUG
 
 #define X_H 27
@@ -32,13 +37,13 @@
 
 //These addresses locate the io registers in the global address space
 //These are for a atmega32
-#define MCUCR   0x55
-#define MCUCSR  0x54
+//#define MCUCR   0x55
+//#define MCUCSR  0x54
 #define SREG    0x5F
 #define SPH     0x5E
 #define SPL     0x5D
 
-#define PORTA   0x3B
+/*#define PORTA   0x3B
 #define DDRA    0x3A
 #define PINA    0x39
 #define PORTB   0x38
@@ -60,7 +65,7 @@
 #define ADMUX   0x27
 #define ADCSRA  0x26
 #define ADCH    0x25
-#define ADCL    0x24
+#define ADCL    0x24*/
 
 
 #define SREG_I 7
@@ -81,7 +86,7 @@
 #define MASK_Z (1<<SREG_Z)
 #define MASK_C (1<<SREG_C)
 
-#define OCDR 0x51
+//#define OCDR 0x51
 
 #define UNUSED(x) (void)(x)
 

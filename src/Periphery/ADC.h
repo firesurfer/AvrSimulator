@@ -34,10 +34,10 @@ enum class TriggerSource
     Timer1CaptureEvent
 };
 
-class ADC: public PeripheryElement
+class periphADC: public PeripheryElement
 {
 public:
-    ADC(MemoryMapper* mapper);
+    periphADC(MemoryMapper* mapper);
     virtual void handle(uint32_t cycles);
     ADCReference getReference();
     ADCPrescaler getPrescaler();

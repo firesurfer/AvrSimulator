@@ -1,12 +1,12 @@
 #include "ADC.h"
 
-ADC::ADC(MemoryMapper *mapper):
+periphADC::periphADC(MemoryMapper *mapper):
     PeripheryElement (mapper)
 {
 
 }
 
-void ADC::handle(uint32_t cycles)
+void periphADC::handle(uint32_t cycles)
 {
     uint16_t adc = (uint16_t)(voltage * 1024.0f / reference);
     adc = adc & 0x0FFF;
@@ -15,32 +15,32 @@ void ADC::handle(uint32_t cycles)
     uint8_t admux = memMapper->getData(ADMUX);
 }
 
-bool ADC::isEnabled()
+bool periphADC::isEnabled()
 {
 
 }
 
-ADCReference ADC::getReference()
+ADCReference periphADC::getReference()
 {
 
 }
 
-ADCPrescaler ADC::getPrescaler()
+ADCPrescaler periphADC::getPrescaler()
 {
 
 }
 
-TriggerSource ADC::getTriggerSource()
+TriggerSource periphADC::getTriggerSource()
 {
 
 }
 
-void ADC::setVoltage(float _voltage)
+void periphADC::setVoltage(float _voltage)
 {
     voltage = _voltage;
 }
 
-void ADC::setExternalReference(float _reference)
+void periphADC::setExternalReference(float _reference)
 {
     reference = _reference;
 }

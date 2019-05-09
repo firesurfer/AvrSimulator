@@ -16,9 +16,9 @@
 
 #pragma once
 #include "CommandBase.h"
-class ADC:public CommandBase
+class cmdADC:public CommandBase
 {
 public:
-    ADC(MemoryMapper* _dataMemory);
+    cmdADC(MemoryMapper* _dataMemory);
     virtual uint32_t Execute(uint16_t instruction, uint16_t &ProgramCounter, ProcessorFlags &flags);
 };

@@ -18,6 +18,8 @@
 
 #include "Periphery/IOPort.h"
 #include "Periphery/Uart.h"
+#include "Periphery/Timer.h"
+
 void PeripheryRegister::registerPeriphery(PeripheryHandler *handler, MemoryMapper *mapper, InterruptController *intController)
 {
     handler->addPeripheryElement(new Uart(mapper, UDR, {UCSRA, 5}, {UCSRA, 7}, {UCSRA, 3}));
@@ -38,4 +40,6 @@ void PeripheryRegister::registerPeriphery(PeripheryHandler *handler, MemoryMappe
     handler->addPeripheryElement(new IOPort(mapper, {"PORTB", DDRB, PORTB, PINB}));
     handler->addPeripheryElement(new IOPort(mapper, {"PORTC", DDRC, PORTC, PINC}));
     handler->addPeripheryElement(new IOPort(mapper, {"PORTD", DDRD, PORTD, PIND}));
+
+    //handler->addPeripheryElement(new Timer(mapper, {TCNT0, {TCCR0,
 }
