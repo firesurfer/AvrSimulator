@@ -43,30 +43,6 @@
 #define SPH     0x5E
 #define SPL     0x5D
 
-/*#define PORTA   0x3B
-#define DDRA    0x3A
-#define PINA    0x39
-#define PORTB   0x38
-#define DDRB    0x37
-#define PINB    0x36
-#define PORTC   0x35
-#define DDRC    0x34
-#define PINC    0x33
-#define PORTD   0x32
-#define DDRD    0x31
-#define PIND    0x30
-
-#define UDR     0x2C
-#define UCSRA   0x2B
-#define UCSRB   0x2A
-#define UBRRL   0x29
-
-#define ACSR    0x28
-#define ADMUX   0x27
-#define ADCSRA  0x26
-#define ADCH    0x25
-#define ADCL    0x24*/
-
 
 #define SREG_I 7
 #define SREG_T 6
@@ -86,8 +62,15 @@
 #define MASK_Z (1<<SREG_Z)
 #define MASK_C (1<<SREG_C)
 
-//#define OCDR 0x51
 
 #define UNUSED(x) (void)(x)
+
+#if _VECTORS_SIZE & 0x2 //if size of interrupt vector table is not divisible by 4, 1 word per interrupt is used (rjmp)
+#define WORDS_PER_INT 1
+#endif
+
+#ifndef WORDS_PER_INT
+#define WORDS_PER_INT 2 //Atmega32 uses 2 instruction words per interrupt (jmp)
+#endif
 
 #endif // PROCESSORDEFINES_H

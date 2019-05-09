@@ -39,7 +39,7 @@ uint32_t InterruptController::handleInterrupts(uint32_t cycles, uint16_t &Progra
                 memoryMapper->pushStack(low_byte);
                 memoryMapper->pushStack(high_byte);
                 memoryMapper->setSREG(0,MASK_I);
-                ProgramCounter = element.vectoraddress;
+                ProgramCounter = element.vectoraddress * WORDS_PER_INT;
                 if(element.clearflag){
                     uint8_t flags = dataMem->getDirect(element.flag.addr);
                     flags &= ~(1<<element.flag.bit);
