@@ -72,4 +72,9 @@ private:
     ProgramMemory* program_memory;
 };
 
+typedef struct{
+    uint16_t addr;
+    uint16_t bit;
+}register_bit_t;
+
 #endif // MEMORYMAPPER_H

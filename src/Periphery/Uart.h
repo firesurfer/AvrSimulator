@@ -22,14 +22,19 @@
 class Uart:public PeripheryElement
 {
 public:
-    Uart(MemoryMapper* mapper);
+    Uart(MemoryMapper* mapper, uint16_t _udr, register_bit_t _udre, register_bit_t _rxc, register_bit_t _dor);
     void handle(uint32_t cycles);
 
 private:
     void onChange(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref);
+    void onStatus(uint32_t addr, uint8_t oldval, uint8_t newval, uint8_t &ref);
     void onRead(uint32_t addr, uint8_t val);
     std::string buffer;
     uint32_t receiveCycles;
+    uint16_t udr;
+    register_bit_t udre;
+    register_bit_t rxc;
+    register_bit_t dor;
 };
 
 #endif // UART_H

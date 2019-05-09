@@ -20,21 +20,17 @@
 #include "Periphery/Uart.h"
 void PeripheryRegister::registerPeriphery(PeripheryHandler *handler, MemoryMapper *mapper, InterruptController *intController)
 {
-    handler->addPeripheryElement(new Uart(mapper));
+    handler->addPeripheryElement(new Uart(mapper, UDR, {UCSRA, 5}, {UCSRA, 7}, {UCSRA, 3}));
 
     intvector_t uartVector;
     uartVector.clearflag = false;
-    uartVector.flagaddr = 0x2B;
-    uartVector.flagbit = 5;
-    uartVector.maskaddr = 0x2A;
-    uartVector.maskbit = 5;
+    uartVector.flag = {0x2B, 5};
+    uartVector.mask = {0x2A, 5};
     uartVector.vectoraddress = 0x1C;
     intController->addInterruptVector(uartVector);
     uartVector.clearflag = false;
-    uartVector.flagaddr = 0x2B;
-    uartVector.flagbit = 7;
-    uartVector.maskaddr = 0x2A;
-    uartVector.maskbit = 7;
+    uartVector.flag = {0x2B, 7};
+    uartVector.mask = {0x2A, 7};
     uartVector.vectoraddress = 0x1A;
     intController->addInterruptVector(uartVector);
 
