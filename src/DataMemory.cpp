@@ -49,7 +49,7 @@ uint8_t DataMemory::get(uint32_t address)
         return data[address];
     }
     else
-        throw out_of_range("SRAM Get: Argument out of range!");
+        throw out_of_range("SRAM Get: Argument "+to_string(address)+" out of range!");
 }
 
 uint8_t DataMemory::getDirect(uint32_t address)
@@ -58,8 +58,9 @@ uint8_t DataMemory::getDirect(uint32_t address)
     {
         return data[address];
     }
-    else
-        LOG(Fatal)<<"Data GetDirect get out of range"<<endl;
+    else{
+        throw out_of_range("SRAM Get: Argument "+to_string(address)+" out of range!");
+    }
 
 }
 
@@ -95,7 +96,7 @@ void DataMemory::set(uint32_t address, uint8_t value, bool watch)
         data[address] = ref;
     }
     else
-        throw out_of_range("SRAM Set: Argument out of range!");
+        throw out_of_range("SRAM Set: Argument "+to_string(address)+" out of range!");
 }
 
 void DataMemory::setDirect16(uint32_t address, uint16_t value)
