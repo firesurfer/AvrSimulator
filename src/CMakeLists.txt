@@ -36,4 +36,5 @@ target_link_libraries(register_machine
     network_lib
     Threads::Threads
     gui_lib
+    Boost::filesystem
 )

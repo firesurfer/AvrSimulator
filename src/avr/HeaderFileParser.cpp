@@ -1,5 +1,5 @@
 #include "HeaderFileParser.h"
-
+#include <iostream>
 HeaderFileParser::HeaderFileParser(std::string _file):
     header_path(_file)
 {
@@ -24,9 +24,11 @@ void HeaderFileParser::parse()
         {
             std::vector<std::string> splitted;
             boost::split(splitted,line, boost::is_any_of("\t "),boost::token_compress_on);
-            defines.insert({splitted[0],splitted[1]});
+            if(splitted.size() > 2)
+                defines.insert({splitted[1],splitted[2]});
         }
     }
+    file.close();
 }
 
 int HeaderFileParser::processDefine(std::string define)
@@ -56,7 +58,12 @@ int HeaderFileParser::processDefine(std::string define)
             int val = std::stoi(number);
             return val;
         }
+        try {
+            int val = std::stoi(def);
+            return val;
+        } catch (std::invalid_argument &ex) {
 
+        }
     }
     return -1;
 }
