@@ -29,3 +29,13 @@ void HeaderFileParser::parse()
         }
     }
 }
+
+std::vector<std::string> HeaderFileParser::listDefines()
+{
+    std::vector<std::string> keys;
+    for(auto & item : defines)
+    {
+        keys.push_back(item.first);
+    }
+    return keys;
+}

@@ -21,6 +21,7 @@ public:
         }
         return "";
     }
+    std::vector<std::string> listDefines();
 private:
     std::string header_path;
 
