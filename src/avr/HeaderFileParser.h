@@ -15,7 +15,11 @@ public:
     template<typename T>
     T getDefine(std::string define)
     {
-
+        if(defines.find(define) != defines.end())
+        {
+            return defines[define];
+        }
+        return "";
     }
 private:
     std::string header_path;
