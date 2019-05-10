@@ -15,7 +15,7 @@ public:
     void parse();
 
     template<typename T>
-    T getDefine(std::string define)
+    T getDefine(std::string define, bool process = true)
     {
         if(defines.find(define) != defines.end())
         {
@@ -23,46 +23,21 @@ public:
         }
         return "";
     }
-    int getDefine(std::string define)
-    {
-
-        if(defines.find(define) != defines.end())
-        {
-            return std::stoi(defines[define]);
-        }
-        return -1;
-    }
-    int processDefine(std::string define)
+    int getDefine(std::string define, bool process = true)
     {
         if(defines.find(define) != defines.end())
         {
-            std::string def = defines[define];
-            std::vector<std::string> strs;
-            boost::split(strs, def, boost::is_any_of("("));
-            if(def.find("_SFR_IO8") != std::string::npos)
+            if(process)
             {
-                std::string number = strs[1];
-                int val = std::stoi(number);
-                val = resolveSFR_IO8(val);
-                return val;
+                return processDefine(define);
             }
-            else  if(def.find("_SFR_IO16") != std::string::npos)
-            {
-                std::string number = strs[1];
-                int val = std::stoi(number);
-                val = resolveSFR_IO16(val);
-                return val;
+            else {
+                return std::stoi(defines[define]);
             }
-            else if(def.find("_VECTOR") != std::string::npos)
-            {
-                std::string number = strs[1];
-                int val = std::stoi(number);
-                return val;
-            }
-
         }
         return -1;
     }
+
     std::vector<std::string> listDefines();
 private:
     std::string header_path;
@@ -72,6 +47,7 @@ private:
 
     int resolveSFR_IO8(int val);
     int resolveSFR_IO16(int val);
+    int processDefine(std::string define);
 
 };
 

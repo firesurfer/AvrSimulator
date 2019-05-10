@@ -29,6 +29,38 @@ void HeaderFileParser::parse()
     }
 }
 
+int HeaderFileParser::processDefine(std::string define)
+{
+    if(defines.find(define) != defines.end())
+    {
+        std::string def = defines[define];
+        std::vector<std::string> strs;
+        boost::split(strs, def, boost::is_any_of("("));
+        if(def.find("_SFR_IO8") != std::string::npos)
+        {
+            std::string number = strs[1];
+            int val = std::stoi(number);
+            val = resolveSFR_IO8(val);
+            return val;
+        }
+        else  if(def.find("_SFR_IO16") != std::string::npos)
+        {
+            std::string number = strs[1];
+            int val = std::stoi(number);
+            val = resolveSFR_IO16(val);
+            return val;
+        }
+        else if(def.find("_VECTOR") != std::string::npos)
+        {
+            std::string number = strs[1];
+            int val = std::stoi(number);
+            return val;
+        }
+
+    }
+    return -1;
+}
+
 std::vector<std::string> HeaderFileParser::listDefines()
 {
     std::vector<std::string> keys;
