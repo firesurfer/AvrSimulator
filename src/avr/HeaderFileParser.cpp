@@ -1,6 +1,5 @@
 #include "HeaderFileParser.h"
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
+
 HeaderFileParser::HeaderFileParser(std::string _file):
     header_path(_file)
 {
@@ -38,4 +37,14 @@ std::vector<std::string> HeaderFileParser::listDefines()
         keys.push_back(item.first);
     }
     return keys;
+}
+
+int HeaderFileParser::resolveSFR_IO8(int val)
+{
+    return val + 0x20;
+}
+
+int HeaderFileParser::resolveSFR_IO16(int val)
+{
+    return val + 0x20;
 }
