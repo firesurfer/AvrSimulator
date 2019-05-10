@@ -10,12 +10,17 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/Logger
     ${CMAKE_CURRENT_SOURCE_DIR}/Network
     ${CMAKE_CURRENT_SOURCE_DIR}/Gui
+    ${CMAKE_CURRENT_SOURCE_DIR}/avr
 )   
 
 
 file(GLOB SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h*
                     ${CMAKE_CURRENT_SOURCE_DIR}/*.c*)
 add_executable(register_machine ${SRC_FILES})
+
+file(GLOB AVR_FILES  ${CMAKE_CURRENT_SOURCE_DIR}/avr/*.h*
+                     ${CMAKE_CURRENT_SOURCE_DIR}/avr/*.c*)
+add_library(avr ${AVR_FILES})
 
 set_target_properties(register_machine
     PROPERTIES
@@ -24,6 +29,7 @@ set_target_properties(register_machine
 )
 
 target_link_libraries(register_machine
+    avr
     command_lib
     periph_lib
     logger_lib
