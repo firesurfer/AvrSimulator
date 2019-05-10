@@ -21,6 +21,15 @@ public:
         }
         return "";
     }
+    int getDefine(std::string define)
+    {
+
+        if(defines.find(define) != defines.end())
+        {
+            return std::stoi(defines[define]);
+        }
+        return -1;
+    }
     std::vector<std::string> listDefines();
 private:
     std::string header_path;
