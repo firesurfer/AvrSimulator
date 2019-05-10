@@ -1,5 +1,8 @@
 #include "HeaderFileParser.h"
 #include <iostream>
+//Instance fpr singleton
+std::shared_ptr<HeaderFileParser> HeaderFileParser::parserInstance;
+
 HeaderFileParser::HeaderFileParser(std::string _file):
     header_path(_file)
 {
@@ -77,6 +80,18 @@ std::vector<std::string> HeaderFileParser::listDefines()
     }
     return keys;
 }
+
+void HeaderFileParser::initInstance(std::string _file)
+{
+    if(!parserInstance)
+        parserInstance = std::make_shared<HeaderFileParser>(_file);
+}
+
+std::shared_ptr<HeaderFileParser> HeaderFileParser::instance()
+{
+    return parserInstance;
+}
+
 
 int HeaderFileParser::resolveSFR_IO8(int val)
 {

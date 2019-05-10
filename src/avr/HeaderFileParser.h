@@ -57,6 +57,9 @@ public:
      * @return list containing names of all defines
      */
     std::vector<std::string> listDefines();
+
+    static void initInstance(std::string _file);
+    static std::shared_ptr<HeaderFileParser> instance();
 private:
     std::string header_path;
 
@@ -67,6 +70,7 @@ private:
     int resolveSFR_IO16(int val);
     int processDefine(std::string define);
 
+    static std::shared_ptr<HeaderFileParser> parserInstance;
 };
 
 #endif // HEADERFILEPARSER_H

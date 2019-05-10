@@ -73,6 +73,9 @@ int main(int argc, char* argv[])
         if(i+1 == argc)
             programMemoryPath = std::string(argv[i]);
     }
+    //TODO obtain path to headerfile
+    HeaderFileParser::initInstance("iom32.h");
+
     LOGLEVEL(loglevel);
     DataMemory dataMemory(2048+0x60,0);
 
